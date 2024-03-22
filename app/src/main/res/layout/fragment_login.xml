@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:navigationIcon="@drawable/back"
+                app:navigationIconTint="@color/secondary_color"
+                app:title="登录 Makka Pakka"
+                app:titleTextColor="@color/secondary_color" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:minHeight="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="?attr/materialCardViewElevatedStyle"
+        android:backgroundTint="@color/surface_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/coordinatorLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/phone_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:visibility="visible">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:hint="邮箱"
+                android:textColorHint="@color/secondary_color"
+                app:boxStrokeColor="@color/secondary_color"
+                app:endIconTint="@color/primary_color"
+                app:counterEnabled="true"
+                app:counterMaxLength="11"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_email"
+                    android:textColor="@color/deep_grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:hint="密码"
+                android:textColorHint="@color/secondary_color"
+                app:boxStrokeColor="@color/secondary_color"
+                app:endIconTint="@color/primary_color"
+                app:endIconMode="password_toggle"
+                app:counterEnabled="true"
+                app:errorEnabled="true"
+                app:counterMaxLength="16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_phone_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/deep_grey"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        &lt;!&ndash;        邮箱界面&ndash;&gt;-->
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/email_field"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/textInputLayout3"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="24dp"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:layout_marginEnd="24dp"-->
+<!--                android:hint="邮箱"-->
+<!--                android:textColorHint="@color/tertiary_color"-->
+<!--                app:boxStrokeColor="@color/primary_color"-->
+<!--                app:counterEnabled="true"-->
+<!--                app:counterMaxLength="11"-->
+<!--                app:endIconMode="clear_text"-->
+<!--                app:endIconTint="@color/tertiary_color"-->
+<!--                app:errorEnabled="true"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/et_email"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="textEmailAddress" />-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/textInputLayout4"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="24dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:layout_marginBottom="24dp"-->
+<!--                android:hint="验证码"-->
+<!--                android:textColorHint="@color/tertiary_color"-->
+<!--                app:boxStrokeColor="@color/primary_color"-->
+<!--                app:counterEnabled="true"-->
+<!--                app:counterMaxLength="6"-->
+<!--                app:endIconTint="@color/tertiary_color"-->
+<!--                app:errorEnabled="true"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/button5"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/et_code"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="textPassword" />-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <Button-->
+<!--                android:id="@+id/button5"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:backgroundTint="@color/secondary_color"-->
+<!--                android:text="获取验证码"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout4"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/textInputLayout4" />-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    </com.google.android.material.card.MaterialCardView>
+
+<!--    <com.example.makka_pakka.view.StateSavingButton-->
+<!--        android:id="@+id/btn_switch_to_phone"-->
+<!--        style="@style/normalButton"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:layout_marginBottom="8dp"-->
+<!--        android:text="手机号登录"-->
+<!--        android:textSize="20sp"-->
+<!--        app:corner_radius="16dp"-->
+<!--        app:init_state="true"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/materialCardView"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/guideline4"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/materialCardView"-->
+<!--        app:non_selected_color="@color/white"-->
+<!--        app:selected_color="@color/secondary_color" />-->
+
+<!--    <com.example.makka_pakka.view.StateSavingButton-->
+<!--        android:id="@+id/btn_switch_to_email"-->
+<!--        style="@style/normalButton"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginBottom="8dp"-->
+<!--        android:text="邮箱登录"-->
+<!--        android:textSize="20sp"-->
+<!--        app:corner_radius="16dp"-->
+<!--        app:init_state="false"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/materialCardView"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/materialCardView"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/btn_switch_to_phone"-->
+<!--        app:non_selected_color="@color/white"-->
+<!--        app:selected_color="@color/secondary_color" />-->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录"
+        android:textSize="24sp"
+        android:paddingHorizontal="36dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/bright_color"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+    </Button>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/app_name"
+        android:textColor="@color/secondary_color"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_jump_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="还没有账号？注册一个！"
+        android:textColor="@color/bright_color"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/materialCardView"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+    <TextView
+        android:id="@+id/tv_jump_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="忘记密码"
+        android:textColor="@color/bright_color"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/materialCardView"
+        app:layout_constraintTop_toBottomOf="@+id/tv_jump_switch" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/coverFragment">
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.makka_pakka.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_resetFragment"
+            app:destination="@id/resetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/coverFragment"
+        android:name="com.example.makka_pakka.login.CoverFragment"
+        android:label="fragment_cover"
+        tools:layout="@layout/fragment_cover" >
+        <action
+            android:id="@+id/action_coverFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_coverFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.makka_pakka.login.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_registerFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.makka_pakka.main.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_initiationFragment"
+            app:destination="@id/initiationFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_mineFragment"
+            app:destination="@id/mineFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resetFragment"
+        android:name="com.example.makka_pakka.login.ResetFragment"
+        android:label="fragment_reset"
+        tools:layout="@layout/fragment_reset" />
+    <fragment
+        android:id="@+id/initiationFragment"
+        android:name="com.example.makka_pakka.login.InitiationFragment"
+        android:label="fragment_initiation"
+        tools:layout="@layout/fragment_initiation" />
+    <fragment
+        android:id="@+id/mainListFragment"
+        android:name="com.example.makka_pakka.main.MainListFragment"
+        android:label="fragment_main_list"
+        tools:layout="@layout/fragment_main_list" />
+    <fragment
+        android:id="@+id/mineFragment"
+        android:name="com.example.makka_pakka.main.MineFragment"
+        android:label="fragment_mine"
+        tools:layout="@layout/fragment_mine" >
+        <action
+            android:id="@+id/action_mineFragment_to_mineDetailFragment"
+            app:destination="@id/mineDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mineDetailFragment"
+        android:name="com.example.makka_pakka.MineDetailFragment"
+        android:label="fragment_mine_detail"
+        tools:layout="@layout/fragment_mine_detail" />
+
+</navigation>

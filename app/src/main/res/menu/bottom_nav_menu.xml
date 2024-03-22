@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_broadcast"
+        android:icon="@drawable/tab_observe"
+        android:title="直播" />
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_warning"-->
+<!--        android:icon="@drawable/tab_warning"-->
+<!--        android:title="@string/title_warning" />-->
+
+    <item
+        android:id="@+id/navigation_mine"
+        android:icon="@drawable/tab_mine"
+        android:title="用户中心" />
+
+
+
+</menu>

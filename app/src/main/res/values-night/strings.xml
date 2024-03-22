@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Makka-Pakka</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_cover_login_exist">已有用户</string>
+    <string name="btn_cover_login_manager">管理员登录</string>
+    <string name="btn_cover_login_create">创建新用户</string>
+    <string name="login_str_username">用户名</string>
+    <string name="man">男</string>
+    <string name="switch_sex">切换性别</string>
+    <string name="logout">退出</string>
+    <string name="title_mine_edit">编辑个人信息</string>
+
+    <string name="decline">拒绝</string>
+    <string name="accept">接受</string>
+</resources>

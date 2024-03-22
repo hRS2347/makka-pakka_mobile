@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StateSavingButton">
+        <attr name="selected_color" format="color"/>
+        <attr name="non_selected_color" format="color"/>
+        <attr name="init_state" format="boolean"/>
+        <attr name="corner_radius" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="LoadingButton">
+        <attr name="image" format="reference"/>
+        <attr name="loading_state" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="HobbySelectingButton">
+        <attr name="selectedColor" format="color"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,82 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MakkaPakka" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/surface_color</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorTertiary">@color/tertiary_color</item>
+        <item name="colorAccent">@color/secondary_color</item>
+        <item name="colorSurface">@color/surface_color</item>
+        <item name="colorSurfaceContainer">@color/surface_color</item>
+
+        <item name="colorOnSurface">@color/on_surface_color</item>
+<!--        background_color = surface_Bright-->
+        <item name="android:windowBackground">@color/background_color</item>
+    </style>
+
+    <style name="MyNavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/secondary_color</item>
+    </style>
+
+    <style name="Widget.App.Button.OutlinedButton.IconOnly" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <style name="CustomDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="normalButton" parent="Widget.Material3.Button">
+        <item name="android:textSize" tools:targetApi="s">24sp</item>
+        <item name="android:textStyle" tools:targetApi="s">bold</item>
+    </style>
+
+    <style name="normalOutlineButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textSize" tools:targetApi="s">24sp</item>
+        <item name="android:textStyle" tools:targetApi="s">bold</item>
+    </style>
+
+    <style name="normalElevatedButton" parent="Widget.Material3.Button.ElevatedButton">
+        <item name="android:textSize" tools:targetApi="s">24sp</item>
+        <item name="android:textStyle" tools:targetApi="s">bold</item>
+    </style>
+    <style name="normalText" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize" tools:targetApi="s">14sp</item>
+    </style>
+
+    <style name="myDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+
+
+
+</resources>
