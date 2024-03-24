@@ -14,7 +14,9 @@
     <color name="background_color">#FCECDD</color>
     <color name="bright_color">#FF8400</color>
     <color name="surface_color">#FFF1D9</color>
-    <color name="on_surface_color">#FFE8C3</color>
+    <color name="container_surface_color">#FFE9C3</color>
+    <color name="on_surface_color">#FFBD53</color>
+    <color name="down_surface_color">#FFF9EF</color>
 
     <color name="light_grey">#CCCCCC</color>
     <color name="bg_grey">#FDFFFD</color>

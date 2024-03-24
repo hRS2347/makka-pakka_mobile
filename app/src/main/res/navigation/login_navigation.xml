@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/coverFragment">
+    app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.makka_pakka.login.LoginFragment"
@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_coverFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_coverFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -81,7 +84,7 @@
         tools:layout="@layout/fragment_main_list" />
     <fragment
         android:id="@+id/mineFragment"
-        android:name="com.example.makka_pakka.main.MineFragment"
+        android:name="com.example.makka_pakka.main.mine.MineFragment"
         android:label="fragment_mine"
         tools:layout="@layout/fragment_mine" >
         <action
@@ -90,8 +93,12 @@
     </fragment>
     <fragment
         android:id="@+id/mineDetailFragment"
-        android:name="com.example.makka_pakka.MineDetailFragment"
+        android:name="com.example.makka_pakka.main.mine.MineDetailFragment"
         android:label="fragment_mine_detail"
-        tools:layout="@layout/fragment_mine_detail" />
+        tools:layout="@layout/fragment_mine_detail" >
+        <action
+            android:id="@+id/action_mineDetailFragment_to_resetFragment"
+            app:destination="@id/resetFragment" />
+    </fragment>
 
 </navigation>

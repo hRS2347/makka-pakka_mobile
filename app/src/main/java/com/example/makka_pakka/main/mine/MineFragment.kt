@@ -1,4 +1,4 @@
-package com.example.makka_pakka.main
+package com.example.makka_pakka.main.mine
 
 import android.annotation.SuppressLint
 import android.os.Bundle

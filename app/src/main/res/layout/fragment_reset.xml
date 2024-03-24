@@ -30,6 +30,16 @@
         </com.google.android.material.appbar.AppBarLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/coordinatorLayout" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
@@ -37,8 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/down_surface_color"
         style="?attr/materialCardViewElevatedStyle"
-        android:backgroundTint="@color/surface_color"
         android:minHeight="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,12 +119,11 @@
         <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
         <!--        邮箱界面-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/email_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout3"
+                android:id="@+id/email_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -159,10 +168,10 @@
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+                app:layout_constraintTop_toBottomOf="@+id/email_field">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_phone_password"
+                    android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/deep_grey"
@@ -187,7 +196,7 @@
                 app:boxStrokeColor="@color/secondary_color"
                 app:endIconTint="@color/primary_color"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button5"
+                app:layout_constraintEnd_toStartOf="@+id/btn_ind_code"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
 
@@ -202,15 +211,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/btn_ind_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="获取验证码"
-                android:textSize="16sp"
                 android:backgroundTint="@color/secondary_color"
+                android:text="获取验证码"
+                android:minWidth="160dp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textInputLayout4"
-                app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"
+                app:layout_constraintEnd_toEndOf="@+id/email_field"
                 app:layout_constraintTop_toTopOf="@+id/textInputLayout4" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

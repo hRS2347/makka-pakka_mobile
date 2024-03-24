@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         style="?attr/materialCardViewElevatedStyle"
-        android:backgroundTint="@color/surface_color"
+        android:backgroundTint="@color/down_surface_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/coordinatorLayout">
 
@@ -50,11 +50,10 @@
             android:id="@+id/phone_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:visibility="visible">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout"
+                android:id="@+id/email_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -74,10 +73,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email"
-                    android:textColor="@color/deep_grey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:textColor="@color/deep_grey" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,10 +99,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+                app:layout_constraintTop_toBottomOf="@+id/email_field">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_phone_password"
+                    android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/deep_grey"
@@ -220,7 +219,16 @@
 <!--        app:layout_constraintStart_toEndOf="@+id/btn_switch_to_phone"-->
 <!--        app:non_selected_color="@color/white"-->
 <!--        app:selected_color="@color/secondary_color" />-->
-
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/coordinatorLayout" />
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"

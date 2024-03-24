@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import com.example.makka_pakka.MAX_NUM_OF_SELECTED_HOBBY
 import com.example.makka_pakka.utils.ViewUtil
+import java.util.ArrayList
 import kotlin.random.Random
 
 class RandomSelectingContainer @JvmOverloads constructor(
@@ -107,7 +108,7 @@ class RandomSelectingContainer @JvmOverloads constructor(
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         //切成一个一个尺寸为 180dp * 60dp的方格，每个方格放置一个
         // 初始位置，随机0-30
-        var currentLeft = 0
+        var currentLeft = perHor * Random.nextInt(1, 2)
         var currentTop = 0
 
         //随机间隔 12-30
@@ -116,7 +117,7 @@ class RandomSelectingContainer @JvmOverloads constructor(
             // 在当前位置放置子视图，透明背景
             if (currentLeft + child.measuredWidth > width) { // 如果超出容器宽度
                 currentTop += child.measuredHeight + perVerLine // 换行
-                currentLeft = 0
+                currentLeft = perHor * Random.nextInt(0, 2)
                 if (currentTop + child.measuredHeight + 2 * perVer > height) { // 如果超出容器高度
                     break
                 }
@@ -129,7 +130,18 @@ class RandomSelectingContainer @JvmOverloads constructor(
                 child.measuredHeight + currentTop + bias
             )
             // 更新位置
-            currentLeft += child.measuredWidth + perHor * Random.nextInt(1, 2)
+            currentLeft += child.measuredWidth + perHor * Random.nextInt(1, 4)
         }
+    }
+
+    fun getList(): ArrayList<String> {
+        val list = ArrayList<String>()
+        for (i in 0 until childCount) {
+            val child = getChildAt(i) as HobbySelectingButton
+            if (child.isS) {
+                list.add(child.text)
+            }
+        }
+        return list
     }
 }

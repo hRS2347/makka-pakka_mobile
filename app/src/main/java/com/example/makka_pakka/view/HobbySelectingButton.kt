@@ -31,10 +31,12 @@ class HobbySelectingButton @JvmOverloads constructor(
     private var width = 0
     private val height = textSize.toInt() + ViewUtil.dpToPx(context, 24f) + strokeWidth.toInt() * 2
     private val minWith = 4 * textSize.toInt() + strokeWidth.toInt() * 2
-    private var strokeCol: Int = TAG_COLOR_LIST[Random.nextInt(0, TAG_COLOR_LIST.size)]
+    private var strokeCol = Color.GRAY
     private var textColNon = Color.GRAY
     private var textCol = Color.WHITE
     private val nonSelectedColor = ResourcesCompat.getColor(resources, R.color.white, null)
+    private val selectedColorIn = TAG_COLOR_LIST[Random.nextInt(0, TAG_COLOR_LIST.size)]
+    private val selectedColor = ResourcesCompat.getColor(resources, selectedColorIn, null)
     //计算整体宽高，处理wrap_content的情况
     //如果宽高都是wrap_content，则宽高为字数*textSize+padding*2
     //如果宽度是wrap_content，则宽度为字数*textSize+padding*2
@@ -72,7 +74,7 @@ class HobbySelectingButton @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         //描边stroke
-        paint.color = if (isS) nonSelectedColor else strokeCol
+        paint.color = if (isS) selectedColor else strokeCol
         paint.style = Paint.Style.FILL
         paint.strokeWidth = strokeWidth
         canvas.drawRoundRect(
@@ -90,7 +92,7 @@ class HobbySelectingButton @JvmOverloads constructor(
             paint.color =
                 ResourcesCompat.getColor(
                     resources,
-                    strokeCol,
+                    selectedColorIn,
                     null
                 )
 
