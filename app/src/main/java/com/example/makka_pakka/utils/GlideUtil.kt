@@ -39,8 +39,8 @@ object GlideUtil {
 
     fun loadAvatar(iv: ImageView, avatarUrl: String) {
         Glide.with(iv.context).load(avatarUrl).circleCrop()
-            .error(R.drawable.tab_mine)
-            .placeholder(R.drawable.tab_mine)
+            .error(R.drawable.logo)
+            .placeholder(R.drawable.logo)
             .into(iv)
     }
 }

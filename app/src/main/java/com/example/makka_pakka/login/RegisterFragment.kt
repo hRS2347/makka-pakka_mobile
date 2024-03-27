@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentRegisterBinding
 import com.example.makka_pakka.utils.GlideUtil
@@ -73,6 +74,7 @@ class RegisterFragment : Fragment() {
 
                     EVENTS.SUCCESS.ordinal -> {
                         bind.progressBar.visibility = View.INVISIBLE
+                        MyApplication.instance.getUserInfo()
                         Navigation.findNavController(bind.btnSubmit)
                             .navigate(R.id.action_registerFragment_to_mainFragment)
                     }
@@ -95,7 +97,7 @@ class RegisterFragment : Fragment() {
                 override fun onResponse(call: Call, response: Response) {
                     Log.d("RegisterFragment", "onResponse: ${response.body?.string()}")
                     if (response.code == 200)
-                        handler.sendMessage(handler.obtainMessage(EVENTS.SUCCESS.ordinal))
+//                        handler.sendMessage(handler.obtainMessage(EVENTS.SUCCESS.ordinal))
                     else
                         handler.sendMessage(
                             handler.obtainMessage(
@@ -125,9 +127,10 @@ class RegisterFragment : Fragment() {
 
                     override fun onResponse(call: Call, response: Response) {
                         val body = response.body?.string()
-                        Log.d("RegisterFragment", "onResponse: ${response.body?.string()}")
-                        if (response.code == 200)
+//                        Log.d("RegisterFragment", "onResponse: ${response.body?.string()}")
+                        if (response.code == 200){
                             handler.sendMessage(handler.obtainMessage(EVENTS.SUCCESS.ordinal))
+                        }
                         else
                             handler.sendMessage(
                                 handler.obtainMessage(

@@ -108,20 +108,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        ifJumpToMainFragment()
-    }
-
-    fun ifJumpToMainFragment() {
-        GlobalScope.launch {
-            withContext(Dispatchers.Main) {
-                if (MyApplication.instance.initUserInfo()) {
-                    val navController = findNavController(R.id.nav_host_fragment_activity_main)
+//        ifJumpToMainFragment()
+        MyApplication.instance.currentUser.observe(this) {
+            if (it!=null && it.isHobbySelected==0 && !isHobbySelectedAsk) {
+                isHobbySelectedAsk =true
+                val navController = findNavController(R.id.nav_host_fragment_activity_main)
                     navController.popBackStack(R.id.mainFragment, false)
                     navController.navigate(R.id.mainFragment)
-                }
             }
         }
     }
+
+//    fun ifJumpToMainFragment() {
+//        GlobalScope.launch {
+//            withContext(Dispatchers.Main) {
+//                if (MyApplication.instance.initUserInfo()) {
+//
+//                }
+//            }
+//        }
+//    }
 
     /***
      * 测试

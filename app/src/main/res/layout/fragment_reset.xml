@@ -189,7 +189,7 @@
                 android:layout_marginBottom="24dp"
                 android:hint="验证码"
                 app:counterEnabled="true"
-                app:counterMaxLength="6"
+                app:counterMaxLength="4"
                 app:errorEnabled="true"
 
                 android:textColorHint="@color/secondary_color"

@@ -17,7 +17,7 @@ import com.example.makka_pakka.utils.ViewUtil
 class InfoEditDialog(context: Context, private val mode: EditType) :
     Dialog(context, R.style.myDialog) {
     private lateinit var bind: DialogInfoEditBinding
-    private val user = MyApplication.instance.currentUser.value?.copy()
+    private var user = MyApplication.instance.currentUser.value?.copy()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = DialogInfoEditBinding.inflate(layoutInflater)
@@ -83,6 +83,9 @@ class InfoEditDialog(context: Context, private val mode: EditType) :
         }
 
         bind.tvSubmit.setOnClickListener {
+            user?.name = bind.etName.text.toString()
+            user?.region = bind.etRegion.text.toString()
+            user?.decription = bind.etDescription.text.toString()
             user.let { info -> MyApplication.instance.userInfoChange(info) }
             Toast.makeText(context, "修改成功,已上传服务器", Toast.LENGTH_SHORT).show()
             dismiss()

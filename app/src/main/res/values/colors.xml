@@ -11,8 +11,8 @@
     <color name="primary_color">#FF6701</color>
     <color name="secondary_color">#FEA82F</color>
     <color name="tertiary_color">#FFC288</color>
-    <color name="background_color">#FCECDD</color>
-    <color name="bright_color">#FF8400</color>
+    <color name="background_color">#F4EFEB</color>
+    <color name="bright_color">#FF9900</color>
     <color name="surface_color">#FFF1D9</color>
     <color name="container_surface_color">#FFE9C3</color>
     <color name="on_surface_color">#FFBD53</color>

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.makka_pakka.HOBBY_TAG_LIST
 import com.example.makka_pakka.MAX_NUM_OF_SELECTED_HOBBY
 import com.example.makka_pakka.MainActivity
+import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.databinding.FragmentInitiationBinding
 import com.example.makka_pakka.utils.HttpUtil
 import okhttp3.Call
@@ -36,6 +37,7 @@ class InitiationFragment : Fragment() {
                 when (it.what) {
                     EVENTS.SUCCESS.ordinal -> {
                         Toast.makeText(context, "提交成功", Toast.LENGTH_SHORT).show()
+                        MyApplication.instance.getUserInfo()
                         findNavController().popBackStack()
                     }
 

@@ -191,7 +191,7 @@
                 android:textColorHint="@color/secondary_color"
                 app:boxStrokeColor="@color/secondary_color"
                 app:counterEnabled="true"
-                app:counterMaxLength="6"
+                app:counterMaxLength="4"
                 app:endIconTint="@color/primary_color"
                 app:errorEnabled="true"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -29,6 +29,7 @@ class MineDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         bind = FragmentMineDetailBinding.inflate(layoutInflater)
+        MyApplication.instance.getUserInfo()
 
         pickMultipleMedia =
             registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
@@ -99,9 +100,7 @@ class MineDetailFragment : Fragment() {
                 val format = sdf.format(date)
 
                 MyApplication.instance.currentUser.value?.copy(
-                    birthday = java.sql.Date.valueOf(
-                        format
-                    )
+                    birthday = format
                 ).let { info ->
                     MyApplication.instance.userInfoChange(info)
                 }

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/primary_color"
     android:layout_height="match_parent">
 
 
@@ -30,7 +31,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:text="@string/app_name"
-        android:textColor="@color/secondary_color"
+        android:textColor="@color/white"
         android:textSize="45sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="@+id/textView"
@@ -41,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textColor="@color/primary_color"
+        android:textColor="@color/secondary_color"
         android:textSize="45sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -56,7 +57,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="56dp"
-        android:backgroundTint="@color/primary_color"
+        android:backgroundTint="@color/secondary_color"
         android:textColor="@color/white"
         android:paddingVertical="12dp"
         android:text="注册"
@@ -74,11 +75,12 @@
         android:layout_marginBottom="56dp"
         android:paddingVertical="12dp"
         android:text="登录"
+        android:backgroundTint="@color/down_surface_color"
         android:textColor="@color/primary_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:strokeColor="@color/primary_color" />
+        app:strokeColor="@color/white" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

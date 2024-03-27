@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentLoginBinding
 import com.example.makka_pakka.utils.GlideUtil
@@ -37,6 +38,7 @@ class LoginFragment : Fragment() {
             Handler.Callback {
                 when (it.what) {
                     EVENTS.SUCCESS.ordinal -> {
+                        MyApplication.instance.getUserInfo()
                         Navigation.findNavController(bind.btnSubmit)
                             .navigate(R.id.action_loginFragment_to_mainFragment)
                     }

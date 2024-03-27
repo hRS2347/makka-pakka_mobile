@@ -1,7 +1,10 @@
 package com.example.makka_pakka.utils
 
+import android.content.Entity
+import android.os.Environment
 import android.util.Log
 import com.example.makka_pakka.AVATAR
+import com.example.makka_pakka.GET_USER_INFO
 import com.example.makka_pakka.IND_CODE
 import com.example.makka_pakka.LOGIN
 import com.example.makka_pakka.REGISTER
@@ -10,7 +13,10 @@ import com.example.makka_pakka.SEND_HABITS
 import com.example.makka_pakka.USER_INFO
 import com.example.makka_pakka.host
 import com.example.makka_pakka.model.UserInfo
+import com.example.makka_pakka.port
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -22,7 +28,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import java.io.File
+import java.io.IOException
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 //单例模式，OKHttp3
@@ -59,6 +68,8 @@ object HttpUtil {
     }
 
 
+
+
     // 登录
     fun login(email: String, password: String, callback: Callback) {
         // 创建请求
@@ -75,7 +86,7 @@ object HttpUtil {
     // 获取验证码
     fun requestIndCode(email: String, callback: Callback) {
         val request = Request.Builder()
-            .url("$host$IND_CODE?email=$email")
+            .url("$host:$port$IND_CODE?email=$email")
             .get().build().let {
                 Log.d("LoginFragment", "requestIndCode: $it")
                 it
@@ -86,7 +97,7 @@ object HttpUtil {
     // 注册
     fun register(email: String, password: String, code: String, callback: Callback) {
         val request = Request.Builder()
-            .url("$host$REGISTER?email=$email&password=$password&code=$code")
+            .url("$host:$port$REGISTER?email=$email&password=$password&code=$code")
             .post(FormBody.Builder().build()).build().let {
                 Log.d("LoginFragment", "register: $it")
                 it
@@ -97,7 +108,7 @@ object HttpUtil {
     // 重置密码
     fun reset(email: String, password: String, code: String, callback: Callback) {
         val request = Request.Builder()
-            .url("$host$RESET?email=$email&password=$password&code=$code")
+            .url("$host:$port$RESET?email=$email&password=$password&code=$code")
             .put(FormBody.Builder().build()).build().let {
                 Log.d("LoginFragment", "reset: $it")
                 it
@@ -112,7 +123,7 @@ object HttpUtil {
         val habits = gson.toJson(habitsList)
         val body = habits.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val request = Request.Builder()
-            .url("$host$SEND_HABITS")
+            .url("$host:$port$SEND_HABITS")
             .post(body).build().let {
                 Log.d("LoginFragment", "sendHabits: $it")
                 it
@@ -125,7 +136,7 @@ object HttpUtil {
         //put
         val json = gson.toJson(value)
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        val request = Request.Builder().url("$host$USER_INFO").put(body).build()
+        val request = Request.Builder().url("$host:$port$USER_INFO").put(body).build()
         client.newCall(request).enqueue(callback)
     }
 
@@ -142,9 +153,13 @@ object HttpUtil {
             )
             .build()
         val request = Request.Builder()
-            .url("$host$AVATAR")
+            .url("$host:$port$AVATAR")
             .post(body)
             .build()
         client.newCall(request).enqueue(callback)
+    }
+
+    fun refreshUserInfo(callback: Callback) {
+        get("$host:$port$GET_USER_INFO", callback)
     }
 }
