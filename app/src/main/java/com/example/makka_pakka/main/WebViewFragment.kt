@@ -5,13 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import com.example.makka_pakka.R
-import com.example.makka_pakka.databinding.FragmentCoverBinding
 import com.example.makka_pakka.databinding.FragmentMainListBinding
-import com.example.makka_pakka.databinding.FragmentMineBinding
 
-class MainListFragment : Fragment() {
+class WebViewFragment : Fragment() {
     private lateinit var bind: FragmentMainListBinding
 
 
@@ -26,7 +22,7 @@ class MainListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        bind.webView.loadUrl("www.bilibili.com")
     }
 }
 

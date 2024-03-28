@@ -55,7 +55,7 @@ class MyApplication : Application() {
              */
             override fun onViewInitFinished(isX5: Boolean) = Unit
         })
-        getUserInfo()
+//        getUserInfo()
     }
 
 //    suspend fun initUserInfo(): Boolean {

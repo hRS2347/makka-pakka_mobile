@@ -109,12 +109,12 @@ class MainActivity : AppCompatActivity() {
         }
 
 //        ifJumpToMainFragment()
+
         MyApplication.instance.currentUser.observe(this) {
             if (it!=null && it.isHobbySelected==0 && !isHobbySelectedAsk) {
                 isHobbySelectedAsk =true
-                val navController = findNavController(R.id.nav_host_fragment_activity_main)
-                    navController.popBackStack(R.id.mainFragment, false)
-                    navController.navigate(R.id.mainFragment)
+                navController.popBackStack(R.id.mainFragment, false)
+                navController.navigate(R.id.mainFragment)
             }
         }
     }

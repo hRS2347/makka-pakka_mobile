@@ -26,6 +26,8 @@
                 app:navigationIcon="@drawable/back"
                 app:navigationIconTint="@color/secondary_color"
                 app:title="登录 Makka Pakka"
+                android:backgroundTint="@color/primary_color"
+                app:titleTextAppearance="@style/normalText"
                 app:titleTextColor="@color/secondary_color" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -64,7 +66,6 @@
                 app:boxStrokeColor="@color/secondary_color"
                 app:endIconTint="@color/primary_color"
                 app:counterEnabled="true"
-                app:counterMaxLength="11"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,13 +76,13 @@
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/deep_grey" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout2"
+                android:id="@+id/pwd_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -241,7 +242,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="登录"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:paddingHorizontal="36dp"
         android:paddingVertical="8dp"
         android:textColor="@color/bright_color"

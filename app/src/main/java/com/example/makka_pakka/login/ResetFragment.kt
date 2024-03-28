@@ -109,6 +109,21 @@ class ResetFragment : Fragment() {
         }
 
         bind.btnSubmit.setOnClickListener {
+            //if the email is not valid
+            if (!bind.etEmail.text.toString().contains("@")) {
+                bind.emailField.error = "请输入正确的邮箱"
+                return@setOnClickListener
+            }
+            //if the password is not valid
+            if (bind.etPassword.text.toString().length < 6) {
+                bind.pwdField.error = "密码长度至少为6位"
+                return@setOnClickListener
+            }
+//if the code is not valid
+            if (bind.etCode.text.toString().length != 4) {
+                bind.cdField.error = "验证码长度为4位"
+                return@setOnClickListener
+            }
             HttpUtil.reset(
                 bind.etEmail.text.toString(),
                 bind.etPassword.text.toString(),
@@ -149,7 +164,11 @@ class ResetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
     }
 }
 

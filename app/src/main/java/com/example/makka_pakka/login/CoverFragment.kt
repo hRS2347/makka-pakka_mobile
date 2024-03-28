@@ -19,8 +19,8 @@ class CoverFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        requireActivity().window.statusBarColor =
-//            ResourcesCompat.getColor(resources, R.color.background_color, null)
+        requireActivity().window.statusBarColor =
+            ResourcesCompat.getColor(resources, R.color.primary_color, null)
         bind = FragmentCoverBinding.inflate(layoutInflater)
         bind.btnLogin.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_coverFragment_to_loginFragment)
@@ -39,6 +39,12 @@ class CoverFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        requireActivity().window.statusBarColor =
+            ResourcesCompat.getColor(resources, R.color.background_color, null)
     }
 }
 

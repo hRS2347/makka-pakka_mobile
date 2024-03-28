@@ -49,6 +49,8 @@ class RegisterFragment : Fragment() {
                                 )
                             )
                         } else {
+                            //if unattached, the fragment will not be able to update the UI
+
                             bind.btnIndCode.text = "重新获取($counter)"
                             bind.btnIndCode.isEnabled = false
                             bind.btnIndCode.setBackgroundColor(
@@ -85,6 +87,12 @@ class RegisterFragment : Fragment() {
 
 
         bind.btnIndCode.setOnClickListener {
+            //check if the email is valid
+            if (!bind.etEmail.text.toString().contains("@")) {
+                bind.emailField.error = "请输入正确的邮箱"
+                return@setOnClickListener
+            }
+
             handler.sendMessage(handler.obtainMessage(EVENTS.COUNTING_TIME.ordinal, 60))
             HttpUtil.requestIndCode(bind.etEmail.text.toString(), object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
@@ -110,6 +118,26 @@ class RegisterFragment : Fragment() {
         }
 
         bind.btnSubmit.setOnClickListener {
+            //check if the email is valid
+            if (!bind.etEmail.text.toString().contains("@")) {
+                bind.emailField.error = "请输入正确的邮箱"
+                return@setOnClickListener
+            }
+            //if the password is too short
+            if (bind.etPassword.text.toString().length < 6) {
+                bind.pwdField.error = "密码长度至少为6位"
+                return@setOnClickListener
+            }
+            // if too long
+            if (bind.etPassword.text.toString().length > 20) {
+                bind.pwdField.error = "密码长度不能超过20位"
+                return@setOnClickListener
+            }
+            //if the code is not valid
+            if (bind.etCode.text.toString().length != 4) {
+                bind.cdField.error = "验证码长度为4位"
+                return@setOnClickListener
+            }
             HttpUtil.register(
                 bind.etEmail.text.toString(),
                 bind.etPassword.text.toString(),
@@ -128,10 +156,9 @@ class RegisterFragment : Fragment() {
                     override fun onResponse(call: Call, response: Response) {
                         val body = response.body?.string()
 //                        Log.d("RegisterFragment", "onResponse: ${response.body?.string()}")
-                        if (response.code == 200){
+                        if (response.code == 200) {
                             handler.sendMessage(handler.obtainMessage(EVENTS.SUCCESS.ordinal))
-                        }
-                        else
+                        } else
                             handler.sendMessage(
                                 handler.obtainMessage(
                                     EVENTS.FAILURE.ordinal,
@@ -155,6 +182,11 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
     }
 }
 

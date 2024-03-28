@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/coverFragment">
+    app:startDestination="@id/webFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.makka_pakka.login.LoginFragment"
@@ -78,8 +78,8 @@
         android:label="fragment_initiation"
         tools:layout="@layout/fragment_initiation" />
     <fragment
-        android:id="@+id/mainListFragment"
-        android:name="com.example.makka_pakka.main.MainListFragment"
+        android:id="@+id/webFragment"
+        android:name="com.example.makka_pakka.main.WebViewFragment"
         android:label="fragment_main_list"
         tools:layout="@layout/fragment_main_list" />
     <fragment

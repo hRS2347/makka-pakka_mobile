@@ -1,6 +1,6 @@
 package com.example.makka_pakka
 
-const val host = "http://172.26.215.156"
+const val host = "http://192.168.137.1"
 const val port = 51601
 const val LOGIN = "/auth/login"
 const val REGISTER = "/auth/register"

@@ -1,7 +1,5 @@
 package com.example.makka_pakka.utils
 
-import android.content.Entity
-import android.os.Environment
 import android.util.Log
 import com.example.makka_pakka.AVATAR
 import com.example.makka_pakka.GET_USER_INFO
@@ -15,8 +13,6 @@ import com.example.makka_pakka.host
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.port
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -28,22 +24,24 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import java.io.File
-import java.io.IOException
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
+
 
 //单例模式，OKHttp3
 object HttpUtil {
     val cookieMap = HashMap<String, List<Cookie>>()
     val gson = Gson()
 
+
     // 基本的网络请求
     private var client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS) // 设置连接超时为10秒
         .readTimeout(30, TimeUnit.SECONDS) // 设置读取超时为30秒
         .writeTimeout(15, TimeUnit.SECONDS) // 设置写入超时为15秒
+//        .addInterceptor(
+//            TokenInterceptor()
+//        )
         .cookieJar(
             object : CookieJar {
                 override fun loadForRequest(url: HttpUrl): List<Cookie> {
@@ -55,6 +53,58 @@ object HttpUtil {
                 }
 
             }).build()
+
+//    class TokenInterceptor : Interceptor {
+//        @Throws(IOException::class)
+//        override fun intercept(chain: Chain): Response {
+//            val request = chain.request()
+//            val response = chain.proceed(request)
+//            Log.d(TAG, "response.code=" + response.code)
+//
+//            //根据和服务端的约定判断token过期
+//            if (isTokenExpired(response)) {
+//                Log.d(TAG, "自动刷新Token,然后重新请求数据")
+//                //同步请求方式，获取最新的Token
+//                val newToken = getNewToken()
+//                //使用新的Token，创建新的请求
+//                val newRequest = chain.request()
+//                    .newBuilder()
+//                    .header("Authorization", "Basic $newToken")
+//                    .build()
+//                //重新请求
+//                return chain.proceed(newRequest)
+//            }
+//            return response
+//        }
+//
+//        /**
+//         * 根据Response，判断Token是否失效
+//         *
+//         * @param response
+//         * @return
+//         */
+//        private fun isTokenExpired(response: Response): Boolean {
+//            return if (response.code == 301) {
+//                true
+//            } else false
+//        }
+//
+//        /**
+//         * 同步请求方式，获取最新的Token
+//         *
+//         * @return
+//         */
+//        @Throws(IOException::class)
+//        private fun getNewToken(): String {
+//            // 通过获取token的接口，同步请求接口
+//            return ""
+//        }
+//
+//        companion object {
+//            private const val TAG = "TokenInterceptor"
+//        }
+//    }
+
 
     fun get(url: String, callback: Callback) {
         val request = Request.Builder().url(url).build()
@@ -68,13 +118,11 @@ object HttpUtil {
     }
 
 
-
-
     // 登录
     fun login(email: String, password: String, callback: Callback) {
         // 创建请求
         val request = Request.Builder()
-            .url("$host$LOGIN?email=$email&password=$password")
+            .url("$host:$port$LOGIN?email=$email&password=$password")
             .post(FormBody.Builder().build()).build().let {
                 Log.d("LoginFragment", "login: $it")
                 it

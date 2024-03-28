@@ -23,6 +23,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
                 app:navigationIcon="@drawable/back"
+                app:titleTextAppearance="@style/normalText"
                 app:title="我的资料" />
 
         </com.google.android.material.appbar.AppBarLayout>

@@ -26,6 +26,7 @@
                 app:navigationIcon="@drawable/back"
                 app:navigationIconTint="@color/secondary_color"
                 app:title="注册 Makka Pakka"
+                app:titleTextAppearance="@style/normalText"
                 app:titleTextColor="@color/secondary_color" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -134,8 +135,6 @@
                 android:textColorHint="@color/secondary_color"
                 app:boxStrokeColor="@color/secondary_color"
                 app:counterEnabled="true"
-                app:counterMaxLength="30"
-                android:maxEms="30"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/primary_color"
                 app:errorEnabled="true"
@@ -153,7 +152,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout2"
+                android:id="@+id/pwd_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -181,7 +180,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout4"
+                android:id="@+id/cd_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -197,7 +196,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_ind_code"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+                app:layout_constraintTop_toBottomOf="@+id/pwd_field">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_code"
@@ -218,9 +217,9 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:minWidth="160dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout4"
+                app:layout_constraintBottom_toBottomOf="@+id/cd_field"
                 app:layout_constraintEnd_toEndOf="@+id/email_field"
-                app:layout_constraintTop_toTopOf="@+id/textInputLayout4" />
+                app:layout_constraintTop_toTopOf="@+id/cd_field" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -276,7 +275,7 @@
         android:paddingVertical="8dp"
         android:text="注册"
         android:textColor="@color/bright_color"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView"></Button>
