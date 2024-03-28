@@ -46,4 +46,8 @@ object ViewUtil {
 
     }
 
+    fun getScreenWidth(context: Context): Int {
+        return context.resources.displayMetrics.widthPixels
+    }
+
 }

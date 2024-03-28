@@ -9,7 +9,7 @@
         <item name="colorTertiary">@color/tertiary_color</item>
         <item name="colorAccent">@color/secondary_color</item>
         <item name="colorSurface">@color/surface_color</item>
-        <item name="colorSurfaceContainer">@color/surface_color</item>
+        <item name="colorSurfaceContainer">@color/container_surface_color</item>
 
         <item name="colorOnSurface">@color/on_surface_color</item>
 <!--        background_color = surface_Bright-->
@@ -59,7 +59,7 @@
         <item name="android:textStyle" tools:targetApi="s">bold</item>
     </style>
     <style name="normalText" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize" tools:targetApi="s">14sp</item>
+        <item name="android:textSize" tools:targetApi="s">16sp</item>
     </style>
 
     <style name="myDialog" parent="android:style/Theme.Dialog">

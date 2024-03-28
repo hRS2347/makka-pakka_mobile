@@ -29,6 +29,7 @@
         android:layout_marginBottom="32dp"
         android:text="暂时跳过"
         android:textSize="18sp"
+        android:backgroundTint="@color/on_surface_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="parent" />
@@ -93,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="换一批"
-        android:textColor="@color/light_grey"
+        android:textColor="@color/stroke_grey"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="@+id/container"

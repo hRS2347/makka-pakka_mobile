@@ -1,5 +1,6 @@
 package com.example.makka_pakka
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,11 +15,15 @@ import com.example.makka_pakka.databinding.ActivityMainBinding
 import com.example.makka_pakka.utils.PermissionUtil
 import com.example.makka_pakka.utils.ViewUtil
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    var isHobbySelected = false
+    var isHobbySelectedAsk = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,13 +100,34 @@ class MainActivity : AppCompatActivity() {
                     if (navView.visibility == View.VISIBLE) {
                         //动画效果，下滑
                         navView.translationY = 0f
-                        navView.animate().translationY(navView.height.toFloat()).setDuration(500).start()
+                        navView.animate().translationY(navView.height.toFloat()).setDuration(500)
+                            .start()
                     }
                     navView.visibility = View.GONE
                 }
             }
         }
+
+//        ifJumpToMainFragment()
+
+        MyApplication.instance.currentUser.observe(this) {
+            if (it!=null && it.isHobbySelected==0 && !isHobbySelectedAsk) {
+                isHobbySelectedAsk =true
+                navController.popBackStack(R.id.mainFragment, false)
+                navController.navigate(R.id.mainFragment)
+            }
+        }
     }
+
+//    fun ifJumpToMainFragment() {
+//        GlobalScope.launch {
+//            withContext(Dispatchers.Main) {
+//                if (MyApplication.instance.initUserInfo()) {
+//
+//                }
+//            }
+//        }
+//    }
 
     /***
      * 测试
