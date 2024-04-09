@@ -3,6 +3,8 @@
     <style name="Theme.MakkaPakka" parent="Theme.Material3.Light.NoActionBar">
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/surface_color</item>
+<!--        <item name="android:windowFullscreen">true</item>-->
+
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorSecondary">@color/secondary_color</item>
@@ -61,7 +63,13 @@
     <style name="normalText" parent="Widget.AppCompat.TextView">
         <item name="android:textSize" tools:targetApi="s">16sp</item>
     </style>
-
+    <style name="littleText" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize" tools:targetApi="s">12sp</item>
+    </style>
+    <style name="littleBoldText" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize" tools:targetApi="s">12sp</item>
+        <item name="android:textStyle" tools:targetApi="s">bold</item>
+    </style>
     <style name="myDialog" parent="android:style/Theme.Dialog">
         <!--背景颜色及和透明程度-->
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -75,8 +83,5 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-
-
-
 
 </resources>

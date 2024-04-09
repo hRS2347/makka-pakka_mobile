@@ -5,29 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primary_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="?attr/actionBarSize"
-                app:navigationIcon="@drawable/back"
-                app:titleTextAppearance="@style/normalText"
-                app:title="我的资料" />
+        <TextView
+            android:id="@+id/topAppBar"
+            style="@style/normalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="个人信息"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+            app:layout_constraintStart_toEndOf="@+id/iv_back"
+            app:layout_constraintTop_toTopOf="@+id/iv_back" />
 
-        </com.google.android.material.appbar.AppBarLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
@@ -87,7 +100,7 @@
                 android:id="@+id/constraintLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="32dp"
                 android:background="@color/down_surface_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,13 +108,13 @@
 
                 <TextView
                     android:id="@+id/textView7"
+                    style="@style/normalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:text="昵称"
-                    style="@style/normalText"
 
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -109,21 +122,20 @@
 
                 <TextView
                     android:id="@+id/tv_name"
+                    style="@style/normalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:text="Makka"
                     android:textColor="@color/deep_grey"
-                    style="@style/normalText"
-
                     app:layout_constraintBottom_toBottomOf="@+id/textView7"
                     app:layout_constraintEnd_toStartOf="@+id/iv_name"
                     app:layout_constraintTop_toTopOf="@+id/textView7" />
 
                 <ImageView
                     android:id="@+id/iv_name"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="16dp"
                     android:padding="10dp"
                     android:src="@drawable/right_arrow"
@@ -160,12 +172,12 @@
 
                 <TextView
                     android:id="@+id/tv_sex"
+                    style="@style/normalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:text="男"
                     android:textColor="@color/deep_grey"
-                    style="@style/normalText"
 
                     app:layout_constraintBottom_toBottomOf="@+id/textView9"
                     app:layout_constraintEnd_toStartOf="@+id/iv_sex"
@@ -173,8 +185,8 @@
 
                 <ImageView
                     android:id="@+id/iv_sex"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="16dp"
                     android:padding="10dp"
                     android:src="@drawable/right_arrow"
@@ -250,12 +262,12 @@
 
                 <TextView
                     android:id="@+id/tv_birth"
+                    style="@style/normalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:text="2021-01-01"
                     android:textColor="@color/deep_grey"
-                    style="@style/normalText"
 
                     app:layout_constraintBottom_toBottomOf="@+id/textView13"
                     app:layout_constraintEnd_toStartOf="@+id/iv_birth"
@@ -263,8 +275,8 @@
 
                 <ImageView
                     android:id="@+id/iv_birth"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="16dp"
                     android:padding="10dp"
                     android:src="@drawable/right_arrow"
@@ -300,12 +312,12 @@
 
                 <TextView
                     android:id="@+id/tv_region"
+                    style="@style/normalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:text="广东省 广州市"
                     android:textColor="@color/deep_grey"
-                    style="@style/normalText"
 
                     app:layout_constraintBottom_toBottomOf="@+id/textView15"
                     app:layout_constraintEnd_toStartOf="@+id/iv_region"
@@ -313,8 +325,8 @@
 
                 <ImageView
                     android:id="@+id/iv_region"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="16dp"
                     android:padding="10dp"
                     android:src="@drawable/right_arrow"
@@ -350,12 +362,12 @@
 
                 <TextView
                     android:id="@+id/tv_description"
+                    style="@style/normalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:text="这是我的简介"
                     android:textColor="@color/deep_grey"
-                    style="@style/normalText"
 
                     app:layout_constraintBottom_toBottomOf="@+id/textView17"
                     app:layout_constraintEnd_toStartOf="@+id/iv_description"
@@ -363,8 +375,8 @@
 
                 <ImageView
                     android:id="@+id/iv_description"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="16dp"
                     android:padding="10dp"
                     android:src="@drawable/right_arrow"
@@ -401,8 +413,8 @@
 
                 <ImageView
                     android:id="@+id/iv_self_setting"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="16dp"
                     android:padding="10dp"
                     android:src="@drawable/right_arrow"

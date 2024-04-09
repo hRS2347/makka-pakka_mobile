@@ -13,8 +13,11 @@ import androidx.navigation.Navigation
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentLoginBinding
+import com.example.makka_pakka.model.MyResponse
 import com.example.makka_pakka.utils.GlideUtil
 import com.example.makka_pakka.utils.HttpUtil
+import com.example.makka_pakka.utils.ViewUtil
+import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -34,6 +37,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         bind = FragmentLoginBinding.inflate(layoutInflater)
+        ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
         handler = Handler(
             Handler.Callback {
                 when (it.what) {
@@ -62,6 +66,7 @@ class LoginFragment : Fragment() {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
+                    val res = Gson().fromJson(response.body?.string(), MyResponse::class.java)
                     if (response.code == 200)
                         handler.sendMessage(handler.obtainMessage(EVENTS.SUCCESS.ordinal))
                     else
@@ -84,7 +89,7 @@ class LoginFragment : Fragment() {
         bind.tvJumpReset.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_resetFragment)
         }
-        bind.topAppBar.setNavigationOnClickListener {
+        bind.ivBack.setOnClickListener {
             Navigation.findNavController(it).navigateUp()
         }
         return bind.root

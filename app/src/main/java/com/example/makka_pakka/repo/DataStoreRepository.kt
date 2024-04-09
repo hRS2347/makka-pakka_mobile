@@ -46,7 +46,28 @@ class DataStoreRepository(
     suspend fun setCurrentUser(user: String) {
         writeString2DataStore(CURRENT_USER, user)
     }
+
+    // 读取token,外层调用时不用协程
+    val tokenFlow = _dataStore.data.catch {
+        if (it is IOException) {
+            Log.e("DataStoreRepository", "Error reading preferences$it")
+            emit(emptyPreferences())
+        } else {
+            throw it
+        }
+    }.map {
+        it[TOKEN] ?: ""
+    }
+
+    // 写入token
+    suspend fun saveToken(token: String) {
+        _dataStore.edit { settings ->
+            settings[TOKEN] = token
+        }
+    }
+
     companion object {
         private const val CURRENT_USER = "user"
+        private val TOKEN = stringPreferencesKey("token")
     }
 }

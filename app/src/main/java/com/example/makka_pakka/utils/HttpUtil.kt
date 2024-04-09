@@ -11,6 +11,9 @@ import com.example.makka_pakka.SEND_HABITS
 import com.example.makka_pakka.USER_INFO
 import com.example.makka_pakka.host
 import com.example.makka_pakka.model.UserInfo
+import com.example.makka_pakka.network.LoggingInterceptor
+import com.example.makka_pakka.network.ResponseInterceptor
+import com.example.makka_pakka.network.TokenInterceptor
 import com.example.makka_pakka.port
 import com.google.gson.Gson
 import okhttp3.Callback
@@ -32,16 +35,22 @@ import java.util.concurrent.TimeUnit
 object HttpUtil {
     val cookieMap = HashMap<String, List<Cookie>>()
     val gson = Gson()
-
+    val reLoginInterceptor = ResponseInterceptor()
 
     // 基本的网络请求
     private var client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS) // 设置连接超时为10秒
         .readTimeout(30, TimeUnit.SECONDS) // 设置读取超时为30秒
         .writeTimeout(15, TimeUnit.SECONDS) // 设置写入超时为15秒
-//        .addInterceptor(
-//            TokenInterceptor()
-//        )
+        .addInterceptor(
+            LoggingInterceptor()
+        )
+        .addInterceptor(
+            TokenInterceptor()
+        )
+        .addInterceptor(
+            reLoginInterceptor
+        )
         .cookieJar(
             object : CookieJar {
                 override fun loadForRequest(url: HttpUrl): List<Cookie> {
@@ -53,58 +62,6 @@ object HttpUtil {
                 }
 
             }).build()
-
-//    class TokenInterceptor : Interceptor {
-//        @Throws(IOException::class)
-//        override fun intercept(chain: Chain): Response {
-//            val request = chain.request()
-//            val response = chain.proceed(request)
-//            Log.d(TAG, "response.code=" + response.code)
-//
-//            //根据和服务端的约定判断token过期
-//            if (isTokenExpired(response)) {
-//                Log.d(TAG, "自动刷新Token,然后重新请求数据")
-//                //同步请求方式，获取最新的Token
-//                val newToken = getNewToken()
-//                //使用新的Token，创建新的请求
-//                val newRequest = chain.request()
-//                    .newBuilder()
-//                    .header("Authorization", "Basic $newToken")
-//                    .build()
-//                //重新请求
-//                return chain.proceed(newRequest)
-//            }
-//            return response
-//        }
-//
-//        /**
-//         * 根据Response，判断Token是否失效
-//         *
-//         * @param response
-//         * @return
-//         */
-//        private fun isTokenExpired(response: Response): Boolean {
-//            return if (response.code == 301) {
-//                true
-//            } else false
-//        }
-//
-//        /**
-//         * 同步请求方式，获取最新的Token
-//         *
-//         * @return
-//         */
-//        @Throws(IOException::class)
-//        private fun getNewToken(): String {
-//            // 通过获取token的接口，同步请求接口
-//            return ""
-//        }
-//
-//        companion object {
-//            private const val TAG = "TokenInterceptor"
-//        }
-//    }
-
 
     fun get(url: String, callback: Callback) {
         val request = Request.Builder().url(url).build()
@@ -191,20 +148,24 @@ object HttpUtil {
 
     //上传头像
     fun uploadAvatar(path: String, callback: Callback) {
-        val file = File(path)
-        val body = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart(
-                "file",
-                file.name,
-                file.asRequestBody("image/*".toMediaTypeOrNull())
-            )
-            .build()
-        val request = Request.Builder()
-            .url("$host:$port$AVATAR")
-            .post(body)
-            .build()
-        client.newCall(request).enqueue(callback)
+        try {
+            val file = File(path)
+            val body = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart(
+                    "file",
+                    file.name,
+                    file.asRequestBody("image/*".toMediaTypeOrNull())
+                )
+                .build()
+            val request = Request.Builder()
+                .url("$host:$port$AVATAR")
+                .post(body)
+                .build()
+            client.newCall(request).enqueue(callback)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun refreshUserInfo(callback: Callback) {

@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentCoverBinding
+import com.example.makka_pakka.utils.ViewUtil
 
 class CoverFragment : Fragment() {
     private lateinit var bind: FragmentCoverBinding
@@ -19,9 +20,8 @@ class CoverFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        requireActivity().window.statusBarColor =
-            ResourcesCompat.getColor(resources, R.color.primary_color, null)
         bind = FragmentCoverBinding.inflate(layoutInflater)
+        ViewUtil.paddingByStatusBar(bind.root)
         bind.btnLogin.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_coverFragment_to_loginFragment)
         }
@@ -41,10 +41,6 @@ class CoverFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        requireActivity().window.statusBarColor =
-            ResourcesCompat.getColor(resources, R.color.background_color, null)
-    }
+
 }
 

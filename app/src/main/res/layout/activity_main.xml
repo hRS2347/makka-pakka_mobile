@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ndroid="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <fragment
         android:id="@+id/nav_host_fragment_activity_main"
@@ -13,21 +14,81 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/login_navigation"
-        />
+        app:navGraph="@navigation/login_navigation" />
 
     <!-- 底部导航栏 -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <!--    <com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation-->
+    <!--        android:id="@+id/bottomNavigation"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:cbn_background="@color/white"-->
+    <!--        app:cbn_fabColor="@color/purple_200"-->
+    <!--        app:cbn_iconColor="@color/white"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        app:cbn_height="76dp"-->
+    <!--        app:cbn_icon_size="24dp"-->
+    <!--        app:cbn_curve_radius="26dp"-->
+    <!--        app:cbn_selected_icon_size="48dp"-->
+    <!--        app:cbn_selectedIconColor="@color/primary_color"-->
+    <!--        app:cbn_titleColor="@color/primary_color"-->
+    <!--        ndroid:visibility="visible"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:itemActiveIndicatorStyle="@style/MyNavIndicator"
-        app:itemIconSize="16dp"
-        app:itemTextAppearanceActive="?attr/textAppearanceTitleSmall"
-        app:itemTextColor="@color/deep_grey"
-        app:itemTextAppearanceInactive="?attr/textAppearanceTitleSmall"
-        app:menu="@menu/bottom_nav_menu"
-        android:visibility="gone"/>
+        android:background="@color/white">
 
+        <ImageView
+            android:id="@+id/add_btn"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_add_button"
+            android:padding="10dp"
+            android:src="@drawable/add_w"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/mine"
+            android:text="我的"
+            android:padding="12dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/stroke_grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="首页"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:padding="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

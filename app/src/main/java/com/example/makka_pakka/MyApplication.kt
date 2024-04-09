@@ -3,19 +3,24 @@ package com.example.makka_pakka
 import android.app.Application
 import android.content.ContentUris
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.makka_pakka.model.MyResponse
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.repo.DataStoreRepository
 import com.example.makka_pakka.utils.FileUtil
 import com.example.makka_pakka.utils.HttpUtil
+import com.example.makka_pakka.utils.gson.GsonUtil
 import com.google.gson.Gson
 import com.tencent.smtt.sdk.QbSdk
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -39,6 +44,18 @@ class MyApplication : Application() {
             instance.dataStore
         )
     }
+
+    private val tokenData by lazy { dataStoreRepository.tokenFlow.asLiveData() }
+
+    fun getToken() = tokenData.value ?: ""
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun saveToken(token: String) {
+        GlobalScope.launch {
+            dataStoreRepository.saveToken(token)
+        }
+    }
+
 
     override fun onCreate() {
         super.onCreate()
@@ -98,8 +115,7 @@ class MyApplication : Application() {
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
                 if (response.code == 200) {
                     val body = response.body?.string()
-                    val myResponse = gson.fromJson(body, MyResponse::class.java)
-                    //myResponse<T>中的data是UserInfo,所以这里要转换一下
+                    val myResponse = GsonUtil.fromJson(body, UserInfo::class.java)
                     currentUser.postValue(myResponse.data)
 
 

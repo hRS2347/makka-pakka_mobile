@@ -20,7 +20,9 @@
     <color name="down_surface_color">#FFF9EF</color>
 
     <color name="light_grey">#CCCCCC</color>
-    <color name="bg_grey">#FDFFFD</color>
+    <color name="bg_grey">#ECECEC</color>
+    <color name="ts_bg_grey">#E4C5C5C5</color>
+
     <color name="stroke_grey">#434343</color>
     <color name="theme_orange">#F4BC7E</color>
     <color name="theme_orange_bright">#FF9C2D</color>
@@ -37,8 +39,9 @@
     <color name="tag_color_6">#9A43F3</color>
     <color name="tag_color_7">#F38443</color>
     <color name="tag_color_8">#F34378</color>
+    <color name="transparent">#00947D7B</color>
 
-<!--    <color name="md_theme_primary">#A23F00</color>-->
+    <!--    <color name="md_theme_primary">#A23F00</color>-->
 <!--    <color name="md_theme_onPrimary">#FFFFFF</color>-->
 <!--    <color name="md_theme_primaryContainer">#FF7D3C</color>-->
 <!--    <color name="md_theme_onPrimaryContainer">#2E0C00</color>-->

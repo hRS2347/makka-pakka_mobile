@@ -14,6 +14,7 @@ import com.example.makka_pakka.MainActivity
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.databinding.FragmentInitiationBinding
 import com.example.makka_pakka.utils.HttpUtil
+import com.example.makka_pakka.utils.ViewUtil
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -31,6 +32,7 @@ class InitiationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         bind = FragmentInitiationBinding.inflate(layoutInflater)
+        ViewUtil.paddingByStatusBar(bind.root)
         (activity as MainActivity).isHobbySelectedAsk = true
         handler = Handler(
             Handler.Callback {

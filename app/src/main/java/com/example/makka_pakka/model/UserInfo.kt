@@ -23,5 +23,5 @@ data class UserInfo(
     // 0: 未选择 1: 选择
     var isHobbySelected: Int?,
     // 简介
-    var decription: String?
+    var description: String?
 )

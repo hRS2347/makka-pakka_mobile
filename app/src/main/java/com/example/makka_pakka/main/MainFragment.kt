@@ -12,6 +12,7 @@ import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentMainBinding
 
+
 class MainFragment : Fragment() {
     private lateinit var bind: FragmentMainBinding
     private lateinit var viewModel: MainViewModel
@@ -29,7 +30,9 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         if (!(activity as MainActivity).isHobbySelectedAsk &&
-            MyApplication.instance.currentUser.value?.isHobbySelected != 1) {//未选择兴趣
+            MyApplication.instance.currentUser.value!=null &&
+            MyApplication.instance.currentUser.value!!.isHobbySelected != 1
+        ) {//未选择兴趣
             findNavController().navigate(R.id.action_mainFragment_to_initiationFragment)
         }
     }
