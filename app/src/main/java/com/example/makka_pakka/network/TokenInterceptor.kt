@@ -16,11 +16,19 @@ class TokenInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
-        val token: String = MyApplication.instance.getToken()
-        Log.d(TAG, "token: $token")
-        val newRequest: Request = request.newBuilder()
-            .addHeader("Token", token)
-            .build()
-        return chain.proceed(newRequest)
+        val token: String = MyApplication.instance.currentToken ?: ""
+        if (token.isNotBlank()){
+            Log.d(TAG, "token: $token")
+            val newRequest: Request = request.newBuilder()
+                .addHeader("token", token)
+                .build()
+            Log.d(TAG, "newRequest: $newRequest")
+            return chain.proceed(newRequest)
+        }else{
+            val newRequest: Request = request.newBuilder()
+                .build()
+            Log.d(TAG, "newRequest: $newRequest")
+            return chain.proceed(newRequest)
+        }
     }
 }

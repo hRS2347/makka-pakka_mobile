@@ -68,11 +68,5 @@
             </intent-filter>
         </receiver>
         
-        <receiver android:name=".boardcast.ReLoginReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.example.makka_pakka.ACTION_RELOGIN" />
-            </intent-filter>
-        </receiver>
     </application>
 </manifest>

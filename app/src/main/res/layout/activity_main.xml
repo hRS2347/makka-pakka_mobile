@@ -16,6 +16,10 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/login_navigation" />
 
+    <com.example.makka_pakka.view.X5WebView
+        android:id="@+id/webView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
     <!-- 底部导航栏 -->
     <!--    <com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation-->
     <!--        android:id="@+id/bottomNavigation"-->

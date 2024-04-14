@@ -1,5 +1,6 @@
 package com.example.makka_pakka.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.Navigation
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
@@ -17,6 +19,7 @@ import com.example.makka_pakka.model.MyResponse
 import com.example.makka_pakka.utils.GlideUtil
 import com.example.makka_pakka.utils.HttpUtil
 import com.example.makka_pakka.utils.ViewUtil
+import com.example.makka_pakka.utils.gson.GsonUtil
 import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Callback
@@ -66,16 +69,29 @@ class LoginFragment : Fragment() {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val res = Gson().fromJson(response.body?.string(), MyResponse::class.java)
-                    if (response.code == 200)
-                        handler.sendMessage(handler.obtainMessage(EVENTS.SUCCESS.ordinal))
-                    else
+                    val bodyString = response.body?.string()
+                    try {
+                        Log.d("LoginFragment", "onResponse: $bodyString")
+                        val res = Gson().fromJson(bodyString, MyResponse::class.java)
+                        if (res.code == 200)
+                            handler.sendMessage(handler.obtainMessage(EVENTS.SUCCESS.ordinal))
+                        else
+                            handler.sendMessage(
+                                handler.obtainMessage(
+                                    EVENTS.FAILURE.ordinal,
+                                    bodyString
+                                )
+                            )
+                    } catch (e: Exception) {
+                        Log.e("LoginFragment", "onResponse: ${e.message}")
                         handler.sendMessage(
                             handler.obtainMessage(
                                 EVENTS.FAILURE.ordinal,
-                                response.body?.string()
+                                e.message
                             )
                         )
+                    }
+
                 }
             }
 
@@ -97,7 +113,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 }
 

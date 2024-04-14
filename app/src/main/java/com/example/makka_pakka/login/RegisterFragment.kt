@@ -14,9 +14,11 @@ import androidx.navigation.Navigation
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentRegisterBinding
+import com.example.makka_pakka.model.MyResponse
 import com.example.makka_pakka.utils.GlideUtil
 import com.example.makka_pakka.utils.HttpUtil
 import com.example.makka_pakka.utils.ViewUtil
+import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -81,7 +83,7 @@ class RegisterFragment : Fragment() {
                         bind.progressBar.visibility = View.INVISIBLE
                         MyApplication.instance.getUserInfo()
                         Navigation.findNavController(bind.btnSubmit)
-                            .navigate(R.id.action_registerFragment_to_mainFragment)
+                            .navigate(R.id.action_registerFragment_to_loginFragment)
                     }
                 }
 
@@ -158,8 +160,8 @@ class RegisterFragment : Fragment() {
 
                     override fun onResponse(call: Call, response: Response) {
                         val body = response.body?.string()
-//                        Log.d("RegisterFragment", "onResponse: ${response.body?.string()}")
-                        if (response.code == 200) {
+                        val myResponse = Gson().fromJson(body, MyResponse::class.java)
+                        if (myResponse.code == 200) {
                             handler.sendMessage(handler.obtainMessage(EVENTS.SUCCESS.ordinal))
                         } else
                             handler.sendMessage(

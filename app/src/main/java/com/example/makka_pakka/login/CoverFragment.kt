@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentCoverBinding
+import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.utils.ViewUtil
 
 class CoverFragment : Fragment() {
@@ -34,6 +35,21 @@ class CoverFragment : Fragment() {
         bind.btnRegister.alpha = 0f
         bind.btnLogin.animate().alpha(1f).setDuration(1000).start()
         bind.btnRegister.animate().alpha(1f).setDuration(1000).start()
+
+        bind.ivLogo.setOnClickListener {
+            MyApplication.instance.currentUser.value = UserInfo(
+                0,
+                "test@test.com",
+                "test_user",
+                "test_password",
+                0,
+                "广东省 广州市 天河区",
+                "1999-01-01",
+                "1999-01-01",
+                0,
+                "this is a test user"
+            )
+        }
         return bind.root
     }
 

@@ -1,18 +1,12 @@
 package com.example.makka_pakka
 
 import android.app.Application
-import android.content.ContentUris
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
-import android.provider.DocumentsContract
-import android.provider.MediaStore
 import android.util.Log
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.example.makka_pakka.model.MyResponse
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.repo.DataStoreRepository
 import com.example.makka_pakka.utils.FileUtil
@@ -22,7 +16,6 @@ import com.google.gson.Gson
 import com.tencent.smtt.sdk.QbSdk
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.Callback
 
@@ -45,12 +38,10 @@ class MyApplication : Application() {
         )
     }
 
-    private val tokenData by lazy { dataStoreRepository.tokenFlow.asLiveData() }
-
-    fun getToken() = tokenData.value ?: ""
-
+    var currentToken = ""
     @OptIn(DelicateCoroutinesApi::class)
     fun saveToken(token: String) {
+        currentToken = token
         GlobalScope.launch {
             dataStoreRepository.saveToken(token)
         }
@@ -72,18 +63,8 @@ class MyApplication : Application() {
              */
             override fun onViewInitFinished(isX5: Boolean) = Unit
         })
-//        getUserInfo()
     }
 
-//    suspend fun initUserInfo(): Boolean {
-//        return if (query.isNullOrBlank() or query.isNullOrEmpty()) {
-//            currentUser.value = null
-//            false
-//        } else {
-//            currentUser.value = gson.fromJson(query, UserInfo::class.java)
-//            true
-//        }
-//    }
 
     fun userInfoChange(userInfo: UserInfo?) {
         if (userInfo == null) return
@@ -107,26 +88,57 @@ class MyApplication : Application() {
     }
 
     fun getUserInfo() {
-        HttpUtil.refreshUserInfo(object : Callback {
-            override fun onFailure(call: okhttp3.Call, e: java.io.IOException) {
-                e.printStackTrace()
-            }
-
-            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                if (response.code == 200) {
-                    val body = response.body?.string()
-                    val myResponse = GsonUtil.fromJson(body, UserInfo::class.java)
-                    currentUser.postValue(myResponse.data)
-
-
-                    GlobalScope.launch {
-                        dataStoreRepository.setCurrentUser(gson.toJson(myResponse.data))
-                    }
-                } else {
-                    Log.e("MyApplication", "onResponse: ${response.body?.string()}")
+        GlobalScope.launch {
+            HttpUtil.refreshUserInfo(object : Callback {
+                override fun onFailure(call: okhttp3.Call, e: java.io.IOException) {
+                    e.printStackTrace()
                 }
-            }
-        })
+
+                override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                    if (response.code == 200) {
+                        val body = response.body?.string()
+                        Log.i("MyApplication", "onResponse: $body")
+                        val myResponse = GsonUtil.fromJson(body, UserInfo::class.java)
+                        currentUser.postValue(myResponse.data)
+
+
+                        GlobalScope.launch {
+                            dataStoreRepository.setCurrentUser(gson.toJson(myResponse.data))
+                        }
+                    } else {
+                        Log.e("MyApplication", "onResponse: ${response.body?.string()}")
+                    }
+                }
+            })
+        }
+    }
+
+    fun reGetUserInfo(onGet: (Unit) -> Unit) {
+        GlobalScope.launch {
+            HttpUtil.refreshUserInfo(object : Callback {
+                override fun onFailure(call: okhttp3.Call, e: java.io.IOException) {
+                    e.printStackTrace()
+                }
+
+                override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                    if (response.code == 200) {
+                        val body = response.body?.string()
+                        Log.i("MyApplication", "onResponse: $body")
+                        val myResponse = GsonUtil.fromJson(body, UserInfo::class.java)
+                        currentUser.postValue(myResponse.data)
+                        onGet(Unit)
+                    } else {
+                        Log.e("MyApplication", "onResponse: ${response.body?.string()}")
+                    }
+                }
+            })
+        }
+    }
+
+    fun testAsyncJump(onGet: (Unit) -> Unit){
+        GlobalScope.launch {
+            onGet(Unit)
+        }
     }
 
     fun avatarChange(avatar: Uri) {

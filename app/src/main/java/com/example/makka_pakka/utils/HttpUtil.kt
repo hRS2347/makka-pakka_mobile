@@ -29,49 +29,55 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.concurrent.TimeUnit
+import kotlin.reflect.KFunction0
 
 
 //单例模式，OKHttp3
 object HttpUtil {
     val cookieMap = HashMap<String, List<Cookie>>()
     val gson = Gson()
-    val reLoginInterceptor = ResponseInterceptor()
+
 
     // 基本的网络请求
-    private var client: OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(10, TimeUnit.SECONDS) // 设置连接超时为10秒
-        .readTimeout(30, TimeUnit.SECONDS) // 设置读取超时为30秒
-        .writeTimeout(15, TimeUnit.SECONDS) // 设置写入超时为15秒
-        .addInterceptor(
-            LoggingInterceptor()
-        )
-        .addInterceptor(
-            TokenInterceptor()
-        )
-        .addInterceptor(
-            reLoginInterceptor
-        )
-        .cookieJar(
-            object : CookieJar {
-                override fun loadForRequest(url: HttpUrl): List<Cookie> {
-                    return cookieMap[url.host] ?: ArrayList<Cookie>()
-                }
+    private var client: OkHttpClient? = null
 
-                override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
-                    cookieMap[url.host] = cookies
-                }
+    fun setUp(callLogin: (Unit)->Unit) {
+        Log.d("HttpUtil", "setUp")
+        this.client = OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS) // 设置连接超时为10秒
+            .readTimeout(30, TimeUnit.SECONDS) // 设置读取超时为30秒
+            .writeTimeout(15, TimeUnit.SECONDS) // 设置写入超时为15秒
+            .addInterceptor(
+                LoggingInterceptor()
+            )
+            .addInterceptor(
+                TokenInterceptor()
+            )
+            .addInterceptor(
+                ResponseInterceptor(callLogin)
+            )
+            .cookieJar(
+                object : CookieJar {
+                    override fun loadForRequest(url: HttpUrl): List<Cookie> {
+                        return cookieMap[url.host] ?: ArrayList<Cookie>()
+                    }
 
-            }).build()
+                    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+                        cookieMap[url.host] = cookies
+                    }
+
+                }).build()
+    }
 
     fun get(url: String, callback: Callback) {
         val request = Request.Builder().url(url).build()
-        client.newCall(request).enqueue(callback)
+        client?.newCall(request)?.enqueue(callback)
     }
 
     fun post(url: String, json: String, callback: Callback) {
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val request = Request.Builder().url(url).post(body).build()
-        client.newCall(request).enqueue(callback)
+        client?.newCall(request)?.enqueue(callback)
     }
 
 
@@ -85,7 +91,7 @@ object HttpUtil {
                 it
             }
         // 发送请求
-        client.newCall(request).enqueue(callback)
+        client?.newCall(request)?.enqueue(callback)
     }
 
     // 获取验证码
@@ -96,7 +102,7 @@ object HttpUtil {
                 Log.d("LoginFragment", "requestIndCode: $it")
                 it
             }
-        client.newCall(request).enqueue(callback)
+        client?.newCall(request)?.enqueue(callback)
     }
 
     // 注册
@@ -107,7 +113,7 @@ object HttpUtil {
                 Log.d("LoginFragment", "register: $it")
                 it
             }
-        client.newCall(request).enqueue(callback)
+        client?.newCall(request)?.enqueue(callback)
     }
 
     // 重置密码
@@ -118,7 +124,7 @@ object HttpUtil {
                 Log.d("LoginFragment", "reset: $it")
                 it
             }
-        client.newCall(request).enqueue(callback)
+        client?.newCall(request)?.enqueue(callback)
     }
 
     /***
@@ -133,7 +139,7 @@ object HttpUtil {
                 Log.d("LoginFragment", "sendHabits: $it")
                 it
             }
-        client.newCall(request).enqueue(callback)
+        client?.newCall(request)?.enqueue(callback)
     }
 
     // 更新用户信息
@@ -142,7 +148,7 @@ object HttpUtil {
         val json = gson.toJson(value)
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val request = Request.Builder().url("$host:$port$USER_INFO").put(body).build()
-        client.newCall(request).enqueue(callback)
+        client?.newCall(request)?.enqueue(callback)
     }
 
 
@@ -162,7 +168,7 @@ object HttpUtil {
                 .url("$host:$port$AVATAR")
                 .post(body)
                 .build()
-            client.newCall(request).enqueue(callback)
+            client?.newCall(request)?.enqueue(callback)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -170,5 +176,9 @@ object HttpUtil {
 
     fun refreshUserInfo(callback: Callback) {
         get("$host:$port$GET_USER_INFO", callback)
+    }
+
+    fun tokenTest(callback: Callback) {
+        get("https://eoh1bkxhotv1atz.m.pipedream.net", callback)
     }
 }

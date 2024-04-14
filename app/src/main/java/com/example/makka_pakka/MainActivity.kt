@@ -1,39 +1,39 @@
 package com.example.makka_pakka
 
-import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.net.ConnectivityManager
-import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.telecom.Call
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.example.makka_pakka.boardcast.NetworkConnectChangedReceiver
 import com.example.makka_pakka.boardcast.ReLoginReceiver
 import com.example.makka_pakka.databinding.ActivityMainBinding
-import com.example.makka_pakka.model.MyResponse
-import com.example.makka_pakka.model.UserInfo
-import com.example.makka_pakka.network.ResponseInterceptor
 import com.example.makka_pakka.utils.HttpUtil
 import com.example.makka_pakka.utils.PermissionUtil
 import com.example.makka_pakka.utils.ViewUtil
-import com.example.makka_pakka.utils.gson.GsonUtil
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
+import com.example.makka_pakka.view.X5WebView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,18 +41,30 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     var isHobbySelectedAsk = false
     private lateinit var navController: NavController
+    private lateinit var handler: Handler
 
-    //    val currentPage = MutableLiveData<Int>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        test()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val filter = IntentFilter()
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(NetworkConnectChangedReceiver(), filter)
+
+        ContextCompat.registerReceiver(
+            this,
+            ReLoginReceiver(),
+            IntentFilter(RELOGIN_ACTION),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+
         PermissionUtil.setUp(this)
         if (!PermissionUtil.checkPermission()) {
             Toast.makeText(this, "请允许APP访问所有文件，否则无法使用。", Toast.LENGTH_SHORT).show();
             this.finish()
         }
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        HttpUtil.setUp { sendBroadcast(Intent(RELOGIN_ACTION)) }
+
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         //点击收起键盘
         window.decorView.setOnTouchListener { _, _ ->
@@ -61,16 +73,6 @@ class MainActivity : AppCompatActivity() {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//FLAG_FORCE_NOT_FULLSCREEN   FLAG_FULLSCREEN FLAG_TRANSLUCENT_STATUS
         transparentStatusBar(window)
-
-        val filter = IntentFilter()
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-        registerReceiver(NetworkConnectChangedReceiver(), filter)
-
-
-        HttpUtil.reLoginInterceptor.context = this
-        registerReceiver(ReLoginReceiver(), IntentFilter("com.example.makka_pakka.ACTION_RELOGIN"))
-        Log.d("my_test", "registerReceiver")
-
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -139,6 +141,8 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+
+
         MyApplication.instance.currentUser.observe(this) {
             if (it != null && it.isHobbySelected == 0 && !isHobbySelectedAsk) {
                 isHobbySelectedAsk = true
@@ -154,6 +158,35 @@ class MainActivity : AppCompatActivity() {
 
         binding.mine.setOnClickListener {
             navController.navigate(R.id.mineFragment)
+        }
+
+        handler = Handler(Handler.Callback {
+            when (it.what) {
+                1 -> {
+                    //重新登录
+                    Toast.makeText(this@MainActivity, "Welcome back", Toast.LENGTH_SHORT)
+                        .show()
+                    navController.navigate(R.id.mainFragment)
+                }
+            }
+            true
+        })
+
+        lifecycleScope.launch {
+            MyApplication.instance.dataStoreRepository.readStringFromDataStore("token").take(1)
+                .collect { value ->
+                    Log.d("token", "MainActivity:token in sp: $value")
+                    // 处理第一个发射的值
+                    MyApplication.instance.currentToken = value ?: ""
+                    if (MyApplication.instance.currentToken.isNotBlank()) {
+                        //获取用户信息
+                        MyApplication.instance.testAsyncJump {
+//                        MyApplication.instance.reGetUserInfo {
+                            //旧的token有效，直接进入主界面
+                            handler.sendEmptyMessage(1)
+                        }
+                    }
+                }
         }
 
     }
@@ -192,6 +225,8 @@ class MainActivity : AppCompatActivity() {
 
         //设置状态栏文字颜色
         setStatusBarTextColor(window, false)
+        test()
+
     }
 
     fun setStatusBarTextColor(window: Window, light: Boolean) {
@@ -214,38 +249,38 @@ class MainActivity : AppCompatActivity() {
      */
     private fun testC() = Unit
     private fun test() {
-        val gson = Gson()
-
-        // 创建 UserInfo 对象
-        val userInfo = UserInfo(
-            id = 1,
-            email = "user@example.com",
-            name = "John",
-            avatarUrl = "https://example.com/avatar.jpg",
-            sex = 0,
-            region = "New York",
-            birthday = "1990-01-01",
-            createTime = "2024-04-05",
-            isHobbySelected = 1,
-            description = "A software engineer"
-        )
-
-        // 创建 MyResponse 对象
-        val response = MyResponse(
-            host = "example.com",
-            code = 200,
-            errorMessage = null,
-            data = userInfo
-        )
-        // 将 MyResponse 对象转换为 JSON 字符串
-        val jsonResponse = gson.toJson(response)
-        // 将 JSON 字符串转换为 MyResponse 对象
-        val type: Type = object : TypeToken<MyResponse<UserInfo?>?>() {}.type
-//        val myResponse: MyResponse<UserInfo> = gson.fromJson(jsonResponse, type)
-        val myResponse: MyResponse<UserInfo> =
-            GsonUtil.fromJson(jsonResponse, UserInfo::class.java)
-        // 输出 MyResponse 对象
-        Log.d("my_test", myResponse.data.avatarUrl.toString())
+//        val gson = Gson()
+//
+//        // 创建 UserInfo 对象
+//        val userInfo = UserInfo(
+//            id = 1,
+//            email = "user@example.com",
+//            name = "John",
+//            avatarUrl = "https://example.com/avatar.jpg",
+//            sex = 0,
+//            region = "New York",
+//            birthday = "1990-01-01",
+//            createTime = "2024-04-05",
+//            isHobbySelected = 1,
+//            description = "A software engineer"
+//        )
+//
+//        // 创建 MyResponse 对象
+//        val response = MyResponse(
+//            host = "example.com",
+//            code = 200,
+//            errorMessage = null,
+//            data = userInfo
+//        )
+//        // 将 MyResponse 对象转换为 JSON 字符串
+//        val jsonResponse = gson.toJson(response)
+//        // 将 JSON 字符串转换为 MyResponse 对象
+//        val type: Type = object : TypeToken<MyResponse<UserInfo?>?>() {}.type
+////        val myResponse: MyResponse<UserInfo> = gson.fromJson(jsonResponse, type)
+//        val myResponse: MyResponse<UserInfo> =
+//            GsonUtil.fromJson(jsonResponse, UserInfo::class.java)
+//        // 输出 MyResponse 对象
+//        Log.d("my_test", myResponse.data.avatarUrl.toString())
     }
 
     override fun onDestroy() {

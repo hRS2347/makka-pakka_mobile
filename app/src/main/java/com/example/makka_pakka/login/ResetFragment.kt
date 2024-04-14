@@ -98,16 +98,7 @@ class ResetFragment : Fragment() {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    Log.d("RegisterFragment", "onResponse: ${response.body?.string()}")
-                    if (response.code == 200)
-                        handler.sendMessage(handler.obtainMessage(EVENTS.SUCCESS.ordinal))
-                    else
-                        handler.sendMessage(
-                            handler.obtainMessage(
-                                EVENTS.FAILURE.ordinal,
-                                response.body?.string()
-                            )
-                        )
+
                 }
             })
         }
