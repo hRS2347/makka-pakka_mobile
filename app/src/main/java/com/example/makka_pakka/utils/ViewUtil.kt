@@ -2,6 +2,8 @@ package com.example.makka_pakka.utils
 
 import android.content.Context
 import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import com.example.makka_pakka.MainActivity
 
@@ -48,6 +50,31 @@ object ViewUtil {
 
     fun getScreenWidth(context: Context): Int {
         return context.resources.displayMetrics.widthPixels
+    }
+
+    fun getStatusBarHeight(context: Context): Int {
+        val resId = context.resources.getIdentifier(
+            "status_bar_height", "dimen", "android"
+        )
+        return context.resources.getDimensionPixelSize(resId)
+    }
+
+    fun fixStatusBarMargin(vararg views: View) {
+        views.forEach { view ->
+            (view.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
+                lp.topMargin = lp.topMargin + getStatusBarHeight(view.context)
+                view.requestLayout()
+            }
+        }
+    }
+
+    fun paddingByStatusBar(view: View) {
+        view.setPadding(
+            view.paddingLeft,
+            view.paddingTop + getStatusBarHeight(view.context),
+            view.paddingRight,
+            view.paddingBottom
+        )
     }
 
 }

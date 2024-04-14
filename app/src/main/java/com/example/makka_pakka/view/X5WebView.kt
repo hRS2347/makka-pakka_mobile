@@ -56,7 +56,12 @@ class X5WebView : WebView {
         webSetting.pluginState = WebSettings.PluginState.ON_DEMAND
         // webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSetting.cacheMode = WebSettings.LOAD_NO_CACHE
-
+        webSetting.javaScriptEnabled = true // 启用 JavaScript
+        webSetting.domStorageEnabled = true // 启用本地存储
+        webSetting.allowFileAccess = true // 允许访问文件
+        webSetting.allowContentAccess = true // 允许访问内容
+        webSetting.setGeolocationEnabled(true) // 启用地理位置（可选）
+        webSetting.mediaPlaybackRequiresUserGesture = false // 允许自动播放媒体（可选）
 // this.getSettingsExtension().setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);//extension
 // settings 的设计
     }

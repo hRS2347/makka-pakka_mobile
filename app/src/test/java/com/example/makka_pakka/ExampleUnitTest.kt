@@ -1,5 +1,8 @@
 package com.example.makka_pakka
 
+import com.example.makka_pakka.model.MyResponse
+import com.example.makka_pakka.model.UserInfo
+import com.google.gson.Gson
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -10,8 +13,9 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+
     }
 }

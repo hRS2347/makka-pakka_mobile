@@ -16,7 +16,14 @@ import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentMineDetailBinding
 import com.example.makka_pakka.utils.GlideUtil
+import com.example.makka_pakka.utils.ViewUtil
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.lljjcoder.Interface.OnCityItemClickListener
+import com.lljjcoder.bean.DistrictBean
+import com.lljjcoder.bean.ProvinceBean
+import com.lljjcoder.style.cityjd.JDCityConfig
+import com.lljjcoder.style.cityjd.JDCityPicker
+import com.lljjcoder.style.citythreelist.CityBean
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -30,7 +37,7 @@ class MineDetailFragment : Fragment() {
     ): View {
         bind = FragmentMineDetailBinding.inflate(layoutInflater)
         MyApplication.instance.getUserInfo()
-
+        ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
         pickMultipleMedia =
             registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
                 if (it.size > 1) {
@@ -53,31 +60,52 @@ class MineDetailFragment : Fragment() {
             bind.tvRegion.text = it.region
             bind.tvBirth.text = it.birthday.toString()
             bind.tvCreateTime.text = it.createTime.toString()
-            bind.tvDescription.text = it.decription
+            bind.tvDescription.text = it.description
 
             if (!it.avatarUrl.isNullOrEmpty()) {
                 GlideUtil.loadAvatar(bind.ivAvatar, it.avatarUrl!!)
             }
         }
 
-        bind.topAppBar.setNavigationOnClickListener {
+        bind.ivBack.setOnClickListener {
             Navigation.findNavController(it).navigateUp()
         }
 
         bind.ivName.setOnClickListener {
-            InfoEditDialog(requireContext(), InfoEditDialog.EditType.NAME).show()
+            InfoEditDialog(requireActivity() , InfoEditDialog.EditType.NAME).show()
         }
 
         bind.ivDescription.setOnClickListener {
-            InfoEditDialog(requireContext(), InfoEditDialog.EditType.DESCRIPTION).show()
+            InfoEditDialog(requireActivity(), InfoEditDialog.EditType.DESCRIPTION).show()
         }
 
         bind.ivRegion.setOnClickListener {
-            InfoEditDialog(requireContext(), InfoEditDialog.EditType.REGION).show()
+//            InfoEditDialog(requireActivity(), InfoEditDialog.EditType.REGION).show()
+            val cityPicker = JDCityPicker()
+            val jdCityConfig = JDCityConfig.Builder().build()
+
+            jdCityConfig.showType = JDCityConfig.ShowType.PRO_CITY_DIS
+            cityPicker.init(requireActivity())
+            cityPicker.setConfig(jdCityConfig)
+            cityPicker.setOnCityItemClickListener(object : OnCityItemClickListener() {
+                override fun onSelected(
+                    province: ProvinceBean?,
+                    city: com.lljjcoder.bean.CityBean?,
+                    district: DistrictBean?
+                ) {
+                    bind.tvRegion.setText(
+                        "${province!!.name} ${city!!.name} ${district!!.name}"
+                .trimIndent()
+                    )
+                }
+
+                override fun onCancel() {}
+            })
+            cityPicker.showCityPicker()
         }
 
         bind.ivSex.setOnClickListener {
-            InfoEditDialog(requireContext(), InfoEditDialog.EditType.SEX).show()
+            InfoEditDialog(requireActivity(), InfoEditDialog.EditType.SEX).show()
         }
 
         bind.ivAvatar.setOnClickListener {

@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentResetBinding
 import com.example.makka_pakka.utils.HttpUtil
+import com.example.makka_pakka.utils.ViewUtil
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -31,6 +32,9 @@ class ResetFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         bind = FragmentResetBinding.inflate(layoutInflater)
+        ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
+//        requireActivity().window.statusBarColor =
+//            ResourcesCompat.getColor(resources, R.color.primary_color, null)
         handler = Handler(
             Handler.Callback {
                 when (it.what) {
@@ -94,16 +98,7 @@ class ResetFragment : Fragment() {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    Log.d("RegisterFragment", "onResponse: ${response.body?.string()}")
-                    if (response.code == 200)
-                        handler.sendMessage(handler.obtainMessage(EVENTS.SUCCESS.ordinal))
-                    else
-                        handler.sendMessage(
-                            handler.obtainMessage(
-                                EVENTS.FAILURE.ordinal,
-                                response.body?.string()
-                            )
-                        )
+
                 }
             })
         }
@@ -156,7 +151,7 @@ class ResetFragment : Fragment() {
             bind.progressBar.visibility = View.VISIBLE
         }
 
-        bind.topAppBar.setNavigationOnClickListener {
+        bind.ivBack.setOnClickListener {
             Navigation.findNavController(it).navigateUp()
         }
         return bind.root
@@ -168,6 +163,8 @@ class ResetFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+//        requireActivity().window.statusBarColor =
+//            ResourcesCompat.getColor(resources, R.color.background_color, null)
         handler.removeCallbacksAndMessages(null)
     }
 }

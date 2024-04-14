@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/webFragment">
+    app:startDestination="@id/coverFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.makka_pakka.login.LoginFragment"
@@ -46,9 +46,6 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_registerFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -78,10 +75,10 @@
         android:label="fragment_initiation"
         tools:layout="@layout/fragment_initiation" />
     <fragment
-        android:id="@+id/webFragment"
-        android:name="com.example.makka_pakka.main.WebViewFragment"
+        android:id="@+id/roomFragment"
+        android:name="com.example.makka_pakka.main.RoomFragment"
         android:label="fragment_main_list"
-        tools:layout="@layout/fragment_main_list" />
+        tools:layout="@layout/fragment_room" />
     <fragment
         android:id="@+id/mineFragment"
         android:name="com.example.makka_pakka.main.mine.MineFragment"
@@ -90,6 +87,13 @@
         <action
             android:id="@+id/action_mineFragment_to_mineDetailFragment"
             app:destination="@id/mineDetailFragment" />
+        <action
+            android:id="@+id/action_mineFragment_to_roomFragment"
+            app:destination="@id/roomFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/mineDetailFragment"

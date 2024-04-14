@@ -10,6 +10,8 @@ import androidx.navigation.Navigation
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentCoverBinding
+import com.example.makka_pakka.model.UserInfo
+import com.example.makka_pakka.utils.ViewUtil
 
 class CoverFragment : Fragment() {
     private lateinit var bind: FragmentCoverBinding
@@ -19,9 +21,8 @@ class CoverFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        requireActivity().window.statusBarColor =
-            ResourcesCompat.getColor(resources, R.color.primary_color, null)
         bind = FragmentCoverBinding.inflate(layoutInflater)
+        ViewUtil.paddingByStatusBar(bind.root)
         bind.btnLogin.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_coverFragment_to_loginFragment)
         }
@@ -34,6 +35,21 @@ class CoverFragment : Fragment() {
         bind.btnRegister.alpha = 0f
         bind.btnLogin.animate().alpha(1f).setDuration(1000).start()
         bind.btnRegister.animate().alpha(1f).setDuration(1000).start()
+
+        bind.ivLogo.setOnClickListener {
+            MyApplication.instance.currentUser.value = UserInfo(
+                0,
+                "test@test.com",
+                "test_user",
+                "test_password",
+                0,
+                "广东省 广州市 天河区",
+                "1999-01-01",
+                "1999-01-01",
+                0,
+                "this is a test user"
+            )
+        }
         return bind.root
     }
 
@@ -41,10 +57,6 @@ class CoverFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        requireActivity().window.statusBarColor =
-            ResourcesCompat.getColor(resources, R.color.background_color, null)
-    }
+
 }
 

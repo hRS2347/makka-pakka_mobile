@@ -5,24 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.makka_pakka.databinding.FragmentMainListBinding
+import com.example.makka_pakka.databinding.FragmentRoomBinding
+import com.example.makka_pakka.utils.ViewUtil
 
-class WebViewFragment : Fragment() {
-    private lateinit var bind: FragmentMainListBinding
+class RoomFragment : Fragment() {
+    private lateinit var bind: FragmentRoomBinding
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = FragmentMainListBinding.inflate(layoutInflater)
+        bind = FragmentRoomBinding.inflate(layoutInflater)
+        ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
 
         return bind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bind.webView.loadUrl("www.bilibili.com")
+        bind.webView.loadUrl("http://bilibili.com")
     }
 }
 

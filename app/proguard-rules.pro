@@ -29,3 +29,14 @@
 -keep class com.tencent.tbs.** {
     *;
 }
+
+-keep class com.lljjcoder.**{
+	*;
+}
+
+-dontwarn demo.**
+-keep class demo.**{*;}
+-dontwarn net.sourceforge.pinyin4j.**
+-keep class net.sourceforge.pinyin4j.**{*;}
+-keep class net.sourceforge.pinyin4j.format.**{*;}
+-keep class net.sourceforge.pinyin4j.format.exception.**{*;}

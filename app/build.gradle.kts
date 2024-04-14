@@ -28,6 +28,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -104,4 +105,8 @@ dependencies {
 //    implementation ("org.nanohttpd:nanohttpd:2.3.1")
     //rxpermissions
     api ("com.tencent.tbs:tbssdk:44286")
+
+    implementation ("com.github.crazyandcoder:citypicker:6.0.2")
+//    implementation ("com.github.ertugrulkaragoz:SuperBottomBar:0.4")
+    implementation ("com.github.iammert:ReadableBottomBar:0.2")
 }
