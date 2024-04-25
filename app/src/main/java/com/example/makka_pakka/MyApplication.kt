@@ -6,7 +6,6 @@ import android.net.Uri
 import android.util.Log
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.repo.DataStoreRepository
 import com.example.makka_pakka.utils.FileUtil
@@ -25,6 +24,19 @@ private val Context.dataStore by preferencesDataStore(
 )
 
 class MyApplication : Application() {
+    val testUser: UserInfo = UserInfo(
+        114514,
+        "114514@1919.com",
+        "PPT之神陶喆",
+        "test",
+        0,
+        "广东省 广州市 天河区",
+        "1999-09-09",
+        "2021-09-09",
+        1,
+        "Hey，你好！"
+    )
+
     var currentUser: MutableLiveData<UserInfo?> = MutableLiveData()
     var gson = Gson()
 
@@ -39,6 +51,7 @@ class MyApplication : Application() {
     }
 
     var currentToken = ""
+
     @OptIn(DelicateCoroutinesApi::class)
     fun saveToken(token: String) {
         currentToken = token
@@ -98,7 +111,7 @@ class MyApplication : Application() {
                     if (response.code == 200) {
                         val body = response.body?.string()
                         Log.i("MyApplication", "onResponse: $body")
-                        val myResponse = GsonUtil.fromJson(body, UserInfo::class.java)
+                        val myResponse = GsonUtil.fromJsonToResponse(body, UserInfo::class.java)
                         currentUser.postValue(myResponse.data)
 
 
@@ -124,7 +137,7 @@ class MyApplication : Application() {
                     if (response.code == 200) {
                         val body = response.body?.string()
                         Log.i("MyApplication", "onResponse: $body")
-                        val myResponse = GsonUtil.fromJson(body, UserInfo::class.java)
+                        val myResponse = GsonUtil.fromJsonToResponse(body, UserInfo::class.java)
                         currentUser.postValue(myResponse.data)
                         onGet(Unit)
                     } else {
@@ -135,7 +148,7 @@ class MyApplication : Application() {
         }
     }
 
-    fun testAsyncJump(onGet: (Unit) -> Unit){
+    fun testAsyncJump(onGet: (Unit) -> Unit) {
         GlobalScope.launch {
             onGet(Unit)
         }

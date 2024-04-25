@@ -11,6 +11,7 @@ import com.example.makka_pakka.MainActivity
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentMainBinding
+import com.example.makka_pakka.utils.GlideUtil
 import com.example.makka_pakka.utils.ViewUtil
 
 
@@ -37,6 +38,11 @@ class MainFragment : Fragment() {
         }
         bind.tvToUserInfo.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_userInfoFragment)
+        }
+        MyApplication.instance.currentUser.observe(viewLifecycleOwner) {
+            if (it != null) {
+                GlideUtil.loadAvatar(bind.ivAvatar, it.avatarUrl?:"")
+            }
         }
         return bind.root
     }

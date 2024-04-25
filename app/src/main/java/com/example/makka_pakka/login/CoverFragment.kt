@@ -37,18 +37,8 @@ class CoverFragment : Fragment() {
         bind.btnRegister.animate().alpha(1f).setDuration(1000).start()
 
         bind.ivLogo.setOnClickListener {
-            MyApplication.instance.currentUser.value = UserInfo(
-                0,
-                "test@test.com",
-                "test_user",
-                "test_password",
-                0,
-                "广东省 广州市 天河区",
-                "1999-01-01",
-                "1999-01-01",
-                0,
-                "this is a test user"
-            )
+            MyApplication.instance.currentUser.value =MyApplication.instance.testUser
+            Navigation.findNavController(it).navigate(R.id.action_coverFragment_to_mainFragment)
         }
         return bind.root
     }

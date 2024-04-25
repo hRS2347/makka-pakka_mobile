@@ -18,3 +18,6 @@ const val TEST_PD = "123456"
 const val TEST_URL = "https://eoh1bkxhotv1atz.m.pipedream.net"
 const val RELOGIN_ACTION = "com.example.makka_pakka.ACTION_RELOGIN"
 
+const val SEARCH_MATCH = "/search/match"
+const val SEARCH_CONTENT = "/search/content"
+
