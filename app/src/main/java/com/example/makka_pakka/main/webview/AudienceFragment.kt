@@ -1,4 +1,4 @@
-package com.example.makka_pakka.main
+package com.example.makka_pakka.main.webview
 
 import android.content.Context
 import android.os.Bundle
@@ -7,23 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.JavascriptInterface
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.makka_pakka.MyApplication
-import com.example.makka_pakka.databinding.FragmentRoomBinding
+import com.example.makka_pakka.databinding.FragmentWebviewBinding
 import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.view.LoadingPic
 import com.google.gson.Gson
 import com.tencent.smtt.sdk.WebView
 
-class RoomFragment : Fragment() {
-    private lateinit var bind: FragmentRoomBinding
+class AudienceFragment : Fragment() {
+    private lateinit var bind: FragmentWebviewBinding
     val loadingPic = LoadingPic.newInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = FragmentRoomBinding.inflate(layoutInflater)
+        bind = FragmentWebviewBinding.inflate(layoutInflater)
         ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
         bind.webView.addJavascriptInterface(
             JavaScriptInterface(MyApplication.instance),
@@ -37,9 +38,10 @@ class RoomFragment : Fragment() {
                 //加载完成后，隐藏加载图标
                 childFragmentManager.beginTransaction().remove(loadingPic).commit()
                 bind.webView.visibility = View.VISIBLE
-                Log.d("RoomFragment", "onPageFinished: ")
             }
         }
+
+        Toast.makeText(context, "观众页面", Toast.LENGTH_SHORT).show()
 
 
         bind.webView.loadUrl("http://bilibili.com")

@@ -62,6 +62,18 @@
         <action
             android:id="@+id/action_mainFragment_to_mineFragment"
             app:destination="@id/mineFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_roomFragment"
+            app:destination="@id/roomFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_userInfoFragment"
+            app:destination="@id/userInfoFragment" />
     </fragment>
 
     <fragment
@@ -75,10 +87,10 @@
         android:label="fragment_initiation"
         tools:layout="@layout/fragment_initiation" />
     <fragment
-        android:id="@+id/roomFragment"
-        android:name="com.example.makka_pakka.main.RoomFragment"
+        android:id="@+id/myRoomFragment"
+        android:name="com.example.makka_pakka.main.webview.MyRoomFragment"
         android:label="fragment_main_list"
-        tools:layout="@layout/fragment_room" />
+        tools:layout="@layout/fragment_webview" />
     <fragment
         android:id="@+id/mineFragment"
         android:name="com.example.makka_pakka.main.mine.MineFragment"
@@ -89,7 +101,7 @@
             app:destination="@id/mineDetailFragment" />
         <action
             android:id="@+id/action_mineFragment_to_roomFragment"
-            app:destination="@id/roomFragment"
+            app:destination="@id/myRoomFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
@@ -104,5 +116,47 @@
             android:id="@+id/action_mineDetailFragment_to_resetFragment"
             app:destination="@id/resetFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.makka_pakka.main.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_userInfoFragment"
+            app:destination="@id/userInfoFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_roomFragment"
+            app:destination="@id/roomFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/audienceFragment"
+        android:name="com.example.makka_pakka.main.webview.AudienceFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_webview" />
+
+    <fragment
+        android:id="@+id/broadcastFragment"
+        android:name="com.example.makka_pakka.main.webview.BroadcastFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_webview" />
+
+    <fragment
+        android:id="@+id/userInfoFragment"
+        android:name="com.example.makka_pakka.main.mine.UserInfoFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_mine" />
+    <fragment
+        android:id="@+id/roomFragment"
+        android:name="com.example.makka_pakka.main.webview.RoomFragment"
+        android:label="fragment_main_list"
+        tools:layout="@layout/fragment_webview" />
+    <action
+        android:id="@+id/action_global_broadcastFragment"
+        app:destination="@id/broadcastFragment"
+        app:enterAnim="@anim/slide_in_down"
+        app:exitAnim="@anim/slide_out_to_top"
+        app:popExitAnim="@anim/slide_out_to_bottom" /><action android:id="@+id/action_global_audienceFragment" app:destination="@id/audienceFragment"/>
+
 
 </navigation>
