@@ -110,5 +110,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_to_audi" />
 
+    <TextView
+        android:id="@+id/tv_to_user_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="查看别人用户信息"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_to_room" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

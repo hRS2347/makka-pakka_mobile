@@ -35,6 +35,9 @@ class MainFragment : Fragment() {
         bind.tvToRoom.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_roomFragment)
         }
+        bind.tvToUserInfo.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_userInfoFragment)
+        }
         return bind.root
     }
 
