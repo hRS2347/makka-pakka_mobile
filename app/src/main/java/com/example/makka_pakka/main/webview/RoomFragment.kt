@@ -76,6 +76,12 @@ class RoomFragment : Fragment() {
             // 返回您的 user 值
             return Gson().toJson(MyApplication.instance.currentUser.value)
         }
+
+        //json格式的user
+        @JavascriptInterface
+        fun subscribeNextBroadcast(): Unit {
+           //TODO: 订阅下一场直播
+        }
     }
 }
 

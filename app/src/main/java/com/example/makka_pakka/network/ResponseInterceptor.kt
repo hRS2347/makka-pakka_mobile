@@ -1,10 +1,8 @@
 package com.example.makka_pakka.network
 
-import android.content.Intent
 import android.util.Log
 import com.example.makka_pakka.LOGIN
 import com.example.makka_pakka.MyApplication
-import com.example.makka_pakka.REGISTER
 import com.example.makka_pakka.model.MyResponse
 import com.example.makka_pakka.utils.gson.GsonUtil
 import com.google.gson.Gson
@@ -12,7 +10,6 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import java.io.IOException
-import kotlin.reflect.KFunction0
 
 class ResponseInterceptor(private var callLogin: (Unit) -> Unit) : Interceptor {
     @Throws(IOException::class)
@@ -36,7 +33,7 @@ class ResponseInterceptor(private var callLogin: (Unit) -> Unit) : Interceptor {
             if (myResponse.code == 200){
                 val url = originalResponse.request.url.toString()
                 if (url.contains(LOGIN) ) {
-                    GsonUtil.fromJson(responseBodyString, String::class.java).data?.let {
+                    GsonUtil.fromJsonToResponse(responseBodyString, String::class.java).data?.let {
                         val token = it.toString()
                         Log.d("NEW_TOKEN",token.toString())
                         MyApplication.instance.saveToken(token)

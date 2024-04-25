@@ -128,7 +128,12 @@
             android:id="@+id/action_searchFragment_to_roomFragment"
             app:destination="@id/roomFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.example.makka_pakka.main.SearchResultFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+    </fragment>
     <fragment
         android:id="@+id/audienceFragment"
         android:name="com.example.makka_pakka.main.webview.AudienceFragment"
@@ -157,6 +162,7 @@
         app:enterAnim="@anim/slide_in_down"
         app:exitAnim="@anim/slide_out_to_top"
         app:popExitAnim="@anim/slide_out_to_bottom" /><action android:id="@+id/action_global_audienceFragment" app:destination="@id/audienceFragment"/>
+
 
 
 </navigation>

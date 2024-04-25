@@ -7,6 +7,8 @@ import com.example.makka_pakka.IND_CODE
 import com.example.makka_pakka.LOGIN
 import com.example.makka_pakka.REGISTER
 import com.example.makka_pakka.RESET
+import com.example.makka_pakka.SEARCH_CONTENT
+import com.example.makka_pakka.SEARCH_MATCH
 import com.example.makka_pakka.SEND_HABITS
 import com.example.makka_pakka.USER_INFO
 import com.example.makka_pakka.host
@@ -41,7 +43,7 @@ object HttpUtil {
     // 基本的网络请求
     private var client: OkHttpClient? = null
 
-    fun setUp(callLogin: (Unit)->Unit) {
+    fun setUp(callLogin: (Unit) -> Unit) {
         Log.d("HttpUtil", "setUp")
         this.client = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS) // 设置连接超时为10秒
@@ -181,4 +183,18 @@ object HttpUtil {
     fun tokenTest(callback: Callback) {
         get("https://eoh1bkxhotv1atz.m.pipedream.net", callback)
     }
+
+    fun searchMatch(key: String, callback: Callback) {
+        get("$host:$port$SEARCH_MATCH/$key", callback)
+    }
+
+    //搜索
+    fun search(key: String, pageIndex: Int, isUser: Boolean, callback: Callback) {
+        if (isUser)
+            get("$host:$port$SEARCH_CONTENT/$key/$pageIndex/30/1", callback)
+        else
+            get("$host:$port$SEARCH_CONTENT/$key/$pageIndex/25/0", callback)
+    }
+
+
 }
