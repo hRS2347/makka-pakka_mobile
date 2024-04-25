@@ -28,6 +28,10 @@ class UserInfoFragment : Fragment() {
         bind.btnEdit.visibility = View.INVISIBLE
         bind.ivShare.visibility = View.INVISIBLE
         bind.ivMore.visibility = View.INVISIBLE
+        bind.ivBack.visibility = View.VISIBLE
+        bind.ivBack.setOnClickListener {
+            Navigation.findNavController(it).navigateUp()
+        }
 
         return bind.root
     }
@@ -36,5 +40,10 @@ class UserInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bind.ivBack.visibility = View.INVISIBLE
+    }
 }
 

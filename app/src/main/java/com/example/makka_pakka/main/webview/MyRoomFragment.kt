@@ -74,7 +74,7 @@ class MyRoomFragment : Fragment() {
         @JavascriptInterface
         fun getUser(): String {
             // 返回您的 user 值
-            return Gson().toJson(MyApplication.instance.currentUser)
+            return Gson().toJson(MyApplication.instance.currentUser.value)
         }
     }
 }
