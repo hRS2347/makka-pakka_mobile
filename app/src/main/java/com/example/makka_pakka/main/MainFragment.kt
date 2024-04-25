@@ -11,6 +11,7 @@ import com.example.makka_pakka.MainActivity
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentMainBinding
+import com.example.makka_pakka.utils.ViewUtil
 
 
 class MainFragment : Fragment() {
@@ -22,7 +23,18 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         bind = FragmentMainBinding.inflate(layoutInflater)
+        ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
+        bind.searchBar.setOnClickListener{
+            findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
+        }
 
+        bind.tvToAudi.setOnClickListener {
+            findNavController().navigate(R.id.action_global_audienceFragment)
+        }
+
+        bind.tvToRoom.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_roomFragment)
+        }
         return bind.root
     }
 

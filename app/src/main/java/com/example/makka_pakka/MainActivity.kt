@@ -21,6 +21,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.makka_pakka.boardcast.NetworkConnectChangedReceiver
 import com.example.makka_pakka.boardcast.ReLoginReceiver
@@ -187,6 +188,10 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+        }
+
+        binding.btnBroadcast.setOnClickListener {
+            findNavController(R.id.nav_host_fragment_activity_main).navigate(R.id.action_global_broadcastFragment)
         }
 
     }
