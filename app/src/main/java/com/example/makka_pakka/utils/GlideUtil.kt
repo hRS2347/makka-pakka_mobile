@@ -8,9 +8,9 @@ import com.bumptech.glide.Glide
 import com.example.makka_pakka.R
 
 object GlideUtil {
-    fun glideImage(context: Context, uri: String, view: ImageView) {
+    fun glideImage( uri: String, view: ImageView) {
         try {
-            Glide.with(context).load(
+            Glide.with(view.context).load(
                 if (uri.isDigitsOnly()) uri.toInt()
                 else uri
             ).error(R.drawable.tab_mine).placeholder(R.drawable.tab_mine)

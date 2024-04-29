@@ -35,9 +35,14 @@ class AudienceFragment : Fragment() {
         bind.webView.webViewClient = object : com.tencent.smtt.sdk.WebViewClient() {
             override fun onPageFinished(p0: WebView?, p1: String?) {
                 super.onPageFinished(p0, p1)
-                //加载完成后，隐藏加载图标
-                childFragmentManager.beginTransaction().remove(loadingPic).commit()
-                bind.webView.visibility = View.VISIBLE
+                try {
+                    //加载完成后，隐藏加载图标
+                    childFragmentManager.beginTransaction().remove(loadingPic).commit()
+                    bind.webView.visibility = View.VISIBLE
+                } catch (e: Exception) {
+                    Log.e("onPageFinished", e.message.toString())
+                }
+
             }
         }
 

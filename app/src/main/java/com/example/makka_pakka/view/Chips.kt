@@ -21,13 +21,12 @@ class Chips @JvmOverloads constructor(
 
     //圆角
     private val cornerRadius = ViewUtil.dpToPx(context, 4f).toFloat() // 设置圆角半径
-    private val textSize = ViewUtil.spToPx(context, 12f).toFloat() // 设置文字大小
-    private val pad = ViewUtil.dpToPx(context, 2f).toFloat() // 设置内边距
+    private val textSize = ViewUtil.spToPx(context, 14f).toFloat() // 设置文字大小
+    private val pad = ViewUtil.dpToPx(context, 16f).toFloat() // 设置内边距
     private var width = 0
-    private val height = textSize.toInt() + ViewUtil.dpToPx(context, 8f)*2// 设置高度
+    private val height = textSize.toInt() + ViewUtil.dpToPx(context, 8f) * 2// 设置高度
     private val minWith = 1 * textSize.toInt()
     private var textColNon = ResourcesCompat.getColor(resources, R.color.stroke_grey, null)
-    private var textCol = Color.WHITE
     private val bgColor = ResourcesCompat.getColor(resources, R.color.white, null)
     //计算整体宽高，处理wrap_content的情况
     //如果宽高都是wrap_content，则宽高为字数*textSize+padding*2
@@ -44,7 +43,12 @@ class Chips @JvmOverloads constructor(
     //wrap_content
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        width = text.length * textSize.toInt() + pad.toInt() * 2
+        // 英文字符宽度 = 1/2 字体大小
+        val textPaint = Paint()
+        textPaint.textSize = textSize
+
+        val textWidth = textPaint.measureText(text)
+        width = (textWidth + pad * 2).toInt()
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)

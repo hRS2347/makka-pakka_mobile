@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.JavascriptInterface
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.databinding.FragmentWebviewBinding
+import com.example.makka_pakka.main.search.SearchResultFragmentArgs
 import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.view.LoadingPic
 import com.google.gson.Gson
@@ -18,7 +21,7 @@ import com.tencent.smtt.sdk.WebView
 class RoomFragment : Fragment() {
     private lateinit var bind: FragmentWebviewBinding
     val loadingPic = LoadingPic.newInstance()
-
+    private val args: RoomFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,7 +29,7 @@ class RoomFragment : Fragment() {
         bind = FragmentWebviewBinding.inflate(layoutInflater)
         ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
         bind.webView.addJavascriptInterface(
-            JavaScriptInterface(MyApplication.instance),
+            JavaScriptInterface(MyApplication.instance, args.id),
             "AndroidInterface"
         )
         //先把加载图标显示出来
@@ -34,13 +37,21 @@ class RoomFragment : Fragment() {
         bind.webView.webViewClient = object : com.tencent.smtt.sdk.WebViewClient() {
             override fun onPageFinished(p0: WebView?, p1: String?) {
                 super.onPageFinished(p0, p1)
-                //加载完成后，隐藏加载图标
-                childFragmentManager.beginTransaction().remove(loadingPic).commit()
-                bind.webView.visibility = View.VISIBLE
-                Log.d("MyRoomFragment", "onPageFinished: ")
+                try {
+                    //加载完成后，隐藏加载图标
+                    childFragmentManager.beginTransaction().remove(loadingPic).commit()
+                    bind.webView.visibility = View.VISIBLE
+                } catch (e: Exception) {
+                    Log.e("onPageFinished", e.message.toString())
+                }
             }
         }
 
+        Toast.makeText(context, args.id, Toast.LENGTH_SHORT).show()
+
+        /***
+         * args.id 为房间id
+         */
 
         bind.webView.loadUrl("http://bilibili.com")
 
@@ -61,7 +72,7 @@ class RoomFragment : Fragment() {
     console.log("Token:", token);
     console.log("User:", user)
      */
-    class JavaScriptInterface(private val context: Context) {
+    class JavaScriptInterface(private val context: Context, private val rid:String) {
 
         //token
         @JavascriptInterface
@@ -81,6 +92,12 @@ class RoomFragment : Fragment() {
         @JavascriptInterface
         fun subscribeNextBroadcast(): Unit {
            //TODO: 订阅下一场直播
+        }
+
+        @JavascriptInterface
+        fun getRoomId(): String {
+            // 返回您的 room id 值
+            return rid
         }
     }
 }

@@ -29,4 +29,16 @@ object GsonUtil {
         return gson.fromJson(json, type)
     }
 
+    inline fun <reified T> fromJsonToListResponse(
+        json: String?,
+        clazz: Class<T>
+    ): List<T> {
+        if (json == null) {
+            throw IllegalArgumentException("json is null")
+        }
+        val type = object : TypeToken<MyResponse<List<T>>>() {}.type
+        return gson.fromJson(json, type)
+    }
+
+
 }

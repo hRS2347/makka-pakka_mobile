@@ -6,6 +6,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.MutableLiveData
+import com.example.makka_pakka.model.RoomInfo
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.repo.DataStoreRepository
 import com.example.makka_pakka.utils.FileUtil
@@ -28,7 +29,7 @@ class MyApplication : Application() {
         114514,
         "114514@1919.com",
         "PPT之神陶喆",
-        "test",
+        "https://i0.hdslb.com/bfs/archive/05e93bf62c7d1de7e2ce1833eecd497a71ad0b37.jpg",
         0,
         "广东省 广州市 天河区",
         "1999-09-09",
@@ -36,6 +37,13 @@ class MyApplication : Application() {
         1,
         "Hey，你好！"
     )
+    val testRoom: RoomInfo = RoomInfo(
+        1919,
+        114514,
+        114514,
+        "https://i0.hdslb.com/bfs/archive/05e93bf62c7d1de7e2ce1833eecd497a71ad0b37.jpg",
+        "PPT之神陶喆发布会",
+        "Hey，你好！")
 
     var currentUser: MutableLiveData<UserInfo?> = MutableLiveData()
     var gson = Gson()
@@ -102,7 +110,7 @@ class MyApplication : Application() {
 
     fun getUserInfo() {
         GlobalScope.launch {
-            HttpUtil.refreshUserInfo(object : Callback {
+            HttpUtil.getUserInfo(object : Callback {
                 override fun onFailure(call: okhttp3.Call, e: java.io.IOException) {
                     e.printStackTrace()
                 }
@@ -128,7 +136,7 @@ class MyApplication : Application() {
 
     fun reGetUserInfo(onGet: (Unit) -> Unit) {
         GlobalScope.launch {
-            HttpUtil.refreshUserInfo(object : Callback {
+            HttpUtil.getUserInfo(object : Callback {
                 override fun onFailure(call: okhttp3.Call, e: java.io.IOException) {
                     e.printStackTrace()
                 }
