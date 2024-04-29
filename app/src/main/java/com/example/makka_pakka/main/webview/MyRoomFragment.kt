@@ -35,9 +35,13 @@ class MyRoomFragment : Fragment() {
             override fun onPageFinished(p0: WebView?, p1: String?) {
                 super.onPageFinished(p0, p1)
                 //加载完成后，隐藏加载图标
-                childFragmentManager.beginTransaction().remove(loadingPic).commit()
-                bind.webView.visibility = View.VISIBLE
-                Log.d("MyRoomFragment", "onPageFinished: ")
+                try {
+                    //加载完成后，隐藏加载图标
+                    childFragmentManager.beginTransaction().remove(loadingPic).commit()
+                    bind.webView.visibility = View.VISIBLE
+                } catch (e: Exception) {
+                    Log.e("onPageFinished", e.message.toString())
+                }
             }
         }
 

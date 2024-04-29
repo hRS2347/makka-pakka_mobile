@@ -25,6 +25,7 @@
 
     <color name="stroke_grey">#434343</color>
     <color name="theme_orange">#F4BC7E</color>
+    <color name="theme_purple">#9800D8</color>
     <color name="theme_orange_bright">#FF9C2D</color>
     <color name="warning_red">#9A2626</color>
     <color name="grey">#08000000</color>

@@ -9,9 +9,8 @@ class HistorySearchContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ViewGroup(context, attrs, defStyleAttr) {
     // 间距
-    private val perHor = ViewUtil.dpToPx(context, 12f)
-    private val perVerLine = ViewUtil.dpToPx(context, 16f)
-    private val perVer = ViewUtil.dpToPx(context, 8f)
+    private val perHor = ViewUtil.dpToPx(context, 8f)
+    private val perVerLine = ViewUtil.dpToPx(context, 8f)
     var sumChipsList = listOf<String>()
         set(value) {
             field = value
@@ -54,7 +53,7 @@ class HistorySearchContainer @JvmOverloads constructor(
             if (currentLeft + child.measuredWidth > width) { // 如果超出容器宽度
                 currentTop += child.measuredHeight + perVerLine // 换行
                 currentLeft = 0
-                if (currentTop + child.measuredHeight + 2 * perVer > height) { // 如果超出容器高度
+                if (currentTop + child.measuredHeight > height) { // 如果超出容器高度
                     break
                 }
             }

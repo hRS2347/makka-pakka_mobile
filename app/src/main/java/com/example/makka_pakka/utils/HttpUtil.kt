@@ -31,7 +31,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.concurrent.TimeUnit
-import kotlin.reflect.KFunction0
 
 
 //单例模式，OKHttp3
@@ -75,6 +74,16 @@ object HttpUtil {
         val request = Request.Builder().url(url).build()
         client?.newCall(request)?.enqueue(callback)
     }
+
+    fun getSynchronous(url: String): String = try {
+        val request = Request.Builder().url(url).build()
+        val response = client?.newCall(request)?.execute()
+        response?.body?.string() ?: ""
+    } catch (e: Exception) {
+        e.printStackTrace()
+        ""
+    }
+
 
     fun post(url: String, json: String, callback: Callback) {
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
@@ -176,7 +185,7 @@ object HttpUtil {
         }
     }
 
-    fun refreshUserInfo(callback: Callback) {
+    fun getUserInfo(callback: Callback) {
         get("$host:$port$GET_USER_INFO", callback)
     }
 
@@ -189,12 +198,8 @@ object HttpUtil {
     }
 
     //搜索
-    fun search(key: String, pageIndex: Int, isUser: Boolean, callback: Callback) {
-        if (isUser)
-            get("$host:$port$SEARCH_CONTENT/$key/$pageIndex/30/1", callback)
-        else
-            get("$host:$port$SEARCH_CONTENT/$key/$pageIndex/25/0", callback)
-    }
+    fun search(key: String, pageIndex: Int, type: Int,callback: Callback) =
+        get("$host:$port$SEARCH_CONTENT/$key/$pageIndex/30/$type", callback)
 
 
 }

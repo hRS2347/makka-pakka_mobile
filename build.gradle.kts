@@ -5,3 +5,11 @@ plugins {
 //    id("com.chaquo.python") version "15.0.0" apply false
 //    id("com.google.devtools.ksp") version "1.9.21-1.0.15" apply false
 }
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
+    }
+}

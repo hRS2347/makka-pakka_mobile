@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 //    id("com.chaquo.python")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 //    id("com.google.devtools.ksp")
 }
 
@@ -108,5 +109,4 @@ dependencies {
 
     implementation ("com.github.crazyandcoder:citypicker:6.0.2")
 //    implementation ("com.github.ertugrulkaragoz:SuperBottomBar:0.4")
-    implementation ("com.github.iammert:ReadableBottomBar:0.2")
 }
