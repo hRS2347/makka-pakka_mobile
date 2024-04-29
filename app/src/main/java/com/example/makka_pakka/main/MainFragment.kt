@@ -11,6 +11,7 @@ import com.example.makka_pakka.MainActivity
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentMainBinding
+import com.example.makka_pakka.main.search.SearchResultFragmentDirections
 import com.example.makka_pakka.utils.GlideUtil
 import com.example.makka_pakka.utils.ViewUtil
 
@@ -34,7 +35,11 @@ class MainFragment : Fragment() {
         }
 
         bind.tvToRoom.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_roomFragment)
+            val action =
+                MainFragmentDirections.actionMainFragmentToRoomFragment(
+                    MyApplication.instance.testRoom.id.toString()
+                )
+            findNavController().navigate(action)
         }
         bind.tvToUserInfo.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_userInfoFragment)
