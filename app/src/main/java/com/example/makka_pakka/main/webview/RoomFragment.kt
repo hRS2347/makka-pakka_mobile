@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.databinding.FragmentWebviewBinding
 import com.example.makka_pakka.main.search.SearchResultFragmentArgs
+import com.example.makka_pakka.utils.CalendarReminderUtil
 import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.view.LoadingPic
 import com.google.gson.Gson
@@ -72,7 +73,7 @@ class RoomFragment : Fragment() {
     console.log("Token:", token);
     console.log("User:", user)
      */
-    class JavaScriptInterface(private val context: Context, private val rid:String) {
+    class JavaScriptInterface(private val context: Context, private val rid: String) {
 
         //token
         @JavascriptInterface
@@ -88,10 +89,15 @@ class RoomFragment : Fragment() {
             return Gson().toJson(MyApplication.instance.currentUser.value)
         }
 
-        //json格式的user
+        //订阅下一场直播
+        //time: 下一场直播的时间
         @JavascriptInterface
-        fun subscribeNextBroadcast(): Unit {
-           //TODO: 订阅下一场直播
+        fun subscribeNextBroadcast(timeInMills: Long, name: String): Unit {
+            CalendarReminderUtil.addCalendarEvent(
+                context,
+                "直播提醒:你订阅的 $name 即将开始",
+                timeInMills//开始时间, 单位为毫秒
+            )
         }
 
         @JavascriptInterface
