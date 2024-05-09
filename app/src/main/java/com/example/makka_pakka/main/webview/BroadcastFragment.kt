@@ -46,7 +46,7 @@ class BroadcastFragment : Fragment() {
 
         Toast.makeText(context, "直播页面", Toast.LENGTH_SHORT).show()
 
-        bind.webView.loadUrl("http://bilibili.com")
+        bind.webView.loadUrl("https://client.makka.fcraft.cn/broadcast")
 
         return bind.root
     }
