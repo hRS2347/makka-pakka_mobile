@@ -62,6 +62,7 @@ class X5WebView : WebView {
         webSetting.allowContentAccess = true // 允许访问内容
         webSetting.setGeolocationEnabled(true) // 启用地理位置（可选）
         webSetting.mediaPlaybackRequiresUserGesture = false // 允许自动播放媒体（可选）
+        //camera
 // this.getSettingsExtension().setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);//extension
 // settings 的设计
     }

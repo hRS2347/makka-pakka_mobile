@@ -26,6 +26,8 @@ object PermissionUtil {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+            Manifest.permission.MODIFY_AUDIO_SETTINGS,
+            Manifest.permission.RECORD_AUDIO,
             Manifest.permission.MANAGE_MEDIA,
             Manifest.permission.CAMERA,
             Manifest.permission.INTERNET,
