@@ -13,7 +13,9 @@ import com.example.makka_pakka.utils.FileUtil
 import com.example.makka_pakka.utils.HttpUtil
 import com.example.makka_pakka.utils.gson.GsonUtil
 import com.google.gson.Gson
+import com.tencent.smtt.export.external.interfaces.PermissionRequest
 import com.tencent.smtt.sdk.QbSdk
+import com.tencent.smtt.sdk.WebChromeClient
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -47,6 +49,13 @@ class MyApplication : Application() {
 
     var currentUser: MutableLiveData<UserInfo?> = MutableLiveData()
     var gson = Gson()
+
+
+    val webChromeClient =  object :WebChromeClient(){
+        override fun onPermissionRequest(request: PermissionRequest?) {
+            request?.grant(request.resources)
+        }
+    }
 
     companion object {
         lateinit var instance: MyApplication

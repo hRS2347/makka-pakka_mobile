@@ -49,6 +49,9 @@ class MainFragment : Fragment() {
                 GlideUtil.loadAvatar(bind.ivAvatar, it.avatarUrl?:"")
             }
         }
+        bind.ivAvatar.setOnClickListener{
+            findNavController().navigate(R.id.action_mainFragment_to_mineFragment)
+        }
         return bind.root
     }
 

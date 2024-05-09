@@ -1,6 +1,7 @@
 package com.example.makka_pakka.main.webview
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import com.example.makka_pakka.databinding.FragmentWebviewBinding
 import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.view.LoadingPic
 import com.google.gson.Gson
+import com.tencent.smtt.export.external.interfaces.PermissionRequest
+import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebView
 
 class BroadcastFragment : Fragment() {
@@ -43,9 +46,7 @@ class BroadcastFragment : Fragment() {
                 }
             }
         }
-
-        Toast.makeText(context, "直播页面", Toast.LENGTH_SHORT).show()
-
+        bind.webView.webChromeClient = MyApplication.instance.webChromeClient
         bind.webView.loadUrl("https://client.makka.fcraft.cn/broadcast")
 
         return bind.root
