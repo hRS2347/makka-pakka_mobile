@@ -67,12 +67,13 @@ class SearchViewModel(
             override fun onResponse(call: Call, response: Response) {
                 try {
                     val result = response.body?.string()
+                    Log.e("SearchViewModel", "match:"+result.toString())
                     val list =
                         GsonUtil.fromJsonToListResponse(result, String::class.java)
                     viewModelScope.launch(
                         Dispatchers.Main
                     ) {
-                        matchedResult.value = list
+                        matchedResult.value = list.data
                     }
                 } catch (e: Exception) {
                     Log.e("SearchViewModel", "getTheMatchedResult", e)
@@ -84,17 +85,17 @@ class SearchViewModel(
                 }
             }
         })
-        viewModelScope.launch(
-            Dispatchers.Main
-        ) {
-            matchedResult.value = listOf(
-                "密钥算法hi",
-                "密钥算法hi21asf",
-                "密钥算法hi21asasfe",
-                "asfsadfdsf密钥算法hi21asasfe",
-                "asfsadfdsf密i21asasfe",
-            )
-        }
+//        viewModelScope.launch(
+//            Dispatchers.Main
+//        ) {
+//            matchedResult.value = listOf(
+//                "密钥算法hi",
+//                "密钥算法hi21asf",
+//                "密钥算法hi21asasfe",
+//                "asfsadfdsf密钥算法hi21asasfe",
+//                "asfsadfdsf密i21asasfe",
+//            )
+//        }
         Log.d("SearchViewModel", "getTheMatchedResult: $str")
     }
 

@@ -48,20 +48,22 @@ class SearchResultViewModel(
                             call: okhttp3.Call,
                             response: okhttp3.Response
                         ) {
+                            val result = response.body?.string()
+                            Log.d("SearchResultViewModel", "onResponse: $result")
                             viewModelScope.launch {
                                 try {
                                     withContext(Dispatchers.Main) {
                                         requestResult.postValue(
                                             when (searchState.value!!) {
                                                 SearchState.USER -> GsonUtil.fromJsonToListResponse(
-                                                    response.body?.string(),
+                                                    result,
                                                     UserInfo::class.java
-                                                )
+                                                ).data
 
                                                 SearchState.ROOM -> GsonUtil.fromJsonToListResponse(
-                                                    response.body?.string(),
+                                                    result,
                                                     RoomInfo::class.java
-                                                )
+                                                ).data
                                             }
                                         )
                                     }
@@ -74,44 +76,44 @@ class SearchResultViewModel(
                         }
                     })
             }
-            withContext(Dispatchers.Main) {
-                withContext(Dispatchers.IO) {
-                    delay(1000)
-                }
-                if (page>3){
-                    requestResult.postValue(emptyList())
-                    return@withContext
-                }
-                if (searchKey.value == "搜不到的人" && searchState.value == SearchState.USER) {
-                    requestResult.postValue(emptyList())
-                    return@withContext
-                }
-                requestResult.postValue(
-                    when (searchState.value!!) {
-                        SearchState.USER -> listOf(
-                            MyApplication.instance.testUser,
-                            MyApplication.instance.testUser,
-                            MyApplication.instance.testUser,
-                            MyApplication.instance.testUser,
-                            MyApplication.instance.testUser,
-                            MyApplication.instance.testUser,
-                            MyApplication.instance.testUser,
-                            MyApplication.instance.testUser,
-                            MyApplication.instance.testUser,
-                        )
-
-                        SearchState.ROOM -> listOf(
-                            MyApplication.instance.testRoom,
-                            MyApplication.instance.testRoom,
-                            MyApplication.instance.testRoom,
-                            MyApplication.instance.testRoom,
-                            MyApplication.instance.testRoom,
-                            MyApplication.instance.testRoom,
-                            MyApplication.instance.testRoom,
-                        )
-                    }
-                )
-            }
+//            withContext(Dispatchers.Main) {
+//                withContext(Dispatchers.IO) {
+//                    delay(1000)
+//                }
+//                if (page>3){
+//                    requestResult.postValue(emptyList())
+//                    return@withContext
+//                }
+//                if (searchKey.value == "搜不到的人" && searchState.value == SearchState.USER) {
+//                    requestResult.postValue(emptyList())
+//                    return@withContext
+//                }
+//                requestResult.postValue(
+//                    when (searchState.value!!) {
+//                        SearchState.USER -> listOf(
+//                            MyApplication.instance.testUser,
+//                            MyApplication.instance.testUser,
+//                            MyApplication.instance.testUser,
+//                            MyApplication.instance.testUser,
+//                            MyApplication.instance.testUser,
+//                            MyApplication.instance.testUser,
+//                            MyApplication.instance.testUser,
+//                            MyApplication.instance.testUser,
+//                            MyApplication.instance.testUser,
+//                        )
+//
+//                        SearchState.ROOM -> listOf(
+//                            MyApplication.instance.testRoom,
+//                            MyApplication.instance.testRoom,
+//                            MyApplication.instance.testRoom,
+//                            MyApplication.instance.testRoom,
+//                            MyApplication.instance.testRoom,
+//                            MyApplication.instance.testRoom,
+//                            MyApplication.instance.testRoom,
+//                        )
+//                    }
+//                )
+//            }
         }
     }
 
