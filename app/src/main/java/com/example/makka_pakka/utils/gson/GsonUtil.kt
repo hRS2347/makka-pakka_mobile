@@ -1,5 +1,6 @@
 package com.example.makka_pakka.utils.gson
 
+import android.util.Log
 import com.example.makka_pakka.model.MyResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -32,12 +33,17 @@ object GsonUtil {
     inline fun <reified T> fromJsonToListResponse(
         json: String?,
         clazz: Class<T>
-    ): List<T> {
-        if (json == null) {
-            throw IllegalArgumentException("json is null")
+    ): MyResponse<List<T>> {
+        try {
+            if (json == null) {
+                throw IllegalArgumentException("json is null")
+            }
+            val type = object : TypeToken<MyResponse<List<T>>>() {}.type
+            return gson.fromJson(json, type)
+        } catch (e: Exception) {
+            Log.e("GsonUtil", "fromJsonToListResponse: $e")
         }
-        val type = object : TypeToken<MyResponse<List<T>>>() {}.type
-        return gson.fromJson(json, type)
+        return MyResponse<List<T>>(null, 0, "解析错误", listOf())
     }
 
 
