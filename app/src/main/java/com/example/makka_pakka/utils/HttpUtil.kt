@@ -17,6 +17,7 @@ import com.example.makka_pakka.network.LoggingInterceptor
 import com.example.makka_pakka.network.ResponseInterceptor
 import com.example.makka_pakka.network.TokenInterceptor
 import com.example.makka_pakka.port
+import com.example.makka_pakka.search_port
 import com.google.gson.Gson
 import okhttp3.Callback
 import okhttp3.Cookie
@@ -194,12 +195,12 @@ object HttpUtil {
     }
 
     fun searchMatch(key: String, callback: Callback) {
-        get("$host:$port$SEARCH_MATCH/$key", callback)
+        get("$host:$search_port$SEARCH_MATCH/$key", callback)
     }
 
     //搜索
     fun search(key: String, pageIndex: Int, type: Int,callback: Callback) =
-        get("$host:$port$SEARCH_CONTENT/$key/$pageIndex/30/$type", callback)
+        get("$host:$search_port$SEARCH_CONTENT/$key/$pageIndex/30/$type", callback)
 
 
 }

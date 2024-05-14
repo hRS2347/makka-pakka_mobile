@@ -19,6 +19,7 @@ class UserResultAdapter(
     lateinit var onItemClickListener: OnItemClickListener
     var searchPage = 1
     var isLoading = false
+    var lastInput= listOf<UserInfo>()
 
     fun clearData() {
         this.data = emptyList()
@@ -26,6 +27,10 @@ class UserResultAdapter(
     }
 
     fun addData(data: List<UserInfo>) {
+        if (lastInput.isNotEmpty() &&data[0].id == lastInput[0].id) {//重复搜索
+            return
+        }
+        lastInput = data
         this.data += data
         notifyDataSetChanged()
     }

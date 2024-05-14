@@ -59,6 +59,8 @@ class SearchViewModel(
     }
 
     fun getTheMatchedResult(str: String) {
+        //clear
+        matchedResult.value = listOf()
         HttpUtil.searchMatch(str, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e("SearchViewModel", "getTheMatchedResult", e)

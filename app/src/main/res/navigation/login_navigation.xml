@@ -106,6 +106,9 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_mineFragment_to_coverFragment"
+            app:destination="@id/coverFragment" />
     </fragment>
     <fragment
         android:id="@+id/mineDetailFragment"

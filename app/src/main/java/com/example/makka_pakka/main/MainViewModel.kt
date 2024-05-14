@@ -11,7 +11,13 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 
 class MainViewModel(
 ) : ViewModel() {
-    //是否已经选择了爱好
+    //首页推荐的list
+    val recommendList = MutableLiveData<List<String>>()
+
+    fun refresh() {
+        //首页推荐的list
+        Log.d("MainViewModel", "refresh: ")
+    }
 
     //异常处理,处理协程中的异常
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->

@@ -26,7 +26,7 @@ class UserInfoFragment : Fragment() {
         ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
         bind.btnRoom.visibility = View.INVISIBLE
         bind.btnEdit.visibility = View.INVISIBLE
-        bind.ivShare.visibility = View.INVISIBLE
+        bind.ivLogout.visibility = View.INVISIBLE
         bind.ivMore.visibility = View.INVISIBLE
         bind.ivBack.visibility = View.VISIBLE
         bind.ivBack.setOnClickListener {

@@ -17,8 +17,10 @@ import com.tencent.smtt.export.external.interfaces.PermissionRequest
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.WebChromeClient
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.Callback
 
 
@@ -45,13 +47,14 @@ class MyApplication : Application() {
         114514,
         "https://i0.hdslb.com/bfs/archive/05e93bf62c7d1de7e2ce1833eecd497a71ad0b37.jpg",
         "PPT之神陶喆发布会",
-        "Hey，你好！")
+        "Hey，你好！"
+    )
 
     var currentUser: MutableLiveData<UserInfo?> = MutableLiveData()
     var gson = Gson()
 
 
-    val webChromeClient =  object :WebChromeClient(){
+    val webChromeClient = object : WebChromeClient() {
         override fun onPermissionRequest(request: PermissionRequest?) {
             request?.grant(request.resources)
         }
@@ -189,5 +192,16 @@ class MyApplication : Application() {
                 }
             }
         })
+    }
+
+    fun logout() {
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                dataStoreRepository.writeString2DataStore("token", "")
+            }
+            withContext(Dispatchers.Main) {
+                currentUser.postValue(null)
+            }
+        }
     }
 }

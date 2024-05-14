@@ -87,6 +87,18 @@ class MineFragment : Fragment() {
             Navigation.findNavController(it)
                 .navigate(R.id.action_mineFragment_to_roomFragment)
         }
+
+        bind.ivLogout.setOnClickListener {
+           //clear token
+            MyApplication.instance.logout()
+
+        }
+        MyApplication.instance.currentUser.observe(viewLifecycleOwner) {i->
+            if (i == null) {
+                Navigation.findNavController(bind.root)
+                    .navigate(R.id.action_mineFragment_to_coverFragment)
+            }
+        }
         return bind.root
     }
 

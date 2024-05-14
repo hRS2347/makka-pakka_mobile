@@ -135,7 +135,7 @@ class SearchResultFragment : Fragment() {
                             bind.tvEmpty.visibility = View.VISIBLE
                             bind.resultRecyclerView.visibility = View.INVISIBLE
                         } else {
-                            Toast.makeText(context, "没有更多数据了", Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(context, "没有更多数据了", Toast.LENGTH_SHORT).show()
                             userResultAdapter.isLoading = false
                         }
                     }
@@ -146,7 +146,7 @@ class SearchResultFragment : Fragment() {
                             bind.tvEmpty.visibility = View.VISIBLE
                             bind.resultRecyclerView.visibility = View.INVISIBLE
                         } else {
-                            Toast.makeText(context, "没有更多数据了", Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(context, "没有更多数据了", Toast.LENGTH_SHORT).show()
                             roomResultAdapter.isLoading = false
                         }
                     }
