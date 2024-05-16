@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.databinding.FragmentWebviewBinding
 import com.example.makka_pakka.main.search.SearchResultFragmentArgs
+import com.example.makka_pakka.main.webview.url_adapt.UrlAdaptingFragment
 import com.example.makka_pakka.utils.CalendarReminderUtil
 import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.view.LoadingPic
@@ -54,7 +55,7 @@ class RoomFragment : Fragment() {
          * args.id 为房间id
          */
 
-        bind.webView.loadUrl("http://bilibili.com")
+        bind.webView.loadUrl(UrlAdaptingFragment.BASE_URL + UrlAdaptingFragment.ROOM + args.id)
 
         return bind.root
     }

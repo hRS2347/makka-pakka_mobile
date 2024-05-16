@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,7 +15,7 @@ import com.example.makka_pakka.databinding.FragmentSearchResultBinding
 import com.example.makka_pakka.model.RoomInfo
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.utils.ViewUtil
-import com.example.makka_pakka.utils.gson.GsonUtil
+import com.example.makka_pakka.utils.GsonUtil
 
 class SearchResultFragment : Fragment() {
     private lateinit var bind: FragmentSearchResultBinding

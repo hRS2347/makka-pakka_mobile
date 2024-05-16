@@ -12,7 +12,7 @@ import com.example.makka_pakka.databinding.FragmentMineBinding
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.utils.GlideUtil
 import com.example.makka_pakka.utils.ViewUtil
-import com.example.makka_pakka.utils.gson.GsonUtil
+import com.example.makka_pakka.utils.GsonUtil
 import java.util.Calendar
 
 class UserInfoFragment : Fragment() {

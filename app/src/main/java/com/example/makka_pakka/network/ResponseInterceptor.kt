@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.makka_pakka.LOGIN
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.model.MyResponse
-import com.example.makka_pakka.utils.gson.GsonUtil
+import com.example.makka_pakka.utils.GsonUtil
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.Response

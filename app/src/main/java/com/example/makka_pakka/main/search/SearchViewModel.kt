@@ -10,14 +10,13 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.repo.DataStoreRepository
 import com.example.makka_pakka.utils.HttpUtil
-import com.example.makka_pakka.utils.gson.GsonUtil
+import com.example.makka_pakka.utils.GsonUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.OkHttp
 import okhttp3.Response
 import okio.IOException
 

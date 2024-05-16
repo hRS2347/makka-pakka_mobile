@@ -22,3 +22,5 @@ const val RELOGIN_ACTION = "com.example.makka_pakka.ACTION_RELOGIN"
 const val SEARCH_MATCH = "/search/match"
 const val SEARCH_CONTENT = "/search/content"
 
+const val RECOMMENDATION = "/"
+

@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_coverFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_coverFragment_to_urlAdaptingFragment"
+            app:destination="@id/urlAdaptingFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -188,6 +191,11 @@
     <action
         android:id="@+id/action_global_audienceFragment"
         app:destination="@id/audienceFragment" />
+    <fragment
+        android:id="@+id/urlAdaptingFragment"
+        android:name="com.example.makka_pakka.main.webview.url_adapt.UrlAdaptingFragment"
+        android:label="fragment_url_adapting"
+        tools:layout="@layout/fragment_url_adapting" />
 
 
 </navigation>

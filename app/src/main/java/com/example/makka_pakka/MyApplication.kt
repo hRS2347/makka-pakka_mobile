@@ -11,7 +11,7 @@ import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.repo.DataStoreRepository
 import com.example.makka_pakka.utils.FileUtil
 import com.example.makka_pakka.utils.HttpUtil
-import com.example.makka_pakka.utils.gson.GsonUtil
+import com.example.makka_pakka.utils.GsonUtil
 import com.google.gson.Gson
 import com.tencent.smtt.export.external.interfaces.PermissionRequest
 import com.tencent.smtt.sdk.QbSdk
