@@ -25,7 +25,9 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         bind = FragmentMainBinding.inflate(layoutInflater)
+
         ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
+
         bind.searchBar.setOnClickListener{
             findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
         }
@@ -41,14 +43,21 @@ class MainFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
+
         bind.tvToUserInfo.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_userInfoFragment)
         }
+
         MyApplication.instance.currentUser.observe(viewLifecycleOwner) {
             if (it != null) {
                 GlideUtil.loadAvatar(bind.ivAvatar, it.avatarUrl?:"")
             }
         }
+
+        bind.ivAvatar.setOnClickListener{
+            findNavController().navigate(R.id.action_mainFragment_to_mineFragment)
+        }
+
         return bind.root
     }
 

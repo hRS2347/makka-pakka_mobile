@@ -1,25 +1,19 @@
 package com.example.makka_pakka.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.Navigation
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentLoginBinding
 import com.example.makka_pakka.model.MyResponse
-import com.example.makka_pakka.utils.GlideUtil
 import com.example.makka_pakka.utils.HttpUtil
 import com.example.makka_pakka.utils.ViewUtil
-import com.example.makka_pakka.utils.gson.GsonUtil
 import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Callback

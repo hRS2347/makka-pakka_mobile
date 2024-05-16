@@ -1,18 +1,27 @@
 package com.example.makka_pakka.main.webview
 
+import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.JavascriptInterface
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.databinding.FragmentWebviewBinding
+import com.example.makka_pakka.main.webview.url_adapt.UrlAdaptingFragment
 import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.view.LoadingPic
 import com.google.gson.Gson
+import com.tencent.smtt.export.external.interfaces.PermissionRequest
+import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebView
 
 class BroadcastFragment : Fragment() {
@@ -25,8 +34,18 @@ class BroadcastFragment : Fragment() {
     ): View {
         bind = FragmentWebviewBinding.inflate(layoutInflater)
         ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
+
+        val handler = Handler(Handler.Callback {
+            when (it.what) {
+                1 -> {
+                    findNavController().navigateUp()
+                }
+            }
+            true
+        })
+
         bind.webView.addJavascriptInterface(
-            JavaScriptInterface(MyApplication.instance),
+            JavaScriptInterface(MyApplication.instance, handler),
             "AndroidInterface"
         )
         //先把加载图标显示出来
@@ -43,10 +62,8 @@ class BroadcastFragment : Fragment() {
                 }
             }
         }
-
-        Toast.makeText(context, "直播页面", Toast.LENGTH_SHORT).show()
-
-        bind.webView.loadUrl("https://client.makka.fcraft.cn/broadcast")
+        bind.webView.webChromeClient = MyApplication.instance.webChromeClient
+        bind.webView.loadUrl(MyApplication.instance.webViewUrlRepo.BASE_URL + MyApplication.instance.webViewUrlRepo.BROADCAST)
 
         return bind.root
     }
@@ -65,7 +82,10 @@ class BroadcastFragment : Fragment() {
     console.log("Token:", token);
     console.log("User:", user)
      */
-    class JavaScriptInterface(private val context: Context) {
+    class JavaScriptInterface(
+        private val context: Context,
+        private val handler: Handler
+    ) {
 
         //token
         @JavascriptInterface
@@ -79,6 +99,11 @@ class BroadcastFragment : Fragment() {
         fun getUser(): String {
             // 返回您的 user 值
             return Gson().toJson(MyApplication.instance.currentUser.value)
+        }
+
+        @JavascriptInterface
+        fun quit() {
+            handler.sendEmptyMessage(1)
         }
     }
 }

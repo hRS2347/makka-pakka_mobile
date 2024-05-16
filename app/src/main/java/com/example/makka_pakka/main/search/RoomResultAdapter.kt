@@ -1,15 +1,9 @@
 package com.example.makka_pakka.main.search
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.makka_pakka.R
-import com.example.makka_pakka.databinding.ViewItemSearchMatchBinding
 import com.example.makka_pakka.databinding.ViewItemSearchResultRoomBinding
-import com.example.makka_pakka.databinding.ViewItemTabBinding
 import com.example.makka_pakka.model.RoomInfo
 import com.example.makka_pakka.utils.GlideUtil
 
@@ -21,6 +15,7 @@ class RoomResultAdapter(
     lateinit var onItemClickListener: OnItemClickListener
     var searchPage = 1
     var isLoading = false
+    var lastInput= listOf<RoomInfo>()
 
     fun clearData() {
         this.data = emptyList()
@@ -29,6 +24,10 @@ class RoomResultAdapter(
 
 
     fun addData(data: List<RoomInfo>) {
+        if (lastInput.isNotEmpty() && data[0].id == lastInput[0].id) {//重复搜索
+            return
+        }
+        lastInput = data
         this.data += data
         notifyDataSetChanged()
     }
@@ -44,9 +43,10 @@ class RoomResultAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val roomInfo = data[position]
-        GlideUtil.glideImage(roomInfo.url, holder.itemBind.ivCover)
+        if(roomInfo.url!=null)
+            GlideUtil.glideImage(roomInfo.url, holder.itemBind.ivCover)
         holder.itemBind.tvTitle.text = roomInfo.name
-        holder.itemBind.tvDescription.text = roomInfo.desc
+        holder.itemBind.tvDescription.text = roomInfo.detail
     }
 
     override fun getItemCount(): Int {

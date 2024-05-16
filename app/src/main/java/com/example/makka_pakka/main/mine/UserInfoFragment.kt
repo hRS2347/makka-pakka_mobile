@@ -12,7 +12,7 @@ import com.example.makka_pakka.databinding.FragmentMineBinding
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.utils.GlideUtil
 import com.example.makka_pakka.utils.ViewUtil
-import com.example.makka_pakka.utils.gson.GsonUtil
+import com.example.makka_pakka.utils.GsonUtil
 import java.util.Calendar
 
 class UserInfoFragment : Fragment() {
@@ -26,7 +26,7 @@ class UserInfoFragment : Fragment() {
         ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
         bind.btnRoom.visibility = View.INVISIBLE
         bind.btnEdit.visibility = View.INVISIBLE
-        bind.ivShare.visibility = View.INVISIBLE
+        bind.ivLogout.visibility = View.INVISIBLE
         bind.ivMore.visibility = View.INVISIBLE
         bind.ivBack.visibility = View.VISIBLE
         bind.ivBack.setOnClickListener {

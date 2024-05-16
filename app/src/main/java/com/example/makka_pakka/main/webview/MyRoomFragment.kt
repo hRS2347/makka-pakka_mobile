@@ -10,6 +10,7 @@ import android.webkit.JavascriptInterface
 import androidx.fragment.app.Fragment
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.databinding.FragmentWebviewBinding
+import com.example.makka_pakka.main.webview.url_adapt.UrlAdaptingFragment
 import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.view.LoadingPic
 import com.google.gson.Gson
@@ -46,7 +47,7 @@ class MyRoomFragment : Fragment() {
         }
 
 
-        bind.webView.loadUrl("http://bilibili.com")
+        bind.webView.loadUrl(MyApplication.instance.webViewUrlRepo.BASE_URL + MyApplication.instance.webViewUrlRepo.MY_ROOM)
 
         return bind.root
     }

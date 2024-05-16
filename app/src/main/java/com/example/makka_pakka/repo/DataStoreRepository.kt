@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.example.makka_pakka.utils.gson.GsonUtil
+import com.example.makka_pakka.utils.GsonUtil
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -59,13 +59,13 @@ class DataStoreRepository(
             throw it
         }
     }.map {
-        it[TOKEN] ?: ""
+        it[stringPreferencesKey(TOKEN)] ?: ""
     }
 
     // 写入token
     suspend fun saveToken(token: String) {
         _dataStore.edit { settings ->
-            settings[TOKEN] = token
+            settings[stringPreferencesKey(TOKEN)] = token
         }
     }
 
@@ -104,7 +104,7 @@ class DataStoreRepository(
             newList.add(search)
             newList.addAll(list)
             writeString2DataStore(key, Gson().toJson(newList))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -116,7 +116,7 @@ class DataStoreRepository(
 
     companion object {
         private const val CURRENT_USER = "user"
-        private val TOKEN = stringPreferencesKey("token")
+        private val TOKEN = "token"
         private const val HISTORY_SEARCH = "history_search"
     }
 }

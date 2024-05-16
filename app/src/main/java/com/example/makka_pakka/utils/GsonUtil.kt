@@ -1,4 +1,4 @@
-package com.example.makka_pakka.utils.gson
+package com.example.makka_pakka.utils
 
 import android.util.Log
 import com.example.makka_pakka.model.MyResponse

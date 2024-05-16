@@ -5,6 +5,7 @@ import com.example.makka_pakka.AVATAR
 import com.example.makka_pakka.GET_USER_INFO
 import com.example.makka_pakka.IND_CODE
 import com.example.makka_pakka.LOGIN
+import com.example.makka_pakka.RECOMMENDATION
 import com.example.makka_pakka.REGISTER
 import com.example.makka_pakka.RESET
 import com.example.makka_pakka.SEARCH_CONTENT
@@ -17,6 +18,7 @@ import com.example.makka_pakka.network.LoggingInterceptor
 import com.example.makka_pakka.network.ResponseInterceptor
 import com.example.makka_pakka.network.TokenInterceptor
 import com.example.makka_pakka.port
+import com.example.makka_pakka.search_port
 import com.google.gson.Gson
 import okhttp3.Callback
 import okhttp3.Cookie
@@ -194,12 +196,16 @@ object HttpUtil {
     }
 
     fun searchMatch(key: String, callback: Callback) {
-        get("$host:$port$SEARCH_MATCH/$key", callback)
+        get("$host:$search_port$SEARCH_MATCH/$key", callback)
     }
 
     //搜索
     fun search(key: String, pageIndex: Int, type: Int,callback: Callback) =
-        get("$host:$port$SEARCH_CONTENT/$key/$pageIndex/30/$type", callback)
+        get("$host:$search_port$SEARCH_CONTENT/$key/$pageIndex/30/$type", callback)
 
+
+    //推荐直播,用于首页，size为推荐的数量
+    fun recommendation(size:Int,callback: Callback) =
+        get("$host:$port/$RECOMMENDATION/$size",callback)
 
 }

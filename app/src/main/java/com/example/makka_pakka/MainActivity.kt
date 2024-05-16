@@ -1,40 +1,36 @@
 package com.example.makka_pakka
 
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
-import android.telecom.Call
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.makka_pakka.boardcast.NetworkConnectChangedReceiver
 import com.example.makka_pakka.boardcast.ReLoginReceiver
 import com.example.makka_pakka.databinding.ActivityMainBinding
+import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.utils.HttpUtil
 import com.example.makka_pakka.utils.PermissionUtil
 import com.example.makka_pakka.utils.ViewUtil
-import com.example.makka_pakka.view.X5WebView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import com.example.makka_pakka.utils.GsonUtil
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import okhttp3.Callback
+import okhttp3.Response
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -164,6 +160,34 @@ class MainActivity : AppCompatActivity() {
         handler = Handler(Handler.Callback {
             when (it.what) {
                 1 -> {
+                    //重新登录
+                    HttpUtil.getUserInfo(object : Callback {
+                        override fun onFailure(call: okhttp3.Call, e: IOException) {
+                            Log.d("MainActivity", "onFailure: ${e.message}")
+                        }
+
+                        override fun onResponse(call: okhttp3.Call, response: Response) {
+                            if (response.code == 200) {
+                                val body = response.body?.string()
+                                Log.i("MyApplication", "onResponse: $body")
+                                try {
+                                    val myResponse =
+                                        GsonUtil.fromJsonToResponse(body, UserInfo::class.java)
+                                    MyApplication.instance.currentUser.postValue(myResponse.data)
+                                    handler.sendEmptyMessage(2)
+                                } catch (e: Exception) {
+                                    Log.e("MyApplication", "onResponse: ${e.message}")
+                                    Log.e("MyApplication", "onResponse: $body")
+                                }
+                            } else {
+                                Log.e("MyApplication", "onResponse: ${response.body?.string()}")
+                            }
+                        }
+
+                    })
+                }
+
+                2 -> {
                     //重新登录
                     Toast.makeText(this@MainActivity, "Welcome back", Toast.LENGTH_SHORT)
                         .show()

@@ -9,14 +9,19 @@ import androidx.lifecycle.MutableLiveData
 import com.example.makka_pakka.model.RoomInfo
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.repo.DataStoreRepository
+import com.example.makka_pakka.repo.WebViewUrlRepo
 import com.example.makka_pakka.utils.FileUtil
 import com.example.makka_pakka.utils.HttpUtil
-import com.example.makka_pakka.utils.gson.GsonUtil
+import com.example.makka_pakka.utils.GsonUtil
 import com.google.gson.Gson
+import com.tencent.smtt.export.external.interfaces.PermissionRequest
 import com.tencent.smtt.sdk.QbSdk
+import com.tencent.smtt.sdk.WebChromeClient
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.Callback
 
 
@@ -43,10 +48,18 @@ class MyApplication : Application() {
         114514,
         "https://i0.hdslb.com/bfs/archive/05e93bf62c7d1de7e2ce1833eecd497a71ad0b37.jpg",
         "PPT之神陶喆发布会",
-        "Hey，你好！")
+        "Hey，你好！"
+    )
 
     var currentUser: MutableLiveData<UserInfo?> = MutableLiveData()
     var gson = Gson()
+
+
+    val webChromeClient = object : WebChromeClient() {
+        override fun onPermissionRequest(request: PermissionRequest?) {
+            request?.grant(request.resources)
+        }
+    }
 
     companion object {
         lateinit var instance: MyApplication
@@ -57,6 +70,9 @@ class MyApplication : Application() {
             instance.dataStore
         )
     }
+
+    lateinit var webViewUrlRepo: WebViewUrlRepo
+
 
     var currentToken = ""
 
@@ -84,6 +100,7 @@ class MyApplication : Application() {
              */
             override fun onViewInitFinished(isX5: Boolean) = Unit
         })
+        webViewUrlRepo = WebViewUrlRepo(dataStoreRepository)
     }
 
 
@@ -180,5 +197,16 @@ class MyApplication : Application() {
                 }
             }
         })
+    }
+
+    fun logout() {
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                dataStoreRepository.writeString2DataStore("token", "")
+            }
+            withContext(Dispatchers.Main) {
+                currentUser.postValue(null)
+            }
+        }
     }
 }

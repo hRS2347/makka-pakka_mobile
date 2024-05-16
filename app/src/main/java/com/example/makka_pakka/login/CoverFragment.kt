@@ -40,6 +40,11 @@ class CoverFragment : Fragment() {
             MyApplication.instance.currentUser.value =MyApplication.instance.testUser
             Navigation.findNavController(it).navigate(R.id.action_coverFragment_to_mainFragment)
         }
+
+        bind.tvEdit.setOnClickListener {
+            MyApplication.instance.currentUser.value =MyApplication.instance.testUser
+            Navigation.findNavController(it).navigate(R.id.action_coverFragment_to_urlAdaptingFragment)
+        }
         return bind.root
     }
 
