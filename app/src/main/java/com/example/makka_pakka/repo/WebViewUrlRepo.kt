@@ -1,5 +1,6 @@
 package com.example.makka_pakka.repo
 
+import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -51,7 +52,31 @@ class WebViewUrlRepo(
             }
             else -> ""
         }
-        else it
+        else {
+            when (key) {
+                BASE_URL_KEY -> {
+                    Log.e("WebViewUrlRepo", "getUrl: $it")
+                    BASE_URL = it
+                }
+
+                AUDIENCE_KEY ->{
+                    AUDIENCE = it
+                }
+
+                BROADCAST_KEY ->{
+                    BROADCAST = it
+                }
+
+                MY_ROOM_KEY ->{
+                    MY_ROOM = it
+                }
+
+                ROOM_KEY ->{
+                    ROOM = it
+                }
+            }
+            it
+        }
     }
 
     suspend fun setUrl(key: String, url: String) {

@@ -71,11 +71,7 @@ class MyApplication : Application() {
         )
     }
 
-    val webViewUrlRepo by lazy {
-        WebViewUrlRepo(
-            dataStoreRepository
-        )
-    }
+    lateinit var webViewUrlRepo: WebViewUrlRepo
 
 
     var currentToken = ""
@@ -104,6 +100,7 @@ class MyApplication : Application() {
              */
             override fun onViewInitFinished(isX5: Boolean) = Unit
         })
+        webViewUrlRepo = WebViewUrlRepo(dataStoreRepository)
     }
 
 
