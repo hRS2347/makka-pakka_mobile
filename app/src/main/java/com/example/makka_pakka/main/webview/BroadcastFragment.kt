@@ -63,7 +63,7 @@ class BroadcastFragment : Fragment() {
             }
         }
         bind.webView.webChromeClient = MyApplication.instance.webChromeClient
-        bind.webView.loadUrl(UrlAdaptingFragment.BASE_URL + UrlAdaptingFragment.BROADCAST)
+        bind.webView.loadUrl(MyApplication.instance.webViewUrlRepo.BASE_URL + MyApplication.instance.webViewUrlRepo.BROADCAST)
 
         return bind.root
     }

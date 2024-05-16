@@ -47,7 +47,7 @@ class MyRoomFragment : Fragment() {
         }
 
 
-        bind.webView.loadUrl(UrlAdaptingFragment.BASE_URL + UrlAdaptingFragment.MY_ROOM)
+        bind.webView.loadUrl(MyApplication.instance.webViewUrlRepo.BASE_URL + MyApplication.instance.webViewUrlRepo.MY_ROOM)
 
         return bind.root
     }

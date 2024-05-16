@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.makka_pakka.model.RoomInfo
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.repo.DataStoreRepository
+import com.example.makka_pakka.repo.WebViewUrlRepo
 import com.example.makka_pakka.utils.FileUtil
 import com.example.makka_pakka.utils.HttpUtil
 import com.example.makka_pakka.utils.GsonUtil
@@ -69,6 +70,13 @@ class MyApplication : Application() {
             instance.dataStore
         )
     }
+
+    val webViewUrlRepo by lazy {
+        WebViewUrlRepo(
+            dataStoreRepository
+        )
+    }
+
 
     var currentToken = ""
 

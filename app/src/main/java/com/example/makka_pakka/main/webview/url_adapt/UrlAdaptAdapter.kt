@@ -5,8 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.makka_pakka.databinding.ViewItemUrlAdaptBinding
 
+data class UrlKeyValue(
+    var key: String = "",
+    var value: String = ""
+)
+
 class UrlAdaptAdapter(
-    var urls: List<String>
+    var urls: List<UrlKeyValue>
 ) :
     RecyclerView.Adapter<UrlAdaptAdapter.ViewHolder>() {
     private lateinit var bind: ViewItemUrlAdaptBinding
@@ -22,7 +27,8 @@ class UrlAdaptAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemBind.et.setText(urls[position])
+        holder.itemBind.et.setText(urls[position].value)
+        holder.itemBind.field.hint = urls[position].key
     }
 
     override fun getItemCount(): Int {
@@ -35,14 +41,14 @@ class UrlAdaptAdapter(
     ) :
         RecyclerView.ViewHolder(itemBind.root) {
         init {
-            itemBind.root.setOnClickListener {
-                listener.onItemClick(adapterPosition)
+            itemBind.btn.setOnClickListener {
+                listener.onItemClick(adapterPosition, itemBind.et.text.toString())
             }
         }
     }
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(position: Int, url: String)
     }
 
 }

@@ -55,7 +55,7 @@ class RoomFragment : Fragment() {
          * args.id 为房间id
          */
 
-        bind.webView.loadUrl(UrlAdaptingFragment.BASE_URL + UrlAdaptingFragment.ROOM + args.id)
+        bind.webView.loadUrl(MyApplication.instance.webViewUrlRepo.BASE_URL + MyApplication.instance.webViewUrlRepo.ROOM + args.id)
 
         return bind.root
     }

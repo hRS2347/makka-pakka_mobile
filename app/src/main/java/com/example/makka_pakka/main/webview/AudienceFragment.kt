@@ -62,7 +62,8 @@ class AudienceFragment : Fragment() {
         Toast.makeText(context, "观众页面", Toast.LENGTH_SHORT).show()
 
 
-        bind.webView.loadUrl(UrlAdaptingFragment.BASE_URL + UrlAdaptingFragment.AUDIENCE)
+        bind.webView.loadUrl(MyApplication.instance.webViewUrlRepo.BASE_URL+
+                MyApplication.instance.webViewUrlRepo.AUDIENCE)
 
         return bind.root
     }
