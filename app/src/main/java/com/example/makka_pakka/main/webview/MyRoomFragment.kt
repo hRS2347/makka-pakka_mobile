@@ -16,8 +16,12 @@ class MyRoomFragment : BaseWebviewFragment() {
         Toast.makeText(context, "我的直播", Toast.LENGTH_SHORT).show()
 
         bind.webView.loadUrl(MyApplication.instance.webViewUrlRepo.BASE_URL + MyApplication.instance.webViewUrlRepo.MY_ROOM)
+        thisWebView = bind.webView
 
         return bind.root
     }
+
+
+
 }
 

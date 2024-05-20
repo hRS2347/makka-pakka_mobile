@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.makka_pakka.main.MainFragment"
+        android:name="com.example.makka_pakka.main.home_page.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
         <action

@@ -8,16 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.makka_pakka.MainActivity
 import com.example.makka_pakka.MyApplication
+import com.example.makka_pakka.OnPressBackListener
 import com.example.makka_pakka.databinding.FragmentWebviewBinding
 import com.example.makka_pakka.main.webview.bridge.JavaScriptInterface
 import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.view.LoadingPic
 import com.tencent.smtt.sdk.WebView
 
-open class BaseWebviewFragment: Fragment() {
+abstract class BaseWebviewFragment : Fragment(), OnPressBackListener {
     lateinit var bind: FragmentWebviewBinding
     val loadingPic = LoadingPic.newInstance()
+    lateinit var thisWebView: WebView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,14 +29,14 @@ open class BaseWebviewFragment: Fragment() {
         bind = FragmentWebviewBinding.inflate(layoutInflater)
         ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
 
-        val handler = Handler(Handler.Callback {
+        val handler = Handler {
             when (it.what) {
                 1 -> {
                     findNavController().navigateUp()
                 }
             }
             true
-        })
+        }
 
         bind.webView.addJavascriptInterface(
             JavaScriptInterface(MyApplication.instance, handler),
@@ -60,6 +63,26 @@ open class BaseWebviewFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        try {
+            (requireActivity() as MainActivity).addOnPressBackListener(this)
+        } catch (e: Exception) {
+            Log.e("onViewCreated", e.message.toString())
+        }
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        try {
+            (requireActivity() as MainActivity).removeOnPressBackListener(this)
+        } catch (e: Exception) {
+            Log.e("onDestroyView", e.message.toString())
+        }
+
+        //销毁webview，如果有需要
+        thisWebView.destroy()
+    }
+
+    override fun doWhenBackPressed(){
+        thisWebView.goBack()
     }
 }

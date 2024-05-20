@@ -1,5 +1,6 @@
 package com.example.makka_pakka
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
@@ -223,25 +224,6 @@ class MainActivity : AppCompatActivity() {
     private var backPressedTime: Long = 0
     private val backPressedInterval: Long = 2000 // 2 seconds
 
-    override fun onBackPressed() {
-        //将返回的目的地绑定bottom
-        if (navController.currentDestination?.id != R.id.mainFragment) {
-            navController.popBackStack()
-            return
-        }
-        // 获取当前时间
-        val currentTime = System.currentTimeMillis()
-        // 如果当前时间与上次按下返回键的时间间隔小于设定的时间间隔
-        if (currentTime - backPressedTime < backPressedInterval) {
-            // 调用父类的 onBackPressed 方法，退出应用
-            super.onBackPressed()
-        } else {
-            // 提示再次点击返回键退出应用
-            Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show()
-            // 更新上次按下返回键的时间
-            backPressedTime = currentTime
-        }
-    }
 
     fun transparentStatusBar(window: Window) {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -316,5 +298,44 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         unregisterReceiver(NetworkConnectChangedReceiver())
         unregisterReceiver(ReLoginReceiver())
+    }
+
+    fun addOnPressBackListener(listener: OnPressBackListener) {
+        onPressBackListenerStack.add(listener)
+    }
+
+    fun removeOnPressBackListener(listener: OnPressBackListener) {
+        onPressBackListenerStack.remove(listener)
+    }
+    private val onPressBackListenerStack = mutableListOf<OnPressBackListener>()
+    override fun onBackPressed() {
+        try {
+            if (onPressBackListenerStack.isNotEmpty()) {
+                onPressBackListenerStack.last().doWhenBackPressed() // 调用栈顶的 doWhenBackPressed 方法
+                return
+            }
+
+            //上面没有把事件消费掉，就执行默认的返回操作
+            Log.d("MainActivity", "onBackPressed: ${navController.currentDestination?.id}")
+            //将返回的目的地绑定bottom
+            if (navController.currentDestination?.id != R.id.mainFragment) {
+                navController.popBackStack()
+                return
+            }
+            // 获取当前时间
+            val currentTime = System.currentTimeMillis()
+            // 如果当前时间与上次按下返回键的时间间隔小于设定的时间间隔
+            if (currentTime - backPressedTime < backPressedInterval) {
+                // 调用父类的 onBackPressed 方法，退出应用
+                super.onBackPressed()
+            } else {
+                // 提示再次点击返回键退出应用
+                Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show()
+                // 更新上次按下返回键的时间
+                backPressedTime = currentTime
+            }
+        } catch (e: Exception) {
+            Log.e("MainActivity", "onBackPressed: ${e.message}")
+        }
     }
 }

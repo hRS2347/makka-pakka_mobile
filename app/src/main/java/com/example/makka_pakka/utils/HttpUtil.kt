@@ -204,8 +204,9 @@ object HttpUtil {
         get("$host:$search_port$SEARCH_CONTENT/$key/$pageIndex/30/$type", callback)
 
 
+    val size = 10
     //推荐直播,用于首页，size为推荐的数量
-    fun recommendation(size:Int,callback: Callback) =
+    fun recommendation(callback: Callback) =
         get("$host:$port/$RECOMMENDATION/$size",callback)
 
 }

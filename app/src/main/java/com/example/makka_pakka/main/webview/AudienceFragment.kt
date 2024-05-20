@@ -19,7 +19,10 @@ class AudienceFragment : BaseWebviewFragment() {
         bind.webView.loadUrl(MyApplication.instance.webViewUrlRepo.BASE_URL+
                 MyApplication.instance.webViewUrlRepo.AUDIENCE)
 
+        thisWebView = bind.webView
+
         return bind.root
     }
+
 }
 

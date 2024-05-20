@@ -12,11 +12,13 @@ class BroadcastFragment : BaseWebviewFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                Toast.makeText(context, "即将停止", Toast.LENGTH_SHORT).show()
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Toast.makeText(context, "即将停止", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     override fun onCreateView(
@@ -27,14 +29,13 @@ class BroadcastFragment : BaseWebviewFragment() {
 
         bind.webView.webChromeClient = MyApplication.instance.webChromeClient
         bind.webView.loadUrl(MyApplication.instance.webViewUrlRepo.BASE_URL + MyApplication.instance.webViewUrlRepo.BROADCAST)
+//        bind.webView.loadUrl("https://www.baidu.com")
+        thisWebView = bind.webView
 
         return bind.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-    }
 
 }
 

@@ -23,8 +23,10 @@ class RoomFragment : BaseWebviewFragment() {
          */
 
         bind.webView.loadUrl(MyApplication.instance.webViewUrlRepo.BASE_URL + MyApplication.instance.webViewUrlRepo.ROOM + args.id)
-
+        thisWebView = bind.webView
         return bind.root
     }
+
+
 }
 
