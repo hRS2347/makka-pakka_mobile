@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.repo.DataStoreRepository
-import com.example.makka_pakka.utils.HttpUtil
 import com.example.makka_pakka.utils.GsonUtil
+import com.example.makka_pakka.utils.HttpUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -74,7 +74,7 @@ class SearchViewModel(
                     viewModelScope.launch(
                         Dispatchers.Main
                     ) {
-                        matchedResult.value = list.data
+                        matchedResult.value = list.data ?: listOf()
                     }
                 } catch (e: Exception) {
                     Log.e("SearchViewModel", "getTheMatchedResult", e)
