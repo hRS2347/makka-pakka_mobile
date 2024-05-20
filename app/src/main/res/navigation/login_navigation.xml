@@ -156,7 +156,11 @@
         android:id="@+id/audienceFragment"
         android:name="com.example.makka_pakka.main.webview.AudienceFragment"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_webview" />
+        tools:layout="@layout/fragment_webview" >
+        <argument
+            android:name="lid"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/broadcastFragment"
