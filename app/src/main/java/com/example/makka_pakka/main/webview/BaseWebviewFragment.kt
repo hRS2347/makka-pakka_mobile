@@ -83,6 +83,16 @@ abstract class BaseWebviewFragment : Fragment(), OnPressBackListener {
     }
 
     override fun doWhenBackPressed(){
-        thisWebView.goBack()
+        sendEventToWebPage("onClientBackPressed", "")
+    }
+
+    private fun sendEventToWebPage(eventName: String, eventData: String) {
+        val jsCode = """
+            (function() {
+                var event = new CustomEvent('$eventName', { detail: '$eventData' });
+                window.dispatchEvent(event);
+            })();
+        """.trimIndent()
+        thisWebView.evaluateJavascript(jsCode, null)
     }
 }
