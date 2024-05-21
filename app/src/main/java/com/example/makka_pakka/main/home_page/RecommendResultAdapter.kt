@@ -43,7 +43,7 @@ class RecommendResultAdapter(
         val live = data[position]
         holder.itemBind.tvName.text = live.name
         holder.itemBind.tvTitle.text = live.title
-        GlideUtil.glideImage(live.url, holder.itemBind.ivCover)
+        GlideUtil.glideImage(live.cover_url, holder.itemBind.ivCover)
     }
 
     override fun getItemCount(): Int {

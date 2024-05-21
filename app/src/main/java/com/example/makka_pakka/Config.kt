@@ -1,6 +1,6 @@
 package com.example.makka_pakka
 
-const val host = "http://192.168.1.147"
+const val host = "http://172.29.19.242"
 const val port = 51601
 const val search_port = 10006
 const val LOGIN = "/auth/login"
@@ -22,5 +22,7 @@ const val RELOGIN_ACTION = "com.example.makka_pakka.ACTION_RELOGIN"
 const val SEARCH_MATCH = "/search/match"
 const val SEARCH_CONTENT = "/search/content"
 
-const val RECOMMENDATION = "/"
+
+const val RECOMMENDATION_PORT = "8088"
+const val RECOMMENDATION = "/live/list"
 

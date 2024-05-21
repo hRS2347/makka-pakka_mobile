@@ -25,6 +25,8 @@ class MainViewModel(
     //首页推荐的list
     val recommendList = MutableLiveData<List<LiveInfo>>()
     val recommendListLoading = MutableLiveData(false)
+
+
     fun refresh() {
         //首页推荐的list
         Log.d("MainViewModel", "refresh: ")
@@ -34,6 +36,7 @@ class MainViewModel(
             withContext(Dispatchers.IO) {
                 HttpUtil.recommendation(object : Callback {
                     override fun onFailure(call: Call, e: IOException) {
+                        Log.e("MainViewModel", "onFailure: ${e.message}")
                         viewModelScope.launch {
                             withContext(Dispatchers.Main) {
                                 recommendListLoading.postValue(false)
@@ -45,13 +48,20 @@ class MainViewModel(
                     override fun onResponse(call: Call, response: Response) {
                         viewModelScope.launch {
                             val body = response.body?.string()
-                            Log.d("MainViewModel", "onResponse: $body")
-                            val list =
-                                GsonUtil.fromJsonToMuList(body, LiveInfo::class.java)
-                            withContext(Dispatchers.Main) {
-                                recommendList.postValue(list)
+                            Log.d("MainViewModel", "list: $body")
+                            if (body == null || body == "null") {
+                                recommendList.postValue(listOf())
                                 recommendListLoading.postValue(false)
+                                return@launch
+                            } else {
+                                val list =
+                                    GsonUtil.fromJsonToMuList(body, LiveInfo::class.java)
+                                withContext(Dispatchers.Main) {
+                                    recommendList.postValue(list)
+                                    recommendListLoading.postValue(false)
+                                }
                             }
+
                         }
                     }
                 })

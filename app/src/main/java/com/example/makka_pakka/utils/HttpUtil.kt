@@ -6,6 +6,7 @@ import com.example.makka_pakka.GET_USER_INFO
 import com.example.makka_pakka.IND_CODE
 import com.example.makka_pakka.LOGIN
 import com.example.makka_pakka.RECOMMENDATION
+import com.example.makka_pakka.RECOMMENDATION_PORT
 import com.example.makka_pakka.REGISTER
 import com.example.makka_pakka.RESET
 import com.example.makka_pakka.SEARCH_CONTENT
@@ -207,6 +208,6 @@ object HttpUtil {
     val size = 10
     //推荐直播,用于首页，size为推荐的数量
     fun recommendation(callback: Callback) =
-        get("$host:$port/$RECOMMENDATION/$size",callback)
+        get("$host:$RECOMMENDATION_PORT$RECOMMENDATION",callback)
 
 }

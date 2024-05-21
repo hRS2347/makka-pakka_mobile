@@ -115,7 +115,11 @@ class MainFragment : Fragment() {
             }
             recommendResultAdapter.addData(it)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.refresh()
     }
 }
 
