@@ -1,16 +1,19 @@
 package com.example.makka_pakka.main.webview
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
+import com.example.makka_pakka.LOGIN
 import com.example.makka_pakka.MyApplication
 
 class AudienceFragment : BaseWebviewFragment() {
     private val args: AudienceFragmentArgs by navArgs()
-    private var lid = 0 //直播id
+    private var upid = 0 //直播者的uid
+    private var live_url = "" //直播地址
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -18,7 +21,9 @@ class AudienceFragment : BaseWebviewFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         //获取到lid
         try {
-            lid = args.lid
+            upid = args.upid
+            live_url = args.liveUrl
+            Log.i("AudienceFragment", "live_url$live_url  upid=$upid")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -28,7 +33,8 @@ class AudienceFragment : BaseWebviewFragment() {
         bind.webView.loadUrl(
             MyApplication.instance.webViewUrlRepo.BASE_URL +
                     MyApplication.instance.webViewUrlRepo.AUDIENCE
-        )
+                    + live_url
+        )//这里看看需不需要改
 
         thisWebView = bind.webView
 

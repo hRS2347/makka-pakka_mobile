@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.model.LiveInfo
 import com.example.makka_pakka.utils.GsonUtil
 import com.example.makka_pakka.utils.HttpUtil
@@ -34,37 +35,37 @@ class MainViewModel(
         //去获取
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
-                HttpUtil.recommendation(object : Callback {
-                    override fun onFailure(call: Call, e: IOException) {
-                        Log.e("MainViewModel", "onFailure: ${e.message}")
-                        viewModelScope.launch {
-                            withContext(Dispatchers.Main) {
-                                recommendListLoading.postValue(false)
-                                recommendList.postValue(listOf())
+                HttpUtil.recommendation(MyApplication.instance.currentUser.value!!.id!!,
+                    object : Callback {
+                        override fun onFailure(call: Call, e: IOException) {
+                            Log.e("MainViewModel", "onFailure: ${e.message}")
+                            viewModelScope.launch {
+                                withContext(Dispatchers.Main) {
+                                    recommendListLoading.postValue(false)
+                                    recommendList.postValue(listOf())
+                                }
                             }
                         }
-                    }
 
-                    override fun onResponse(call: Call, response: Response) {
-                        viewModelScope.launch {
-                            val body = response.body?.string()
-                            Log.d("MainViewModel", "list: $body")
-                            if (body == null || body == "null") {
-                                recommendList.postValue(listOf())
-                                recommendListLoading.postValue(false)
-                                return@launch
-                            } else {
-                                val list =
-                                    GsonUtil.fromJsonToMuList(body, LiveInfo::class.java)
-                                withContext(Dispatchers.Main) {
-                                    recommendList.postValue(list)
+                        override fun onResponse(call: Call, response: Response) {
+                            viewModelScope.launch {
+                                try {
+                                    val body = response.body?.string()
+                                    Log.d("MainViewModel", "list: $body")
+                                    val list =
+                                        GsonUtil.fromJsonToMuList(body, LiveInfo::class.java)
+                                    withContext(Dispatchers.Main) {
+                                        recommendList.postValue(list)
+                                        recommendListLoading.postValue(false)
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e("MainViewModel", "onResponse: ${e.message}")
+                                    recommendList.postValue(listOf())
                                     recommendListLoading.postValue(false)
                                 }
                             }
-
                         }
-                    }
-                })
+                    })
             }
         }
         //模拟数据

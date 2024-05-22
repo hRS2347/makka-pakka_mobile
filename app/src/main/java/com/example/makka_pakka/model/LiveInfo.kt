@@ -6,7 +6,7 @@ package com.example.makka_pakka.model
 //  Name: v.Name
 
 data class LiveInfo(
-    val lid: Int, // 直播id , 后面传给web端
+    val uid: Int, // 直播人
     val title: String, // 直播标题
     val cover_url: String, // 直播封面的url
     val live_url: String, // 直播的url

@@ -24,5 +24,5 @@ const val SEARCH_CONTENT = "/search/content"
 
 
 const val RECOMMENDATION_PORT = "8088"
-const val RECOMMENDATION = "/live/list"
+const val RECOMMENDATION = "/live/suggest"
 

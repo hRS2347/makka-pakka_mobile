@@ -82,7 +82,8 @@ class MainFragment : Fragment() {
                 override fun onItemClick(pos: Int) {
                     //get lid to the audienceFragment
                     val action =
-                        MainFragmentDirections.actionGlobalAudienceFragment(recommendResultAdapter.data[pos].lid)
+                        MainFragmentDirections.actionGlobalAudienceFragment(upid = recommendResultAdapter.data[pos].uid,
+                            liveUrl = recommendResultAdapter.data[pos].live_url)
                     findNavController().navigate(action)
                 }
             }

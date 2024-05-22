@@ -158,8 +158,11 @@
         android:label="fragment_setting"
         tools:layout="@layout/fragment_webview" >
         <argument
-            android:name="lid"
+            android:name="upid"
             app:argType="integer" />
+        <argument
+            android:name="live_url"
+            app:argType="string" />
     </fragment>
 
     <fragment

@@ -207,7 +207,7 @@ object HttpUtil {
 
     val size = 10
     //推荐直播,用于首页，size为推荐的数量
-    fun recommendation(callback: Callback) =
-        get("$host:$RECOMMENDATION_PORT$RECOMMENDATION",callback)
+    fun recommendation(uid:Int,callback: Callback) =
+        get("$host:$RECOMMENDATION_PORT$RECOMMENDATION/$uid",callback)
 
 }
