@@ -22,10 +22,13 @@ class RecommendResultAdapter(
 
     fun addData(data: List<LiveInfo>) {
         lastInput = data
-        this.data += data
+        //塞到最前面 保证最新的在最前面
+        this.data = data + this.data
+        //不加重复的
+        this.data = this.data.distinctBy { it.live_url }
         //大于20，清空最早的
-        if (this.data.size > 20) {
-            this.data = this.data.subList(this.data.size - 20, this.data.size)
+        if (this.data.size > 12) {
+            this.data = this.data.subList(0, 12)
         }
         notifyDataSetChanged()
     }

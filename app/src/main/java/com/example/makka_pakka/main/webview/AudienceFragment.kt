@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
-import com.example.makka_pakka.LOGIN
 import com.example.makka_pakka.MyApplication
 
 class AudienceFragment : BaseWebviewFragment() {
@@ -29,17 +28,18 @@ class AudienceFragment : BaseWebviewFragment() {
         }
 
         Toast.makeText(context, "观众页面", Toast.LENGTH_SHORT).show()
-
+        Log.d("AudienceFragment", "url: ${MyApplication.instance.webViewUrlRepo.BASE_URL+ MyApplication.instance.webViewUrlRepo.AUDIENCE+live_url}")
+        bind.webView.webChromeClient = MyApplication.instance.webChromeClient
         bind.webView.loadUrl(
             MyApplication.instance.webViewUrlRepo.BASE_URL +
                     MyApplication.instance.webViewUrlRepo.AUDIENCE
                     + live_url
         )//这里看看需不需要改
 
+
         thisWebView = bind.webView
 
         return bind.root
     }
-
 }
 

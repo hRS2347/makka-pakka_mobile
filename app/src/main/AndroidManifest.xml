@@ -40,6 +40,7 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -54,9 +55,10 @@
         android:theme="@style/Theme.MakkaPakka"
         tools:targetApi="34"
         tools:replace="android:theme">
-
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <activity
             android:name=".MainActivity"
+            android:hardwareAccelerated="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

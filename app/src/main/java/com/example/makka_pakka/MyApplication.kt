@@ -88,9 +88,14 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+        QbSdk.setDownloadWithoutWifi(true)
         QbSdk.initX5Environment(applicationContext, object : QbSdk.PreInitCallback {
             override fun onCoreInitFinished() {
                 // 内核初始化完成，可能为系统内核，也可能为系统内核
+                Log.d("MyApplication", "onCoreInitFinished")
+                Log.d("MyApplication", "X5内核版本：" + QbSdk.getTbsVersion(applicationContext))
+
             }
 
             /**
@@ -98,7 +103,13 @@ class MyApplication : Application() {
              * 由于X5内核体积较大，需要依赖网络动态下发，所以当内核不存在的时候，默认会回调false，此时将会使用系统内核代替
              * @param isX5 是否使用X5内核
              */
-            override fun onViewInitFinished(isX5: Boolean) = Unit
+            override fun onViewInitFinished(isX5: Boolean) {
+                if(isX5){//true
+                    Log.e("腾讯X5", " onViewInitFinished 加载 成功 $isX5");
+                }else{
+                    Log.e("腾讯X5", " onViewInitFinished 加载 失败！！！使用原生安卓webview $isX5");
+                }
+            }
         })
         webViewUrlRepo = WebViewUrlRepo(dataStoreRepository)
     }

@@ -15,6 +15,7 @@ import com.example.makka_pakka.databinding.FragmentWebviewBinding
 import com.example.makka_pakka.main.webview.bridge.JavaScriptInterface
 import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.view.LoadingPic
+import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.WebView
 
 abstract class BaseWebviewFragment : Fragment(), OnPressBackListener {
@@ -42,6 +43,8 @@ abstract class BaseWebviewFragment : Fragment(), OnPressBackListener {
             JavaScriptInterface(MyApplication.instance, handler),
             "AndroidInterface"
         )
+
+
         //先把加载图标显示出来
         childFragmentManager.beginTransaction().add(bind.linearLayout.id, loadingPic).commit()
         bind.webView.webViewClient = object : com.tencent.smtt.sdk.WebViewClient() {

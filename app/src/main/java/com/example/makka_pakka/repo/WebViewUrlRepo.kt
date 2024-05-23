@@ -99,11 +99,11 @@ class WebViewUrlRepo(
         const val ROOM_KEY = "ROOM_KEY"
 
 
-        const val BASE_URL_DEFAULT = "https://www.baidu.com"
-        const val AUDIENCE_DEFAULT = "https://www.baidu.com"
-        const val BROADCAST_DEFAULT = "https://www.baidu.com"
-        const val MY_ROOM_DEFAULT = "https://www.baidu.com"
-        const val ROOM_DEFAULT = "https://www.baidu.com"
+        const val BASE_URL_DEFAULT = "https://client.makka.fcraft.cn"
+        const val AUDIENCE_DEFAULT = "/audience"
+        const val BROADCAST_DEFAULT = "/broadcast"
+        const val MY_ROOM_DEFAULT = "/user/home"
+        const val ROOM_DEFAULT = "/user/home"
 
     }
 }
