@@ -3,11 +3,7 @@ package com.example.makka_pakka.main.home_page
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.model.LiveInfo
 import com.example.makka_pakka.utils.GsonUtil
 import com.example.makka_pakka.utils.HttpUtil
@@ -35,7 +31,7 @@ class MainViewModel(
         //去获取
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
-                HttpUtil.recommendation(MyApplication.instance.currentUser.value!!.id!!,
+                HttpUtil.liveList(
                     object : Callback {
                         override fun onFailure(call: Call, e: IOException) {
                             Log.e("MainViewModel", "onFailure: ${e.message}")
@@ -55,7 +51,8 @@ class MainViewModel(
                                     val list =
                                         GsonUtil.fromJsonToMuList(body, LiveInfo::class.java)
                                     withContext(Dispatchers.Main) {
-                                        recommendList.postValue(list)
+//                                        recommendList.postValue(list)
+                                        recommendList.value = list
                                         recommendListLoading.postValue(false)
                                     }
                                 } catch (e: Exception) {

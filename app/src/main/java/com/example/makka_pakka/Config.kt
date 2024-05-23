@@ -1,8 +1,8 @@
 package com.example.makka_pakka
 
-const val host = "http://172.29.19.242"
-const val port = 51601
-const val search_port = 10006
+const val host = "http://swzx.fcraft.cn"
+const val port = 6485
+const val search_port = 6484
 const val LOGIN = "/auth/login"
 const val REGISTER = "/auth/register"
 const val RESET = "/auth/resetPassword"
@@ -23,6 +23,7 @@ const val SEARCH_MATCH = "/search/match"
 const val SEARCH_CONTENT = "/search/content"
 
 
-const val RECOMMENDATION_PORT = "8088"
+const val RECOMMENDATION_PORT = "6483"
 const val RECOMMENDATION = "/live/suggest"
+const val LIVE_LIST = "/live/list"
 

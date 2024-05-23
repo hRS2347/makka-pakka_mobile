@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.makka_pakka.AVATAR
 import com.example.makka_pakka.GET_USER_INFO
 import com.example.makka_pakka.IND_CODE
+import com.example.makka_pakka.LIVE_LIST
 import com.example.makka_pakka.LOGIN
 import com.example.makka_pakka.RECOMMENDATION
 import com.example.makka_pakka.RECOMMENDATION_PORT
@@ -209,5 +210,8 @@ object HttpUtil {
     //推荐直播,用于首页，size为推荐的数量
     fun recommendation(uid:Int,callback: Callback) =
         get("$host:$RECOMMENDATION_PORT$RECOMMENDATION/$uid",callback)
+
+    fun liveList(callback: Callback) =
+        get("$host:$RECOMMENDATION_PORT$LIVE_LIST/",callback)
 
 }
