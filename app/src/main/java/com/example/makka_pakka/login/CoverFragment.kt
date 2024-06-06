@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentCoverBinding
-import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.utils.ViewUtil
 
 class CoverFragment : Fragment() {

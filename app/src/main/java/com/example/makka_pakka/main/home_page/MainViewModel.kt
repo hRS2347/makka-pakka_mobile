@@ -27,7 +27,7 @@ class MainViewModel(
     val recommendList: MutableLiveData<List<LiveInfo>> = MutableLiveData(listOf())
     val recommendListLoading = MutableLiveData(false)
 
-    fun refresh(isMock: Boolean = true) {
+    fun refresh(isMock: Boolean = false) {
         //首页推荐的list
         Log.d("MainViewModel", "refresh: ")
         recommendListLoading.value = true
