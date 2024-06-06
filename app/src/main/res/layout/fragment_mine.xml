@@ -60,6 +60,7 @@
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coordinatorLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -249,17 +250,19 @@
                         android:layout_width="120dp"
                         android:layout_height="160dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
                         android:src="@drawable/gesture_1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline7"
                         app:layout_constraintTop_toBottomOf="@+id/tv_guidance" />
 
                     <ImageView
                         android:id="@+id/iv_wave"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/logo"
                         app:layout_constraintBottom_toBottomOf="@+id/iv_gesture"
-                        app:layout_constraintStart_toEndOf="@+id/iv_gesture"
+                        app:layout_constraintStart_toStartOf="@+id/guideline7"
                         app:layout_constraintTop_toTopOf="@+id/iv_gesture" />
 
                     <TextView
@@ -298,8 +301,8 @@
                         android:textSize="42sp"
                         android:textStyle="bold"
                         android:visibility="invisible"
-                        app:layout_constraintEnd_toEndOf="@+id/iv_gesture"
-                        app:layout_constraintStart_toStartOf="@+id/iv_gesture"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                        app:layout_constraintStart_toStartOf="@+id/guideline7"
                         app:layout_constraintTop_toBottomOf="@+id/iv_gesture" />
 
                     <TextView

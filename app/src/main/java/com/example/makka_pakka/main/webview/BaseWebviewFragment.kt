@@ -98,4 +98,6 @@ abstract class BaseWebviewFragment : Fragment(), OnPressBackListener {
         """.trimIndent()
         thisWebView.evaluateJavascript(jsCode, null)
     }
+
+
 }

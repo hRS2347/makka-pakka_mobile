@@ -29,7 +29,7 @@ const val LIVE_LIST = "/live/list"
 
 
 //const val HAND_GESTURE_HOST  = "http://172.26.235.66:8886"
-const val HAND_GESTURE_HOST  = "http://172.29.17.251:8886"
+const val HAND_GESTURE_HOST  = "http://192.168.137.248:8886"
 const val HAND_GESTURE_SAVE = "/save"
 const val HAND_GESTURE_PREDICT = "/predict"
 const val HAND_GESTURE_CONFIG = "/config"

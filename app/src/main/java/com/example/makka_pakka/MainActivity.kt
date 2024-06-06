@@ -3,6 +3,7 @@ package com.example.makka_pakka
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
+import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.os.Handler
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
@@ -348,6 +350,28 @@ class MainActivity : AppCompatActivity() {
             }
         }
         AudioTrackManager.startPlaying()
+
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                if (MyApplication.instance.keyboardHeight != 0f) { // 只需要获取一次
+                    return
+                }
+                val r = Rect()
+                binding.root.getWindowVisibleDisplayFrame(r)
+                val screenHeight = binding.root.rootView.height
+                val keypadHeight = screenHeight - r.bottom
+
+                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+                    // Keyboard is opened
+                    Log.d("Keyboard Height", "Height: $keypadHeight")
+                    // 转换为rem并处理
+                    val keyboardHeightInRem = ViewUtil.pxToRem(keypadHeight)
+                    Log.d("Keyboard Height in rem", "Height in rem: $keyboardHeightInRem")
+                    MyApplication.instance.keyboardHeight = keyboardHeightInRem
+                }
+            }
+        })
     }
 
     fun toMine() {
@@ -458,4 +482,5 @@ class MainActivity : AppCompatActivity() {
             toHome()
         }
     }
+
 }

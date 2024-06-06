@@ -7,6 +7,7 @@ import android.webkit.JavascriptInterface
 import android.widget.Toast
 import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.utils.CalendarReminderUtil
+import com.example.makka_pakka.utils.ViewUtil
 import com.google.gson.Gson
 
 /*** js调用方法
@@ -60,4 +61,14 @@ class JavaScriptInterface(
         Log.i("testShowToast", "showToast: $msg")
         Toast.makeText(context, msg, if (length == "long") Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show();
     }
+
+    /***
+     * 返回键盘高度，rem单位
+     */
+    @JavascriptInterface
+    fun getKeyboardHeight(): Float {
+        return MyApplication.instance.keyboardHeight
+    }
+
+
 }

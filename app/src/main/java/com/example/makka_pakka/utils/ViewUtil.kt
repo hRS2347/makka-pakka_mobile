@@ -77,4 +77,8 @@ object ViewUtil {
         )
     }
 
+    fun pxToRem(keypadHeight: Int): Float {
+        return keypadHeight.toFloat() / 16
+    }
+
 }

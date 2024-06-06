@@ -30,6 +30,7 @@ private val Context.dataStore by preferencesDataStore(
 )
 
 class MyApplication : Application() {
+    var keyboardHeight: Float = 0f
     val testUser: UserInfo = UserInfo(
         114514,
         "114514@1919.com",
