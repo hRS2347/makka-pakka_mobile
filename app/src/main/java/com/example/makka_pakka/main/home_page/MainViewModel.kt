@@ -18,6 +18,7 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
 import java.io.IOException
+import kotlin.random.Random
 
 
 class MainViewModel(
@@ -75,7 +76,9 @@ class MainViewModel(
                     list.add(
                         LiveInfo(
                             i,
-                            "title1",
+                            "title${
+                                Random.nextInt(100)*System.currentTimeMillis()*(i+1) % 10000
+                            }",
                             "https://i0.hdslb.com/bfs/archive/05e93bf62c7d1de7e2ce1833eecd497a71ad0b37.jpg",
                             "https://i0.hdslb.com/bfs/archive/05e93bf62c7d1de7e2ce1833eecd497a71ad0b37.jpg",
                             "Alan"

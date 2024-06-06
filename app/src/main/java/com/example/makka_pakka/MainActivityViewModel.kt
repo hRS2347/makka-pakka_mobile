@@ -28,6 +28,9 @@ class MainActivityViewModel : ViewModel() {
     var recordingTime = MutableLiveData(20) //录制的时间,单位为0.1s,总共2s
     val predictResult = MutableLiveData<Int>()
     private var lockState = LockState.LOCKED
+    val waveImgUrl = MutableLiveData("")
+    var selectedIndex = 0
+
 
     enum class LockState(val code: Int) {
         //解锁顺序是1-2
@@ -89,16 +92,16 @@ class MainActivityViewModel : ViewModel() {
         if (isRecording || !isPredictRunningOn.value!!) {
             return
         }
-        predictResult.postValue(-1)
         // 0.3s后开始
         viewModelScope.launch {
-            delay(300)
             // 1. Start recording
-            AudioRecordManager.startRecord()
             // 2. Wait for 2 second
-            recordingTime.value = 20
+            recordingTime.value = 23
             isRecording = true
             while (recordingTime.value!! > 0) {
+                if (recordingTime.value==21){
+                    AudioRecordManager.startRecord()
+                }
                 recordingTime.value = recordingTime.value!! - 1
                 if (recordingTime.value!! == 0) {
                     _runPredict()
@@ -135,6 +138,12 @@ class MainActivityViewModel : ViewModel() {
                                     Log.i(TAG, result!!)
                                     changeLockState(result.toInt())
                                     predictResult.postValue(result.toInt())
+                                    waveImgUrl.postValue(
+                                        HttpUtil.getWaveImgUrl(
+                                            MyApplication.instance.currentUser.value!!.id!!
+                                        )
+                                    )
+
                                 }
                                 withContext(Dispatchers.Default) {
                                     delay(1000)  //延迟1s

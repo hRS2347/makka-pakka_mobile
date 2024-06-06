@@ -282,6 +282,12 @@ class MineFragment : Fragment() {
             GlideUtil.glideImage(it, bind.ivWave, true)
         }
 
+        (activity as MainActivity).viewModel.waveImgUrl.observe(viewLifecycleOwner) {
+            Log.d("MineFragment", "onCreateView: $it")
+            //强制刷新
+            GlideUtil.glideImage(it, bind.ivWave, true)
+        }
+
         gestureControlListener = object : GestureControlListener {
             override fun onGestureControl(gesture: Int) {
                 //如果不是在首页，不响应手势

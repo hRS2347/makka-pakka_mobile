@@ -25,7 +25,8 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels { MainViewModel.Factory }
     private val recommendResultAdapter by lazy {
         RecommendResultAdapter(
-            emptyList()
+            emptyList(),
+            (activity as MainActivity).viewModel.selectedIndex
         )
     }
     private lateinit var gestureControlListener: GestureControlListener
@@ -148,6 +149,7 @@ class MainFragment : Fragment() {
 
                     4 -> {
                         try {
+                            (activity as MainActivity).viewModel.selectedIndex = recommendResultAdapter.selectedIndex
                             //进入直播间
                             val action =
                                 MainFragmentDirections.actionGlobalAudienceFragment(
@@ -155,13 +157,14 @@ class MainFragment : Fragment() {
                                     liveUrl = recommendResultAdapter.data[recommendResultAdapter.selectedIndex].live_url
                                 )
                             findNavController().navigate(action)
-                        }catch (e: Exception){
+                        } catch (e: Exception) {
                             e.printStackTrace()
                         }
                     }
 
                     5 -> {
                         //切换页面
+                        (activity as MainActivity).viewModel.selectedIndex = recommendResultAdapter.selectedIndex
                         (activity as MainActivity).switchNav()
                     }
                 }

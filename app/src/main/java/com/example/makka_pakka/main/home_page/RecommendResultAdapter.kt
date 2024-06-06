@@ -9,11 +9,11 @@ import com.example.makka_pakka.utils.GlideUtil
 
 class RecommendResultAdapter(
     var data: List<LiveInfo>,
+    var selectedIndex:Int
 ) :
     RecyclerView.Adapter<RecommendResultAdapter.ViewHolder>() {
     private lateinit var bind: ViewItemSearchResultLiveBinding
     lateinit var onItemClickListener: OnItemClickListener
-    var selectedIndex = 0
     var lastInput = listOf<LiveInfo>()
 
     fun clearData() {
@@ -30,6 +30,10 @@ class RecommendResultAdapter(
         //大于20，清空最早的
         if (this.data.size > 12) {
             this.data = this.data.subList(0, 12)
+        }
+
+        if (selectedIndex >= this.data.size) {
+            selectedIndex = 0
         }
         notifyDataSetChanged()
     }
@@ -78,5 +82,9 @@ class RecommendResultAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(pos: Int)
+    }
+
+    companion object{
+
     }
 }

@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val filter = IntentFilter()
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
         registerReceiver(NetworkConnectChangedReceiver(), filter)
@@ -237,7 +238,11 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel.recordingTime.observe(this) {
             val time = it / 10F
-            binding.tvCountingTime.text = (time).toString()
+            if (it > 18) {
+                binding.tvCountingTime.text = "准备"
+            } else
+                binding.tvCountingTime.text = (time).toString()
+
             if (time > 1.2F) {
                 binding.tvCountingTime.setTextColor(
                     ActivityCompat.getColor(
@@ -399,6 +404,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         unregisterReceiver(NetworkConnectChangedReceiver())
         unregisterReceiver(ReLoginReceiver())
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     fun addOnPressBackListener(listener: OnPressBackListener) {
