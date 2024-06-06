@@ -8,21 +8,21 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.makka_pakka.R
-import com.example.makka_pakka.databinding.FragmentMineBinding
+import com.example.makka_pakka.databinding.FragmentUserInfoBinding
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.utils.GlideUtil
-import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.utils.GsonUtil
+import com.example.makka_pakka.utils.ViewUtil
 import java.util.Calendar
 
 class UserInfoFragment : Fragment() {
-    private lateinit var bind: FragmentMineBinding
+    private lateinit var bind: FragmentUserInfoBinding
     private val args: UserInfoFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        bind = FragmentMineBinding.inflate(layoutInflater)
+        bind = FragmentUserInfoBinding.inflate(layoutInflater)
         ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
         bind.btnRoom.visibility = View.INVISIBLE
         bind.btnEdit.visibility = View.INVISIBLE

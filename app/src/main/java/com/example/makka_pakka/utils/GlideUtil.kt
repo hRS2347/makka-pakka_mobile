@@ -8,13 +8,23 @@ import com.bumptech.glide.Glide
 import com.example.makka_pakka.R
 
 object GlideUtil {
-    fun glideImage( uri: String, view: ImageView) {
+    fun glideImage(uri: String, view: ImageView, forcedRefresh: Boolean = false) {
         try {
-            Glide.with(view.context).load(
-                if (uri.isDigitsOnly()) uri.toInt()
-                else uri
-            ).error(R.drawable.tab_mine).placeholder(R.drawable.tab_mine)
-                .into(view)
+            if (forcedRefresh) {
+                Glide.with(view.context).load(
+                        if (uri.isDigitsOnly()) uri.toInt()
+                        else uri
+                    ).fitCenter().error(R.drawable.logo).placeholder(R.drawable.logo)
+                    .skipMemoryCache(true).into(view)
+                Log.d("GlideUtil", "forced glideImage: $uri")
+            } else {
+                Glide.with(view.context).load(
+                    if (uri.isDigitsOnly()) uri.toInt()
+                    else uri
+                ).fitCenter().error(R.drawable.logo).placeholder(R.drawable.logo)
+                    .into(view)
+            }
+            Log.d("GlideUtil", "glideImage: $uri")
         } catch (e: Exception) {
             Log.e(
                 "GlideUtil",

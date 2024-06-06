@@ -3,6 +3,10 @@ package com.example.makka_pakka.utils
 import android.util.Log
 import com.example.makka_pakka.AVATAR
 import com.example.makka_pakka.GET_USER_INFO
+import com.example.makka_pakka.HAND_GESTURE_CONFIG
+import com.example.makka_pakka.HAND_GESTURE_HOST
+import com.example.makka_pakka.HAND_GESTURE_PREDICT
+import com.example.makka_pakka.HAND_GESTURE_SAVE
 import com.example.makka_pakka.IND_CODE
 import com.example.makka_pakka.LIVE_LIST
 import com.example.makka_pakka.LOGIN
@@ -27,10 +31,12 @@ import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.FormBody
 import okhttp3.HttpUrl
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
@@ -202,16 +208,103 @@ object HttpUtil {
     }
 
     //搜索
-    fun search(key: String, pageIndex: Int, type: Int,callback: Callback) =
+    fun search(key: String, pageIndex: Int, type: Int, callback: Callback) =
         get("$host:$search_port$SEARCH_CONTENT/$key/$pageIndex/30/$type", callback)
 
 
-    val size = 10
+    const val size = 10
+
     //推荐直播,用于首页，size为推荐的数量
-    fun recommendation(uid:Int,callback: Callback) =
-        get("$host:$RECOMMENDATION_PORT$RECOMMENDATION/$uid",callback)
+    fun recommendation(uid: Int, callback: Callback) =
+        get("$host:$RECOMMENDATION_PORT$RECOMMENDATION/$uid", callback)
 
     fun liveList(callback: Callback) =
-        get("$host:$RECOMMENDATION_PORT$LIVE_LIST/",callback)
+        get("$host:$RECOMMENDATION_PORT$LIVE_LIST/", callback)
+
+    /**
+     * 保存手势
+     * @param uid 用户id
+     * 无操作时，index为0
+     * 在观看界面，需要进行的操作是 增大音量（1）、减小音量（2）、退出（3）、提升亮度（4）、降低亮度（5）
+     * 在首页进行的操作是，选择+1（1），选择-1（2），刷新（3）、进入（4）
+     * @param pcmPath pcm文件路径
+     */
+    private val MEDIA_TYPE_PCM: MediaType? = "multipart/form-data".toMediaTypeOrNull()
+    fun saveHandGesture(uid: Int, pcmPath: File, callback: Callback) {
+        val pcmFile = RequestBody.create(MEDIA_TYPE_PCM, pcmPath)
+        val multiBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("uid", uid.toString())
+            .addFormDataPart("file", "test.pcm", pcmFile)
+            .build()
+        // 构建请求
+        try {
+            val request = Request.Builder().post(multiBody)
+                .url(HAND_GESTURE_HOST + HAND_GESTURE_SAVE).build()
+            // 发送请求, 获得响应
+            client?.newCall(request)?.enqueue(callback)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * 获取手势配置
+     * @param uid 用户id
+     * @return 返回一个数字，代表完成了哪一步
+     */
+    fun getHandGestureConfig(uid: Int, callback: Callback) {
+        try {
+            //delete by request arg
+            val request = Request.Builder().get()
+                .url("$HAND_GESTURE_HOST$HAND_GESTURE_CONFIG?uid=$uid").build()
+            client?.newCall(request)?.enqueue(callback)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * 清空配置
+     */
+    fun clearHandGestureConfig(uid: Int, callback: Callback) {
+        //delete by request arg
+        val request = Request.Builder().delete()
+            .url("$HAND_GESTURE_HOST$HAND_GESTURE_CONFIG?uid=$uid").build()
+        client?.newCall(request)?.enqueue(callback)
+    }
+
+    /**
+     * 进行一次手势识别
+     */
+    fun handGestureRecognize(uid: Int, pcmPath: File, callback: Callback) {
+        val pcmFile = RequestBody.create(MEDIA_TYPE_PCM, pcmPath)
+        val multiBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("uid", uid.toString())
+            .addFormDataPart("file", "test.pcm", pcmFile)
+            .build()
+        // 构建请求
+        val request = Request.Builder().post(multiBody)
+            .url(HAND_GESTURE_HOST + HAND_GESTURE_PREDICT).build()
+        // 发送请求, 获得响应
+        client?.newCall(request)?.enqueue(callback)
+    }
+
+    fun getWaveImgUrl(uid:Int): String {
+        return "$HAND_GESTURE_HOST/pre_img?uid=$uid&time=${System.currentTimeMillis()}"
+    }
+
+    fun postForPreImg(uid: Int, pcmPath: File, callback: Callback) {
+        val pcmFile = RequestBody.create(MEDIA_TYPE_PCM, pcmPath)
+        val multiBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("uid", uid.toString())
+            .addFormDataPart("file", "test.pcm", pcmFile)
+            .build()
+        // 构建请求
+        val request = Request.Builder().post(multiBody)
+            .url(HAND_GESTURE_HOST + "/pre_img").build()
+        // 发送请求, 获得响应
+        client?.newCall(request)?.enqueue(callback)
+    }
+
 
 }

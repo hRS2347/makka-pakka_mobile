@@ -16,4 +16,5 @@
 
     <string name="decline">拒绝</string>
     <string name="accept">接受</string>
+    <string name="gesture_guidance">1号手势：上下，增大音量（观看），选择下一个（首页）\n2号手势：下上，减小音量（观看），选择上一个（首页）\n3号手势：两圈，返回（观看），刷新列表（首页）\n4号手势：上，提高亮度（观看），进入直播间（首页）\n5号手势：下，降低亮度（观看），切换页面（首页）</string>
 </resources>

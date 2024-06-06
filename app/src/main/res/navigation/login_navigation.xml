@@ -175,7 +175,7 @@
         android:id="@+id/userInfoFragment"
         android:name="com.example.makka_pakka.main.mine.UserInfoFragment"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_mine" >
+        tools:layout="@layout/fragment_user_info" >
         <argument
             android:name="json"
             app:argType="string" />
@@ -198,6 +198,9 @@
     <action
         android:id="@+id/action_global_audienceFragment"
         app:destination="@id/audienceFragment" />
+    <action
+        android:id="@+id/action_global_mineFragment"
+        app:destination="@id/mineFragment" />
     <fragment
         android:id="@+id/urlAdaptingFragment"
         android:name="com.example.makka_pakka.main.webview.url_adapt.UrlAdaptingFragment"

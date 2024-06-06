@@ -27,3 +27,9 @@ const val RECOMMENDATION_PORT = "6483"
 const val RECOMMENDATION = "/live/suggest"
 const val LIVE_LIST = "/live/list"
 
+
+//const val HAND_GESTURE_HOST  = "http://172.26.235.66:8886"
+const val HAND_GESTURE_HOST  = "http://172.26.237.212:8886"
+const val HAND_GESTURE_SAVE = "/save"
+const val HAND_GESTURE_PREDICT = "/predict"
+const val HAND_GESTURE_CONFIG = "/config"

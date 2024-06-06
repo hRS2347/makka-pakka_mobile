@@ -13,6 +13,7 @@ class RecommendResultAdapter(
     RecyclerView.Adapter<RecommendResultAdapter.ViewHolder>() {
     private lateinit var bind: ViewItemSearchResultLiveBinding
     lateinit var onItemClickListener: OnItemClickListener
+    var selectedIndex = 0
     var lastInput = listOf<LiveInfo>()
 
     fun clearData() {
@@ -25,11 +26,16 @@ class RecommendResultAdapter(
         //塞到最前面 保证最新的在最前面
         this.data = data + this.data
         //不加重复的
-        this.data = this.data.distinctBy { it.live_url }
+        this.data = this.data.distinctBy { it.uid }
         //大于20，清空最早的
         if (this.data.size > 12) {
             this.data = this.data.subList(0, 12)
         }
+        notifyDataSetChanged()
+    }
+
+    fun changeSelectedIndex(index: Int) {
+        selectedIndex = index
         notifyDataSetChanged()
     }
 
@@ -47,6 +53,11 @@ class RecommendResultAdapter(
         holder.itemBind.tvName.text = live.name
         holder.itemBind.tvTitle.text = live.title
         GlideUtil.glideImage(live.cover_url, holder.itemBind.ivCover)
+        if (selectedIndex == position) {
+            holder.itemBind.selectedLayout.visibility = ViewGroup.VISIBLE
+        } else {
+            holder.itemBind.selectedLayout.visibility = ViewGroup.GONE
+        }
     }
 
     override fun getItemCount(): Int {

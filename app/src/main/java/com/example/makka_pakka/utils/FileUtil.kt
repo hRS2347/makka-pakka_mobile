@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import java.io.File
 
 
 object FileUtil {
@@ -119,5 +120,18 @@ object FileUtil {
      */
     private fun isDownloadsDocument(uri: Uri): Boolean {
         return "com.android.providers.downloads.documents" == uri.authority
+    }
+
+    //获取外部存储路径
+    //@param context 上下文对象
+    //@uid 用户id
+    fun getExternalStoragePath(context: Context, dirName: String): String {
+        // if dirName not exist, create it
+        val dir = context.getExternalFilesDir(null)!!.absolutePath + "/$dirName/"
+        val file = File(dir)
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+        return context.getExternalFilesDir(null)!!.absolutePath + "/$dirName/"
     }
 }

@@ -1,18 +1,22 @@
 package com.example.makka_pakka
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
@@ -23,14 +27,17 @@ import com.example.makka_pakka.boardcast.NetworkConnectChangedReceiver
 import com.example.makka_pakka.boardcast.ReLoginReceiver
 import com.example.makka_pakka.databinding.ActivityMainBinding
 import com.example.makka_pakka.model.UserInfo
+import com.example.makka_pakka.sound_flex.GestureControlListener
 import com.example.makka_pakka.utils.HttpUtil
 import com.example.makka_pakka.utils.PermissionUtil
 import com.example.makka_pakka.utils.ViewUtil
 import com.example.makka_pakka.utils.GsonUtil
+import com.example.makka_pakka.utils.MediaControlUtil
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import okhttp3.Callback
 import okhttp3.Response
+import szu.stclkhlww.shushengyiqi.playsound.AudioTrackManager
 import java.io.IOException
 
 
@@ -40,6 +47,8 @@ class MainActivity : AppCompatActivity() {
     var isHobbySelectedAsk = false
     private lateinit var navController: NavController
     private lateinit var handler: Handler
+    val viewModel: MainActivityViewModel by viewModels { MainActivityViewModel.Factory }
+    var gestureController: GestureControlListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +70,15 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "请允许APP访问所有文件，否则无法使用。", Toast.LENGTH_SHORT).show();
             this.finish()
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                Toast.makeText(this, "请允许APP访问所有文件，否则无法使用。", Toast.LENGTH_SHORT)
+                    .show();
+                startActivity(Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION));
+            }
+        }
+
         HttpUtil.setUp { sendBroadcast(Intent(RELOGIN_ACTION)) }
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
@@ -150,12 +168,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.home.setOnClickListener {
-            navController.popBackStack(R.id.mainFragment, false)
-            navController.navigate(R.id.mainFragment)
+            toHome()
         }
 
         binding.mine.setOnClickListener {
-            navController.navigate(R.id.mineFragment)
+            toMine()
         }
 
         handler = Handler(Handler.Callback {
@@ -218,7 +235,123 @@ class MainActivity : AppCompatActivity() {
         binding.btnBroadcast.setOnClickListener {
             findNavController(R.id.nav_host_fragment_activity_main).navigate(R.id.action_global_broadcastFragment)
         }
+        viewModel.recordingTime.observe(this) {
+            val time = it / 10F
+            binding.tvCountingTime.text = (time).toString()
+            if (time > 1.2F) {
+                binding.tvCountingTime.setTextColor(
+                    ActivityCompat.getColor(
+                        this,
+                        R.color.secondary_color
+                    )
+                )
+            } else if (time > 0.6F) {
+                binding.tvCountingTime.setTextColor(
+                    ActivityCompat.getColor(
+                        this,
+                        R.color.primary_color
+                    )
+                )
+            } else {
+                binding.tvCountingTime.setTextColor(
+                    ActivityCompat.getColor(
+                        this,
+                        R.color.warning_red
+                    )
+                )
+            }
+        }
+        viewModel.errorMsg.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+        viewModel.predictResult.observe(this) {
+            Log.i("predict result", it.toString())
+            binding.tvCountingTime.setTextColor(
+                ActivityCompat.getColor(
+                    this,
+                    R.color.primary_color
+                )
+            )
+            if (it == -1)
+                binding.tvCountingTime.text = "准备"
+            else {
+                if (viewModel.isLocked.value!!)
+                    binding.tvCountingTime.text = "未解锁：$it"
+                else {
+                    gestureController?.onGestureControl(it)
+                    binding.tvCountingTime.text = "结果：$it"
+                }
+            }
 
+        }
+
+        binding.floatingTab.setOnClickListener {
+            viewModel.switchPredictRunningState()
+        }
+
+        viewModel.isPredictRunningOn.observe(this) {
+            binding.floatingTab.background = if (it && !viewModel.isLocked.value!!) {
+                ActivityCompat.getDrawable(
+                    this,
+                    R.drawable.side_floating_white_card_on
+                )
+            } else if (it && viewModel.isLocked.value!!) {
+                ActivityCompat.getDrawable(
+                    this,
+                    R.drawable.side_floating_white_card_locked
+                )
+            } else {
+                ActivityCompat.getDrawable(
+                    this,
+                    R.drawable.side_floating_white_card
+                )
+            }
+            if (!it) {
+                binding.tvCountingTime.text = "暂停中"
+                binding.tvCountingTime.setTextColor(
+                    ActivityCompat.getColor(
+                        this,
+                        R.color.tertiary_color
+                    )
+                )
+            }
+        }
+
+        viewModel.isLocked.observe(this) {
+            binding.floatingTab.background = if (it) {
+                ActivityCompat.getDrawable(
+                    this,
+                    R.drawable.side_floating_white_card_locked
+                )
+            } else {
+                ActivityCompat.getDrawable(
+                    this,
+                    R.drawable.side_floating_white_card_on
+                )
+            }
+        }
+
+        viewModel.isPredictTabOn.observe(this) {
+            //右滑消失 或 左滑出现
+            if (it) {
+                binding.floatingTab.visibility = View.VISIBLE
+                binding.floatingTab.animate().translationX(0f).setDuration(300).start()
+            } else {
+                binding.floatingTab.animate().translationX(
+                    binding.floatingTab.width.toFloat()
+                ).setDuration(300).start()
+            }
+        }
+        AudioTrackManager.startPlaying()
+    }
+
+    fun toMine() {
+        navController.navigate(R.id.action_global_mineFragment)
+    }
+
+    fun toHome() {
+        navController.popBackStack(R.id.mainFragment, false)
+        navController.navigate(R.id.mainFragment)
     }
 
     private var backPressedTime: Long = 0
@@ -237,7 +370,6 @@ class MainActivity : AppCompatActivity() {
         //设置状态栏文字颜色
         setStatusBarTextColor(window, false)
         test()
-
     }
 
     fun setStatusBarTextColor(window: Window, light: Boolean) {
@@ -260,38 +392,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun testC() = Unit
     private fun test() {
-//        val gson = Gson()
-//
-//        // 创建 UserInfo 对象
-//        val userInfo = UserInfo(
-//            id = 1,
-//            email = "user@example.com",
-//            name = "John",
-//            avatarUrl = "https://example.com/avatar.jpg",
-//            sex = 0,
-//            region = "New York",
-//            birthday = "1990-01-01",
-//            createTime = "2024-04-05",
-//            isHobbySelected = 1,
-//            description = "A software engineer"
-//        )
-//
-//        // 创建 MyResponse 对象
-//        val response = MyResponse(
-//            host = "example.com",
-//            code = 200,
-//            errorMessage = null,
-//            data = userInfo
-//        )
-//        // 将 MyResponse 对象转换为 JSON 字符串
-//        val jsonResponse = gson.toJson(response)
-//        // 将 JSON 字符串转换为 MyResponse 对象
-//        val type: Type = object : TypeToken<MyResponse<UserInfo?>?>() {}.type
-////        val myResponse: MyResponse<UserInfo> = gson.fromJson(jsonResponse, type)
-//        val myResponse: MyResponse<UserInfo> =
-//            GsonUtil.fromJson(jsonResponse, UserInfo::class.java)
-//        // 输出 MyResponse 对象
-//        Log.d("my_test", myResponse.data.avatarUrl.toString())
+
     }
 
     override fun onDestroy() {
@@ -307,6 +408,7 @@ class MainActivity : AppCompatActivity() {
     fun removeOnPressBackListener(listener: OnPressBackListener) {
         onPressBackListenerStack.remove(listener)
     }
+
     private val onPressBackListenerStack = mutableListOf<OnPressBackListener>()
     override fun onBackPressed() {
         try {
@@ -336,6 +438,18 @@ class MainActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             Log.e("MainActivity", "onBackPressed: ${e.message}")
+        }
+    }
+
+    fun volumeUp() = MediaControlUtil.volumeUp(this)
+    fun volumeDown() = MediaControlUtil.volumeDown(this)
+    fun brightnessUp() = MediaControlUtil.brightnessUp(this)
+    fun brightnessDown() = MediaControlUtil.brightnessDown(this)
+    fun switchNav() {
+        if (navController.currentDestination?.id == R.id.mainFragment) {
+            toMine()
+        } else {
+            toHome()
         }
     }
 }
