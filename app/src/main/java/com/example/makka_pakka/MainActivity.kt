@@ -351,27 +351,30 @@ class MainActivity : AppCompatActivity() {
         }
         AudioTrackManager.startPlaying()
 
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (MyApplication.instance.keyboardHeight != 0f) { // 只需要获取一次
-                    return
-                }
-                val r = Rect()
-                binding.root.getWindowVisibleDisplayFrame(r)
-                val screenHeight = binding.root.rootView.height
-                val keypadHeight = screenHeight - r.bottom
-
-                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
-                    // Keyboard is opened
-                    Log.d("Keyboard Height", "Height: $keypadHeight")
-                    // 转换为rem并处理
-                    val keyboardHeightInRem = ViewUtil.pxToRem(keypadHeight)
-                    Log.d("Keyboard Height in rem", "Height in rem: $keyboardHeightInRem")
-                    MyApplication.instance.keyboardHeight = keyboardHeightInRem
-                }
-            }
-        })
+//        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object :
+//            ViewTreeObserver.OnGlobalLayoutListener {
+//            private var isKeyboardShowing = false
+//
+//            override fun onGlobalLayout() {
+//                if (MyApplication.instance.keyboardHeight != 0f) { // 只需要获取一次
+//                    return
+//                }
+//                val r = Rect()
+//                binding.root.getWindowVisibleDisplayFrame(r)
+//                val screenHeight = binding.root.rootView.height
+//                val keypadHeight = screenHeight - r.bottom
+//
+//                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+//                    // Keyboard is opened
+//                    Log.d("Keyboard Height", "Height: $keypadHeight")
+//                    // 转换为rem并处理
+//                    val keyboardHeightInRem = ViewUtil.pxToRem(keypadHeight)
+//                    Log.d("Keyboard Height in rem", "Height in rem: $keyboardHeightInRem")
+//                    MyApplication.instance.keyboardHeight = keyboardHeightInRem
+//                }
+//
+//            }
+//        })
     }
 
     fun toMine() {

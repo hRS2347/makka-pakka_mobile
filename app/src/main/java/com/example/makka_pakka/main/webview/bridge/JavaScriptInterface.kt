@@ -62,13 +62,6 @@ class JavaScriptInterface(
         Toast.makeText(context, msg, if (length == "long") Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show();
     }
 
-    /***
-     * 返回键盘高度，rem单位
-     */
-    @JavascriptInterface
-    fun getKeyboardHeight(): Float {
-        return MyApplication.instance.keyboardHeight
-    }
 
 
 }
