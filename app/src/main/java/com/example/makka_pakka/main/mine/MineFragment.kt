@@ -118,8 +118,8 @@ class MineFragment : Fragment() {
 
         bind.ivLogout.setOnClickListener {
             //clear token
+            (requireActivity() as MainActivity).viewModel.logout()
             MyApplication.instance.logout()
-
         }
         MyApplication.instance.currentUser.observe(viewLifecycleOwner) { i ->
             if (i == null) {

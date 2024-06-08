@@ -31,6 +31,18 @@ class MainActivityViewModel : ViewModel() {
     val waveImgUrl = MutableLiveData("")
     var selectedIndex = 0
 
+    fun logout() {
+        isRecording = false
+        AudioRecordManager.stopRecord()
+        isPredictRunningOn.value = false
+        isPredictTabOn.value = false
+        isLocked.value = true
+        recordingTime.value = 20
+        predictResult.value = 0
+        lockState = LockState.LOCKED
+        waveImgUrl.value = ""
+        selectedIndex = 0
+    }
 
     enum class LockState(val code: Int) {
         //解锁顺序是1-2
@@ -99,7 +111,7 @@ class MainActivityViewModel : ViewModel() {
             recordingTime.value = 23
             isRecording = true
             while (recordingTime.value!! > 0) {
-                if (recordingTime.value==21){
+                if (recordingTime.value == 21) {
                     AudioRecordManager.startRecord()
                 }
                 recordingTime.value = recordingTime.value!! - 1
