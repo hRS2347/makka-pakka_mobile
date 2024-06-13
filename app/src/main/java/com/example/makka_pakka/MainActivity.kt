@@ -159,14 +159,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-
         MyApplication.instance.currentUser.observe(this) {
             if (it != null && it.isHobbySelected == 0 && !isHobbySelectedAsk) {
                 isHobbySelectedAsk = true
                 navController.popBackStack(R.id.mainFragment, false)
-                navController.navigate(R.id.mainFragment)
+            } else if (it == null) {
+                navController.popBackStack(R.id.coverFragment, false)
             }
         }
 
@@ -227,7 +225,6 @@ class MainActivity : AppCompatActivity() {
                     if (MyApplication.instance.currentToken.isNotBlank()) {
                         //获取用户信息
                         MyApplication.instance.testAsyncJump {
-//                        MyApplication.instance.reGetUserInfo {
                             //旧的token有效，直接进入主界面
                             handler.sendEmptyMessage(1)
                         }
@@ -350,31 +347,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         AudioTrackManager.startPlaying()
-
-//        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object :
-//            ViewTreeObserver.OnGlobalLayoutListener {
-//            private var isKeyboardShowing = false
-//
-//            override fun onGlobalLayout() {
-//                if (MyApplication.instance.keyboardHeight != 0f) { // 只需要获取一次
-//                    return
-//                }
-//                val r = Rect()
-//                binding.root.getWindowVisibleDisplayFrame(r)
-//                val screenHeight = binding.root.rootView.height
-//                val keypadHeight = screenHeight - r.bottom
-//
-//                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
-//                    // Keyboard is opened
-//                    Log.d("Keyboard Height", "Height: $keypadHeight")
-//                    // 转换为rem并处理
-//                    val keyboardHeightInRem = ViewUtil.pxToRem(keypadHeight)
-//                    Log.d("Keyboard Height in rem", "Height in rem: $keyboardHeightInRem")
-//                    MyApplication.instance.keyboardHeight = keyboardHeightInRem
-//                }
-//
-//            }
-//        })
     }
 
     fun toMine() {
@@ -453,7 +425,9 @@ class MainActivity : AppCompatActivity() {
             //上面没有把事件消费掉，就执行默认的返回操作
             Log.d("MainActivity", "onBackPressed: ${navController.currentDestination?.id}")
             //将返回的目的地绑定bottom
-            if (navController.currentDestination?.id != R.id.mainFragment) {
+            if (navController.currentDestination?.id != R.id.mainFragment
+                &&  navController.currentDestination?.id != R.id.coverFragment
+                ) {
                 navController.popBackStack()
                 return
             }

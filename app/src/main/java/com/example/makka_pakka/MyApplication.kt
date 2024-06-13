@@ -30,7 +30,6 @@ private val Context.dataStore by preferencesDataStore(
 )
 
 class MyApplication : Application() {
-    var keyboardHeight: Float = 0f
     val testUser: UserInfo = UserInfo(
         114514,
         "114514@1919.com",
@@ -98,7 +97,6 @@ class MyApplication : Application() {
                 Log.d("MyApplication", "X5内核版本：" + QbSdk.getTbsVersion(applicationContext))
 
             }
-
             /**
              * 预初始化结束
              * 由于X5内核体积较大，需要依赖网络动态下发，所以当内核不存在的时候，默认会回调false，此时将会使用系统内核代替
@@ -155,28 +153,6 @@ class MyApplication : Application() {
                         GlobalScope.launch {
                             dataStoreRepository.setCurrentUser(gson.toJson(myResponse.data))
                         }
-                    } else {
-                        Log.e("MyApplication", "onResponse: ${response.body?.string()}")
-                    }
-                }
-            })
-        }
-    }
-
-    fun reGetUserInfo(onGet: (Unit) -> Unit) {
-        GlobalScope.launch {
-            HttpUtil.getUserInfo(object : Callback {
-                override fun onFailure(call: okhttp3.Call, e: java.io.IOException) {
-                    e.printStackTrace()
-                }
-
-                override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                    if (response.code == 200) {
-                        val body = response.body?.string()
-                        Log.i("MyApplication", "onResponse: $body")
-                        val myResponse = GsonUtil.fromJsonToResponse(body, UserInfo::class.java)
-                        currentUser.postValue(myResponse.data)
-                        onGet(Unit)
                     } else {
                         Log.e("MyApplication", "onResponse: ${response.body?.string()}")
                     }

@@ -121,12 +121,7 @@ class MineFragment : Fragment() {
             (requireActivity() as MainActivity).viewModel.logout()
             MyApplication.instance.logout()
         }
-        MyApplication.instance.currentUser.observe(viewLifecycleOwner) { i ->
-            if (i == null) {
-                Navigation.findNavController(bind.root)
-                    .navigate(R.id.action_mineFragment_to_coverFragment)
-            }
-        }
+
         viewModel.currentGestureGifIndex.observe(viewLifecycleOwner) { index ->
             //淡入
             bind.ivGesture.alpha = 0f
@@ -141,7 +136,7 @@ class MineFragment : Fragment() {
         }
         handler.sendEmptyMessage(MineViewModel.MSG_INDEX_GESTURE_GIF_CHANGE)
         viewModel.recordingTime.observe(viewLifecycleOwner) {
-            if (it == -1){
+            if (it == -1) {
                 bind.tvCountingTime.text = "准备"
                 return@observe
             }
@@ -294,7 +289,7 @@ class MineFragment : Fragment() {
                 if (findNavController().currentDestination?.id != R.id.mineFragment) {
                     return
                 }
-                if (gesture == 5){
+                if (gesture == 5) {
                     Log.d("MineFragment", "onGestureControl: gesture 5")
                     //切换页面
                     (activity as MainActivity).switchNav()
