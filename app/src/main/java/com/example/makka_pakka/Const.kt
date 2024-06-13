@@ -65,13 +65,5 @@ val HOBBY_TAG_LIST = listOf(
     "心情日记"
 )
 val TAG_COLOR_LIST = listOf(
-    R.color.tag_color_1,
-    R.color.tag_color_2,
-    R.color.tag_color_3,
-    R.color.tag_color_4,
-    R.color.tag_color_5,
-    R.color.tag_color_6,
-    R.color.tag_color_7,
-    R.color.tag_color_8,
-
+    R.color.primary_color
 )
