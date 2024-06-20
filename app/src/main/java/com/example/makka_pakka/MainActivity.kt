@@ -30,6 +30,7 @@ import com.example.makka_pakka.boardcast.ReLoginReceiver
 import com.example.makka_pakka.databinding.ActivityMainBinding
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.sound_flex.GestureControlListener
+import com.example.makka_pakka.utils.CalendarReminderUtil
 import com.example.makka_pakka.utils.HttpUtil
 import com.example.makka_pakka.utils.PermissionUtil
 import com.example.makka_pakka.utils.ViewUtil
@@ -46,7 +47,6 @@ import java.io.IOException
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    var isHobbySelectedAsk = false
     private lateinit var navController: NavController
     private lateinit var handler: Handler
     val viewModel: MainActivityViewModel by viewModels { MainActivityViewModel.Factory }
@@ -67,6 +67,8 @@ class MainActivity : AppCompatActivity() {
             IntentFilter(RELOGIN_ACTION),
             ContextCompat.RECEIVER_NOT_EXPORTED
         )
+
+
 
         PermissionUtil.setUp(this)
         if (!PermissionUtil.checkPermission()) {
@@ -97,7 +99,12 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
         val navView = binding.bottomNavigation
-
+//        CalendarReminderUtil.addCalendarEvent(
+//            this,
+//            "直播提醒:你订阅的 asdf 即将开始",
+//            System.currentTimeMillis()+1000*60*60*24
+//            //开始时间, 单位为毫秒
+//        )
         //让navview 出现时，动画效果更加平滑
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
@@ -158,11 +165,19 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
+        MyApplication.instance.currentUser.value.let {
+            Log.i("MainActivity", "onCreate: $it")
+            if (it != null && it.isHobbySelected == 0 && !viewModel.isHobbySelectedAsk) {
+                viewModel.isHobbySelectedAsk = true
+                navController.navigate(R.id.action_global_initiationFragment)
+            }
+        }
         MyApplication.instance.currentUser.observe(this) {
-            if (it != null && it.isHobbySelected == 0 && !isHobbySelectedAsk) {
-                isHobbySelectedAsk = true
-                navController.popBackStack(R.id.mainFragment, false)
+            Log.i("MainActivity", "onCreate: $it")
+            //用户信息为空，跳转到封面,未选择爱好，跳转到主界面
+            if (it != null && it.isHobbySelected == 0 && !viewModel.isHobbySelectedAsk) {
+                viewModel.isHobbySelectedAsk = true
+                navController.navigate(R.id.action_global_initiationFragment)
             } else if (it == null) {
                 navController.popBackStack(R.id.coverFragment, false)
             }

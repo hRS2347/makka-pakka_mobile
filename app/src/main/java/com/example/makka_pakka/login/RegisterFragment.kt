@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -82,8 +83,11 @@ class RegisterFragment : Fragment() {
                     EVENTS.SUCCESS.ordinal -> {
                         bind.progressBar.visibility = View.INVISIBLE
                         MyApplication.instance.getUserInfo()
-                        Navigation.findNavController(bind.btnSubmit)
-                            .navigate(R.id.action_registerFragment_to_loginFragment)
+                        Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show()
+                        handler.postDelayed({
+                            Navigation.findNavController(bind.btnSubmit)
+                                .navigate(R.id.action_registerFragment_to_loginFragment)
+                        }, 300)
                     }
                 }
 

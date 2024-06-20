@@ -34,7 +34,9 @@ object PermissionUtil {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.WRITE_SETTINGS,
-
+            Manifest.permission.READ_CALENDAR,
+            Manifest.permission.WRITE_CALENDAR
+//            android.permission.READ_CALENDAR or android.permission.WRITE_CALENDAR
 
         ).subscribe { permission ->
             if (!permission.granted) flag = false

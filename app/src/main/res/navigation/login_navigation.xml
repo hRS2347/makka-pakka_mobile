@@ -201,6 +201,9 @@
     <action
         android:id="@+id/action_global_mineFragment"
         app:destination="@id/mineFragment" />
+    <action
+        android:id="@+id/action_global_initiationFragment"
+        app:destination="@id/initiationFragment" />
     <fragment
         android:id="@+id/urlAdaptingFragment"
         android:name="com.example.makka_pakka.main.webview.url_adapt.UrlAdaptingFragment"

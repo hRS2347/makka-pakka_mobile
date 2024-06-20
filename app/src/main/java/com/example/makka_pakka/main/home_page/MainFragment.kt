@@ -1,6 +1,7 @@
 package com.example.makka_pakka.main.home_page
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.example.makka_pakka.MyApplication
 import com.example.makka_pakka.R
 import com.example.makka_pakka.databinding.FragmentMainBinding
 import com.example.makka_pakka.sound_flex.GestureControlListener
+import com.example.makka_pakka.utils.CalendarReminderUtil
 import com.example.makka_pakka.utils.GlideUtil
 import com.example.makka_pakka.utils.ViewUtil
 
@@ -38,6 +40,8 @@ class MainFragment : Fragment() {
         bind = FragmentMainBinding.inflate(layoutInflater)
 
         ViewUtil.paddingByStatusBar(bind.coordinatorLayout)
+
+
 
         bind.searchBar.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
@@ -84,7 +88,6 @@ class MainFragment : Fragment() {
         recommendResultAdapter.onItemClickListener =
             object : RecommendResultAdapter.OnItemClickListener {
                 override fun onItemClick(pos: Int) {
-                    //get lid to the audienceFragment
                     val action =
                         MainFragmentDirections.actionGlobalAudienceFragment(
                             upid = recommendResultAdapter.data[pos].uid,
@@ -96,9 +99,13 @@ class MainFragment : Fragment() {
 
         bind.rv.adapter = recommendResultAdapter
         bind.rv.layoutManager = GridLayoutManager(context, 2)
-        if (!(activity as MainActivity).isHobbySelectedAsk &&
-            MyApplication.instance.currentUser.value != null &&
-            MyApplication.instance.currentUser.value!!.isHobbySelected != 1
+        //log出下一判断中用到的值
+        Log.d("MainFragment", "isHobbySelectedAsk: ${(activity as MainActivity).viewModel.isHobbySelectedAsk}")
+        Log.d("MainFragment", "currentUser: ${MyApplication.instance.currentUser.value}")
+        Log.d("MainFragment", "isHobbySelected: ${MyApplication.instance.currentUser.value?.isHobbySelected}")
+        if ((!(activity as MainActivity).viewModel.isHobbySelectedAsk) &&  //本次未选择兴趣
+            MyApplication.instance.currentUser.value != null && //已登录
+            MyApplication.instance.currentUser.value?.isHobbySelected == 0 //未选择兴趣
         ) {//未选择兴趣
             findNavController().navigate(R.id.action_mainFragment_to_initiationFragment)
         }
@@ -149,7 +156,8 @@ class MainFragment : Fragment() {
 
                     4 -> {
                         try {
-                            (activity as MainActivity).viewModel.selectedIndex = recommendResultAdapter.selectedIndex
+                            (activity as MainActivity).viewModel.selectedIndex =
+                                recommendResultAdapter.selectedIndex
                             //进入直播间
                             val action =
                                 MainFragmentDirections.actionGlobalAudienceFragment(
@@ -164,7 +172,8 @@ class MainFragment : Fragment() {
 
                     5 -> {
                         //切换页面
-                        (activity as MainActivity).viewModel.selectedIndex = recommendResultAdapter.selectedIndex
+                        (activity as MainActivity).viewModel.selectedIndex =
+                            recommendResultAdapter.selectedIndex
                         (activity as MainActivity).switchNav()
                     }
                 }
@@ -175,11 +184,6 @@ class MainFragment : Fragment() {
 
 
         return bind.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        viewModel.refresh()
     }
 }
 

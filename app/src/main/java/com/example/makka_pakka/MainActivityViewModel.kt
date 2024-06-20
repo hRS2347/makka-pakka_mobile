@@ -30,6 +30,7 @@ class MainActivityViewModel : ViewModel() {
     private var lockState = LockState.LOCKED
     val waveImgUrl = MutableLiveData("")
     var selectedIndex = 0
+    var isHobbySelectedAsk = false
 
     fun logout() {
         isRecording = false
@@ -42,6 +43,7 @@ class MainActivityViewModel : ViewModel() {
         lockState = LockState.LOCKED
         waveImgUrl.value = ""
         selectedIndex = 0
+        isHobbySelectedAsk = false
     }
 
     enum class LockState(val code: Int) {

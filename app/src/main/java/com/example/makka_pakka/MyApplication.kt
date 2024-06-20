@@ -80,6 +80,7 @@ class MyApplication : Application() {
     fun saveToken(token: String) {
         currentToken = token
         GlobalScope.launch {
+            Log.d("MyApplication", "saveToken: $token")
             dataStoreRepository.saveToken(token)
         }
     }
@@ -145,7 +146,7 @@ class MyApplication : Application() {
                 override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
                     if (response.code == 200) {
                         val body = response.body?.string()
-                        Log.i("MyApplication", "onResponse: $body")
+                        Log.i("MyApplication", "new user Info: $body")
                         val myResponse = GsonUtil.fromJsonToResponse(body, UserInfo::class.java)
                         currentUser.postValue(myResponse.data)
 
@@ -189,6 +190,7 @@ class MyApplication : Application() {
 
     fun logout() {
         GlobalScope.launch {
+            currentToken = ""
             withContext(Dispatchers.IO) {
                 dataStoreRepository.writeString2DataStore("token", "")
             }

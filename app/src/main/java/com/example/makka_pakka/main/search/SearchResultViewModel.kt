@@ -35,6 +35,7 @@ class SearchResultViewModel(
                     searchState.value!!.typeCode,
                     object : Callback {
                         override fun onFailure(call: okhttp3.Call, e: java.io.IOException) {
+                            Log.d("SearchResultViewModel", "onResponse: $e")
                             viewModelScope.launch {
                                 withContext(Dispatchers.Main) {
                                     errorMsg.postValue("网络错误")

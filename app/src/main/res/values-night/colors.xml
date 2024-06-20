@@ -8,18 +8,24 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primary_color">#FFD93D</color>
-    <color name="secondary_color">#FF8400</color>
-    <color name="bright_color">#FF8400</color>
-    <color name="tertiary_color">#4F200D</color>
-    <color name="background_color">#F6F4F0</color>
-    <color name="surface_color">#F6F1E9</color>
-    <color name="on_surface_color">#F6F1E9</color>
+    <color name="primary_color">#FF771D</color>
+    <color name="secondary_color">#FEA82F</color>
+    <color name="tertiary_color">#FFC288</color>
+    <color name="background_color">#F4EFEB</color>
+    <color name="bright_color">#FFAD33</color>
+    <color name="light_color">#FFE0B2</color>
+    <color name="surface_color">#FFF1D9</color>
+    <color name="container_surface_color">#FFE9C3</color>
+    <color name="on_surface_color">#FFBD53</color>
+    <color name="down_surface_color">#FFF9EF</color>
 
     <color name="light_grey">#CCCCCC</color>
-    <color name="bg_grey">#FDFFFD</color>
+    <color name="bg_grey">#ECECEC</color>
+    <color name="ts_bg_grey">#E4C5C5C5</color>
+
     <color name="stroke_grey">#434343</color>
     <color name="theme_orange">#F4BC7E</color>
+    <color name="theme_purple">#9800D8</color>
     <color name="theme_orange_bright">#FF9C2D</color>
     <color name="warning_red">#9A2626</color>
     <color name="grey">#08000000</color>
@@ -34,6 +40,7 @@
     <color name="tag_color_6">#9A43F3</color>
     <color name="tag_color_7">#F38443</color>
     <color name="tag_color_8">#F34378</color>
+    <color name="transparent">#00947D7B</color>
 
     <!--    <color name="md_theme_primary">#A23F00</color>-->
     <!--    <color name="md_theme_onPrimary">#FFFFFF</color>-->

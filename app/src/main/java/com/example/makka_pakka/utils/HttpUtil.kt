@@ -19,6 +19,7 @@ import com.example.makka_pakka.SEARCH_MATCH
 import com.example.makka_pakka.SEND_HABITS
 import com.example.makka_pakka.USER_INFO
 import com.example.makka_pakka.host
+import com.example.makka_pakka.host_s
 import com.example.makka_pakka.model.UserInfo
 import com.example.makka_pakka.network.LoggingInterceptor
 import com.example.makka_pakka.network.ResponseInterceptor
@@ -204,12 +205,12 @@ object HttpUtil {
     }
 
     fun searchMatch(key: String, callback: Callback) {
-        get("$host:$search_port$SEARCH_MATCH/$key", callback)
+        get("$host_s$SEARCH_MATCH/$key", callback)
     }
 
     //搜索
     fun search(key: String, pageIndex: Int, type: Int, callback: Callback) =
-        get("$host:$search_port$SEARCH_CONTENT/$key/$pageIndex/30/$type", callback)
+        get("$host_s$SEARCH_CONTENT/$key/$pageIndex/30/$type", callback)
 
 
     const val size = 10

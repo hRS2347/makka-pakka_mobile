@@ -33,7 +33,7 @@ class InitiationFragment : Fragment() {
     ): View {
         bind = FragmentInitiationBinding.inflate(layoutInflater)
         ViewUtil.paddingByStatusBar(bind.root)
-        (activity as MainActivity).isHobbySelectedAsk = true
+        (activity as MainActivity).viewModel.isHobbySelectedAsk = true
         handler = Handler(
             Handler.Callback {
                 when (it.what) {

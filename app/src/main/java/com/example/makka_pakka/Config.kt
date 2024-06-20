@@ -1,6 +1,7 @@
 package com.example.makka_pakka
 
 const val host = "http://swzx.fcraft.cn"
+const val host_s = "https://client.makka.fcraft.cn/api10006"
 const val port = 6485
 const val search_port = 6484
 const val LOGIN = "/auth/login"
@@ -12,7 +13,6 @@ const val SEND_HABITS = "/user/interest"
 const val AVATAR = "/user/uploadAvatar"
 
 const val GET_USER_INFO = "/user/getUserInfo"
-
 
 const val RELOGIN_ACTION = "com.example.makka_pakka.ACTION_RELOGIN"
 

@@ -5,7 +5,6 @@ import android.provider.CalendarContract
 import androidx.core.content.contentValuesOf
 import java.util.Calendar
 import java.util.TimeZone
-
 object CalendarReminderUtil {
     /**
      * 添加日历事件
@@ -15,8 +14,8 @@ object CalendarReminderUtil {
         context: Context,//上下文
         name: String,//事件名称
         startTime: Long?,//开始时间
-//        planWeek: String,//重复规则,不重复传空字符串，重复传"MO,TU,WE,TH,FR,SA,SU"
-//        untilDate: String//重复规则结束时间，不重复传空字符串，重复传"yyyyMMdd'T'HHmmss'Z'"
+        planWeek: String? = "",//重复规则,不重复传空字符串，重复传"MO,TU,WE,TH,FR,SA,SU"
+        untilDate: String? = ""//重复规则结束时间，不重复传空字符串，重复传"yyyyMMdd'T'HHmmss'Z'"
     ) {
         val cr = context.contentResolver
         val timeZone = TimeZone.getDefault().id
@@ -30,15 +29,27 @@ object CalendarReminderUtil {
                 System.currentTimeMillis() + 60 * 60 * 1000
             }
         }
+
+        // Construct the recurrence rule if applicable
+        val rrule = if (!planWeek.isNullOrBlank() && !untilDate.isNullOrBlank()) {
+            "FREQ=WEEKLY;WKST=SU;BYDAY=$planWeek;UNTIL=$untilDate"
+        } else if (!planWeek.isNullOrBlank()) {
+            "FREQ=WEEKLY;WKST=SU;BYDAY=$planWeek"
+        } else {
+            null
+        }
+
         val values = contentValuesOf(
             CalendarContract.Events.DTSTART to beginTime.timeInMillis,
             CalendarContract.Events.DTEND to endTime.timeInMillis,
             CalendarContract.Events.TITLE to name,
             CalendarContract.Events.DESCRIPTION to "描述",
             CalendarContract.Events.CALENDAR_ID to 1,
-            CalendarContract.Events.EVENT_TIMEZONE to timeZone,
-            CalendarContract.Events.RRULE to "FREQ=WEEKLY;WKST=SU;BYDAY=;UNTIL="
-        )
+            CalendarContract.Events.EVENT_TIMEZONE to timeZone
+        ).apply {
+            rrule?.let { put(CalendarContract.Events.RRULE, it) }
+        }
+
         val uri = cr.insert(CalendarContract.Events.CONTENT_URI, values)
         val eventId = uri?.lastPathSegment?.toLong()
         val reminderUri = CalendarContract.Reminders.CONTENT_URI
@@ -49,6 +60,5 @@ object CalendarReminderUtil {
         )
         cr.insert(reminderUri, reminderValues)
     }
-
-
 }
+

@@ -33,7 +33,7 @@ class ResponseInterceptor(private var callLogin: (Unit) -> Unit) : Interceptor {
             if (myResponse.code == 200){
                 val url = originalResponse.request.url.toString()
                 if (url.contains(LOGIN) ) {
-                    GsonUtil.fromJsonToResponse(responseBodyString, String::class.java).data?.let {
+                    GsonUtil.fromJsonToResponse(responseBodyString, String::class.java).data.let {
                         val token = it.toString()
                         Log.d("NEW_TOKEN",token.toString())
                         MyApplication.instance.saveToken(token)
