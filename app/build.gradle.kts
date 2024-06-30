@@ -109,4 +109,6 @@ dependencies {
 
     implementation ("com.github.crazyandcoder:citypicker:6.0.2")
 //    implementation ("com.github.ertugrulkaragoz:SuperBottomBar:0.4")
+    implementation("com.github.elevenetc:textsurface:0.9.1")
+
 }

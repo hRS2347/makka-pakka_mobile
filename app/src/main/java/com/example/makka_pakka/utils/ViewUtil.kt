@@ -23,8 +23,8 @@ object ViewUtil {
 
     fun setSquareSize(context: Context, value: Float, view: ImageView) {
         val params = view.layoutParams
-        params.width = dpToPx(context, value)  // 设置宽度为100dp
-        params.height = dpToPx(context, value) // 设置高度为200dp
+        params.width = dpToPx(context, value)
+        params.height = dpToPx(context, value)
         view.layoutParams = params
     }
 
